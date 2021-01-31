@@ -126,20 +126,145 @@
 
     <section class="informative">
       <h2>Methods</h2>
+
       <p class="note">
-        See
-        <a href="https://www.w3.org/TR/did-core/#methods">Methods</a>.
+        See [[DID-CORE]] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#methods">DID Methods</a>.
+      </p>
+
+      <p>
+        Avoid introducing requirements in your did method specification that are
+        not described in [[DID-CORE]], or registered in the
+        [[DID-SPEC-REGISTRIES]].
+      </p>
+
+      <p>
+        Avoid constructing a new DID Method that is nearly identical to existing
+        DID Methods.
+      </p>
+
+      <p>
+        There are several "families" of DID Methods, including
+        <a href="https://hyperledger-indy.readthedocs.io/en/latest/index.html"
+          >Hyperledger Indy</a
+        >, <a href="https://identity.foundation/sidetree/spec/">Sidetree</a> and
+        various methods that share similar smart contracts or rely on shared
+        content addressing technology.
+      </p>
+
+      <p class="advisement">
+        Implementers are cautioned to write and regularly run integration and
+        interoperability tests that span these "families", in order to ensure
+        methods have sufficient support for open standards and real
+        interoperability.
+      </p>
+
+      <p>
+        The primary user facing aspects of a DID Method are its
+        <a href="#did-syntax">DID Syntax</a>
+        and it's
+        <a href="#verifiable-data-registry">Verifiable Data Registry</a>.
+        Together these determine most of the unique properties of a DID Method,
+        and its privacy and security properties compared to other methods.
       </p>
 
       <section class="informative">
         <h3>DID Syntax</h3>
         <p class="note">
-          See <a href="https://www.w3.org/TR/did-core/#did-syntax">DID Core</a>.
+          See [[DID-CORE]] for normative requirements associated with developing
+          <a href="https://www.w3.org/TR/did-core/#did-syntax">DID Syntax</a>.
+        </p>
+        <p>
+          Avoid allowing users to control the structure of the DID Unique
+          Suffix, also referred to as the <code>id-char</code> in the ABNF. This
+          can be accomplished by coupling the create operation canonical
+          representation to the the <code>id-char</code>. It can also be
+          accomplished by leveraging sources of entropy.
+        </p>
+
+        <p>
+          Avoid vanity DIDs, for example,
+          <code>did:example:deadbeef1f236...</code>, the structure of the
+          identifier should not be relied on for anything other than collision
+          resistance. Be especially careful of trusting a relationship between a
+          did subject and did controller without relying on a cryptographically
+          secure verification relationship for
+          <a href="authentication">authentication</a>.
+        </p>
+
+        <p>
+          Depending on the nature of the
+          <a href="#verifiable-data-registry">VDR</a>, publishing
+          <code>type</code> or <code>kind</code> might be advantageous for
+          decentralized discovery or mass surveilance. Implementers are not to
+          rely on conformance to specification text while implementing
+          decentralized identifiers.
         </p>
       </section>
 
       <section class="informative">
         <h2>Verifiable Data Registry</h2>
+
+        <p class="note">
+          See [[DID-CORE]] for normative requirements associated with developing
+          <a href="https://www.w3.org/TR/did-core/#dfn-verifiable-data-registry"
+            >Verifiable Data Registry</a
+          >.
+        </p>
+
+        <p>
+          The <a href="#verifiable-data-registry">VDR</a> is the system to which
+          DID Operations such as Create, Resolve, Update and Deactivate are
+          applied.
+        </p>
+
+        <p>
+          Typically a globally unique tamper evident immutable log is used to
+          produce a verifiable data registry.
+        </p>
+
+        <p>
+          Blockchains or distributed ledgers are popular choices for building
+          verifiable data registries, but there are other solutions which yield
+          unique security pros and cons.
+        </p>
+
+        <p>
+          Some DID methods rely on centralized trusted service providers and
+          merkle proofs, to provide tamper evident logs without the costs
+          associated with distributeted consensus.
+        </p>
+
+        <p>
+          Some DID methods rely on multiple registries, that may not be globally
+          available.
+        </p>
+
+        <p>
+          Some DID methods might rely on legacy security infrastructure, such as
+          TLS or TOR.
+        </p>
+
+        <p>
+          Few DID methods support portability accross verifiable data
+          registries, and altering the VDR associated with a DID will almost
+          certainly impact Privacy and Security considerations.
+        </p>
+
+        <p>
+          Intead of designing complex DID Methods with registry portability,
+          consider supporting multiple did methods that have each been designed
+          to support disjoint security or privacy consideration, for example:
+          globally discoverable, offline, pairwise unique, linked to existing
+          roots of trust such as websites, etc...
+        </p>
+
+        <p>
+          Depending on the nature of the VDR, it may be desirable to store data
+          other than DID Documents, for example: verifiable credentials,
+          templates or schemas for credentials, discovery meta data or integrity
+          or content addresable identifiers for related information.
+        </p>
       </section>
     </section>
 
