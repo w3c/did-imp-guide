@@ -270,55 +270,264 @@
 
     <section class="informative">
       <h2>DID Resolution</h2>
+
       <p class="note">
-        See
+        See [[DID-CORE]] for normative requirements associated with developing
         <a href="https://www.w3.org/TR/did-core/#did-resolution"
           >DID Resolution</a
         >.
       </p>
 
+      <p>
+        DID resolution is a function which takes a DID, and produces a DID
+        Resolution response in a representation, most commonly JSON.
+      </p>
+
+      <pre class="example" title="Resolution response for did+json">
+        {
+          "didDocument": {
+            "@context": [
+              "https://www.w3.org/ns/did/v1",
+            ],
+            "id": "did:example:123",
+          },
+          "didDocumentMetaData": {
+            "content-type": "application/did+json"
+          },
+          "didResolutionMetaData": {}
+        }
+      </pre>
+
+      <p>
+        DID resolution can be proxied through intermediariees such as command
+        line tools or http servers. Because the DID Document contains key
+        material, such intermediaries represent excellent targets for attackers,
+        becuase these systems can be used to tamper with verification
+        relationships.
+      </p>
+
+      <p>
+        Avoid tampering with a DID Document that as been returned by did method
+        software. It is better to throw an error than attempt problemss in the
+        underlying DID Method.
+      </p>
+
+      <p>
+        Avoid transforming DID Documents without the consent of the did subject
+        or controller.
+      </p>
+
+      <p>
+        Whenever possible, run all software necessary to support a DID Method
+        yourself.
+      </p>
+
       <section class="informative">
         <h3>DID URL Syntax</h3>
+
         <p class="note">
-          See
+          See [[DID-CORE]] for normative requirements associated with developing
           <a href="https://www.w3.org/TR/did-core/#did-url-syntax"
             >DID URL Syntax</a
           >.
         </p>
 
+        <p>
+          DID URLs can be used to identify sub resources inside a DID Document,
+          older versions of a DID Document, or resources outside of a DID
+          Document.
+        </p>
+
+        <p>
+          DID URLs can be used to identify sub resources inside a DID Document,
+          older versions of a DID Document, or resources outside of a DID
+          Document.
+        </p>
+
+        <pre
+          class="example"
+          title="DID URL identifying a verification method in a DID Document"
+        >
+        did:example:123#primary
+        </pre>
+
+        <pre
+          class="example"
+          title="DID URL identifying a service in a DID Document"
+        >
+          did:example:123#agent
+          </pre
+        >
+
+        <pre
+          class="example"
+          title="DID URL identifying a resource outside a DID Document"
+        >
+          did:example:123?service=packages@relativeRef=/jose/versions/v0.1.2/archive.zip
+          </pre
+        >
+
+        <p>
+          Adjusting any part of a DID URL, including the <code>did</code>,
+          <code>path</code>, <code>query</code>, changes the identifier.
+        </p>
+
+        <p>
+          The resource identifiers <code>did:example:123</code>,
+          <code>did:example:123/path</code> and
+          <code>did:example:123?args=1</code> are for unique resources.
+        </p>
+
         <section class="informative">
           <h4>Path</h4>
+
           <p class="note">
-            See
+            See [[DID-CORE]] for normative requirements associated with
+            developing
             <a href="https://www.w3.org/TR/did-core/#path">Path</a>.
           </p>
+          <p>
+            Avoid using <code>path</code>, there are not enough implementations
+            that rely on it.
+          </p>
+
+          <pre
+            class="example"
+            title="DID URL identifying a resource outside a DID Document"
+          >
+          did:example:123/ephemeral/77d66171-b290-489c-abf1-95ae10725201#primary
+          </pre>
         </section>
 
         <section class="informative">
           <h4>Query</h4>
+
           <p class="note">
-            See
+            See [[DID-CORE]] for normative requirements associated with
+            developing
             <a href="https://www.w3.org/TR/did-core/#query">Query</a>.
+          </p>
+
+          <p>
+            Avoid using <code>query</code>, there are not enough implementations
+            that rely on it.
+          </p>
+
+          <pre
+            class="example"
+            title="DID URL identifying a verification method in an older version of a DID Document"
+          >
+          did:example:123?version-id=77d66171-b290-489c-abf1-95ae10725201#primary
+        </pre
+          >
+        </section>
+
+        <section class="informative">
+          <h4>Fragment</h4>
+
+          <p class="note">
+            See [[DID-CORE]] for normative requirements associated with
+            developing
+            <a href="https://www.w3.org/TR/did-core/#fragment">Fragment</a>.
+          </p>
+
+          <pre
+            class="example"
+            title="DID URL identifying a verification method in a DID Document"
+          >
+          did:example:123#primary
+        </pre
+          >
+
+          <p>
+            Fragments identify sub resources of a resource identified with a DID
+            URL.
+          </p>
+
+          <p>
+            The interpretation of the fragement is determined by the mime type.
           </p>
         </section>
       </section>
 
       <section class="informative">
         <h3>Representations</h3>
+
         <p class="note">
-          See
+          See [[DID-CORE]] for normative requirements associated with developing
           <a href="https://www.w3.org/TR/did-core/#representations"
             >Representations</a
           >.
         </p>
 
+        <p>
+          The [[DID-CORE]] specification describes representations and the
+          [[DID-SPEC-REGISTRIES]] supports the registration of an unbounded
+          number of alternative representations.
+        </p>
+
+        <p>Each representation has unique pros and cons.</p>
+
+        <p>
+          DID Methods are responsible for producing a DID Document in the
+          requested representation.
+        </p>
+
+        <p>
+          DID Method implementers may choose to return verification methods in
+          alternate formats for representations, for example, an implementer
+          might prefer to return verification material encoded with
+          <code>publicKeyJwk</code> for <code>application/did+json</code> and
+          <code>publicKeyBase58</code> for <code>application/did+ld+json</code>.
+        </p>
+
+        <p>
+          If a DID Method supports both <code>application/did+json</code> and
+          <code>application/did+ld+json</code> if it recommended that they both
+          include an <code>@context</code> and that both be capable of
+          supporting linked data proofs.
+        </p>
+
+        <p>
+          Avoid allowing arbitrary unknown properties into
+          <code>application/did+json</code> such as <code>__proto__</code> or
+          other characters that might be used to attack JSON parsing.
+        </p>
+
+        <p>
+          While <code>application/did+json</code> is very flexible, and allows
+          for arbitrary JSON, implementers are cautioned to implement security
+          in depth.
+        </p>
+
+        <p>
+          Implementers are cautioned to review
+          <a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a>
+        </p>
+
+        <p>
+          Implementers should confirm that each representation they decide to
+          support is interoperable with the same representation in other did
+          methods.
+        </p>
+
+        <p>
+          Implementers should avoid guessing about conformance to [[DID-CORE]].
+        </p>
+
         <section class="informative">
           <h3>DID URL Dereferencing</h3>
           <p class="note">
-            See
+            See [[DID-CORE]] for normative requirements associated with
+            developing
             <a href="https://www.w3.org/TR/did-core/#did-url-dereferencing"
               >DID URL Dereferencing</a
             >.
+          </p>
+
+          <p>
+            Dereferencing critical to integrating with cryptographic toolkits
+            such as Linked Data Proofs, JOSE, PGP or Anon Creds.
           </p>
         </section>
       </section>
@@ -327,25 +536,161 @@
     <section class="informative">
       <h2>Verification Relationships</h2>
       <p class="note">
-        See
+        See [[DID-CORE]] for normative requirements associated with developing
         <a href="https://www.w3.org/TR/did-core/#verification-relationships"
           >Verification Relationships</a
         >.
       </p>
 
+      <p>
+        Verification relationships are loosely equivalent to the concept of key
+        purpose.
+      </p>
+
+      <p>
+        It is considered a security best practice not to reuse the same key for
+        multiple purposes.
+      </p>
+
       <section class="informative">
         <h2>Authentication</h2>
         <p class="note">
-          See
+          See [[DID-CORE]] for normative requirements associated with developing
           <a href="https://www.w3.org/TR/did-core/#authentication"
             >Authentication</a
           >.
+        </p>
+        <p>
+          Implementers are advised to implement support for this relationship.
+        </p>
+        <p>
+          This relationship should be used for proofs or signatures associated
+          with did subject authentication.
+        </p>
+
+        <p>Avoid conflating authentication and authorization.</p>
+
+        <p>
+          Avoid leveraging alternative relationships for the purpose of
+          authentication.
+        </p>
+      </section>
+
+      <section class="informative">
+        <h2>Assertion Method</h2>
+        <p class="note">
+          See [[DID-CORE]] for normative requirements associated with developing
+          <a href="https://www.w3.org/TR/did-core/#assertion">Assertion</a>.
+        </p>
+        <p>
+          Implementers are advised to implement support for this relationship.
+        </p>
+        <p>
+          This relationship should be used for proofs or signatures associated
+          with claims issued by this did subject about another identifier, which
+          might be a DID.
+        </p>
+
+        <p>
+          This method is described in the [[VC-DATA-MODEL], see
+          <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures-0"
+            >Proofs</a
+          >
+        </p>
+
+        <p>
+          Avoid leveraging alternative relationships for the purpose of issuing
+          credentials.
         </p>
       </section>
     </section>
 
     <section class="informative">
       <h2>Examples</h2>
+
+      <pre class="example" title="Resolution object for application/did+json">
+        {
+          "didDocument": {
+            "@context": [
+              "https://www.w3.org/ns/did/v1",
+              {
+                "@base": "did:example:123"
+              }
+            ],
+            "id": "did:example:123",
+            "verificationMethod": [
+              {
+                "id": "#key-g1",
+                "controller": "did:example:123",
+                "type": "JsonWebKey2020",
+                "publicKeyJwk": {
+                  "kty": "EC",
+                  "crv": "BLS12381_G1",
+                  "x": "kIf1PZ8UJzZySnCsZx14cHS3AxiWO2jH26MeJu_WdAF1varePeXYlpr-Qo_dLVJ-"
+                }
+              },
+              {
+                "id": "#key-g2",
+                "controller": "did:example:123",
+                "type": "JsonWebKey2020",
+                "publicKeyJwk": {
+                  "kty": "EC",
+                  "crv": "BLS12381_G2",
+                  "x": "lc0FEvffl8o9bKhwVM2bZOzt_p4lz4vTIBtYDyFPQHh1GIx7wmwaSfbgot3eEvi2BS_7ncWoFnoAYBOyIAqMyCDIYHmjs2-LVagsZx-f14je_wGOB1ThaFlUdoA4UAOX"
+                }
+              }
+            ],
+            "authentication": ["#key-g1", "#key-g2"],
+            "assertionMethod": ["#key-g1", "#key-g2"],
+            "capabilityInvocation": ["#key-g1", "#key-g2"],
+            "capabilityDelegation": ["#key-g1", "#key-g2"]
+          },
+          "didDocumentMetaData": {
+            "content-type": "application/did+json"
+          },
+          "didResolutionMetaData": {}
+        }        
+      </pre>
+
+      <pre
+        class="example"
+        title="Resolution object for application/did+ld+json"
+      >
+        {
+          "didDocument": {
+            "@context": [
+              "https://www.w3.org/ns/did/v1",
+              {
+                "@base": "did:example:456"
+              }
+            ],
+            "id": "did:example:456",
+            "verificationMethod": [
+              {
+                "id": "#key-g1",
+                "type": "Bls12381G1Key2020",
+                "controller": "did:example:456",
+                "publicKeyBase58": "7c98uRcPAjWbPJ7GeHc4Csd3qGKYsbHGjE3G8v2YX6Te3g6Ur2PfDcrpmoBoBmV8yT"
+              },
+              {
+                "id": "#key-g2",
+                "type": "Bls12381G2Key2020",
+                "controller": "did:example:456",
+                "publicKeyBase58": "yuTSz1w31UYhoAN6v2D16dLtPg2kMGkwbptoZ5z96bpuHrvBNAshsLsgX9GvE6bnG95WPWuRkQJ9oUmL1ytEjfojWPsQBmwKXhd6gxkwHkHfakMNYzGMgyH76rigsu4E62o"
+              }
+            ],
+            "authentication": ["#key-g1", "#key-g2"],
+            "assertionMethod": ["#key-g1", "#key-g2"],
+            "capabilityInvocation": ["#key-g1", "#key-g2"],
+            "capabilityDelegation": ["#key-g1", "#key-g2"]
+          },
+          "didDocumentMetaData": {
+            "content-type": "application/did+ld+json"
+          },
+          "didResolutionMetaData": {}
+        }
+        
+      </pre>
     </section>
 
     <section class="informative">
