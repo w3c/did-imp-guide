@@ -705,21 +705,94 @@
       <h2>Privacy Considerations</h2>
 
       <p class="advisement">
-        Never store PII, even in an encryptetd format on any immutable storage
+        Never store PII, even in an encrypted format on any immutable storage
         backed verifiable datat registry.
+      </p>
+
+      <p class="advisement">
+        Avoid reusing verification methods across did methods.
+      </p>
+
+      <p class="advisement">
+        Avoid reusing services with unique paramaters across did methods.
       </p>
 
       <section class="informative">
         <h3>Anonymity</h3>
+
+        <p>
+          Consider formally modeling the privacy implications assoicated with
+          your implementation usng
+          <a href="https://en.wikipedia.org/wiki/T-closeness">t-closeness</a> or
+          other mechanisms.
+        </p>
+
+        <p>
+          If DID Method supports globaly enumeration and indexing, consider
+          exposing this information publically. You may wish to provide alerts
+          similar to servicess that watch version control systems for sensitive
+          information that is accidentally leaked.
+        </p>
       </section>
 
       <section class="informative">
         <h3>Compliance</h3>
+
+        <p>
+          Review any applicable local law when considering developing or
+          operating a decentralized identifier method.
+        </p>
+
+        <p>Consider <a href="https://gdpr.eu/">GDPR.</a></p>
+
+        <p>Consider <a href="https://oag.ca.gov/privacy/ccpa">CCPA.</a></p>
       </section>
     </section>
 
     <section class="informative">
       <h2>Security Considerations</h2>
+
+      <p>
+        Consider defense in depth, cryptographic agility and poltical
+        acceptability of any cryptography you rely on for did method security.
+      </p>
+
+      <p>
+        Avoid complex or slow signature formats, especicially if they are poorly
+        documented, or do not have an open standard with well documented test
+        vectors.
+      </p>
+
+      <p class="advisement">
+        Avoid open source implementations that are declared a "defacto
+        standard", but lack open standard technical specification.
+      </p>
+
+      <p class="advisement">
+        Add support for legacy crypto systems such as
+        <a href="https://www.iana.org/assignments/jose/jose.xhtml">jose</a>
+        and <a href="https://www.openpgp.org/">Open PGP</a>.
+      </p>
+
+      <section class="informative">
+        <h3>Vendor Lock</h3>
+        <p>
+          Competition, direct substitutability, interoperability and mutual
+          feature support are key to reducing the barrier to adoption, and
+          confidence in your DID Method.
+        </p>
+
+        <p>
+          Avoid inventing "new features", work with others to find a common way
+          to express any new features that is not unqiue to your did method.
+        </p>
+
+        <p>
+          Avoid hard coupling to specific networks, such as Bitcoin or Hyper
+          Ledger Fabric. Design your method such that it may be adapted to
+          support multiple ledger systems.
+        </p>
+      </section>
 
       <section class="informative">
         <h3>Digital Signatures</h3>
@@ -729,18 +802,62 @@
           <a href="https://safecurves.cr.yp.to/">safecurves.cr.yp.to</a> before
           selecting eliptic curve types.
         </p>
+
+        <p class="advisement">Avoid secp256k1, RSA, P-256, P-384, P-521.</p>
+
+        <p>
+          Avoid relying on smart contracts for complex data mangement. If you
+          must use a smart contract, keep it simple and architect a solution
+          that supports data migration.
+        </p>
       </section>
 
       <section class="informative">
         <h3>Hashing Algorithms</h3>
+
+        <p>Avoid MD5.</p>
       </section>
 
       <section class="informative">
         <h3>Zero Knowledge Proofs</h3>
+
+        <p>
+          Consider using
+          <a href="https://w3c-ccg.github.io/ldp-bbs2020/">BBS+ Signatures</a>
+          for selective disclosure and linked secret based JSON-LD verifiable
+          credentials.
+        </p>
+
+        <p>
+          Avoid zero knowledge proofs as described in the
+          <a
+            href="https://w3c.github.io/vc-data-model/#example-25-a-verifiable-presentation-that-supports-cl-signatures"
+            >AnonCredDerivedCredentialv1</a
+          >. This proof format is coupled to specific ledger technologies,
+          similar to the concept of an ethereum virtual machine smart contract
+          only running on EVM compatible ledgers. Ledger specific technologies
+          should be avoided when designing forportable, interoperable and open
+          standards based zero knowledge proofs.
+        </p>
+
+        <p>
+          Avoid storing credential schemas on ledgers. Many DID methods cannot
+          store information other than a DID Document, which reduces the direct
+          interoperabiility, substitutability and cost effectiveness of
+          solutions that make use of rare or poorly supported features such as
+          credential schema defintion storage.
+        </p>
       </section>
 
       <section class="informative">
         <h3>Biometrics</h3>
+
+        <p>Avoid relying exclusively on biometrics.</p>
+
+        <p>
+          Hardware isolated keys protected by biometrics on devices may increase
+          the usability of DIDs.
+        </p>
       </section>
     </section>
   </body>
