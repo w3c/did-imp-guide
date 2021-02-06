@@ -266,6 +266,120 @@
           or content addresable identifiers for related information.
         </p>
       </section>
+
+      <section class="informative">
+        <h2>Establishing a DID</h2>
+  
+        <p>
+  In order to create secure DID systems, it is important to consider the process
+  of establishing a Decentralized Identifier.
+        </p>
+
+
+        <p class="advisement">
+Establishing cryptographic assurances for the identifier from the
+inception of the identifier is critical to ensuring that the security of the
+system isn't compromised through attacks against the creation process.
+        </p>
+
+        <p>A commonly observed process for establishing a decentralized identifier is:</p>
+        <ol>
+          <li>Obtain <code>entropy</code> from a source of true randomness.</li>
+          <li>Generate a first verification method from <code>entropy</code>.</li>
+          <li>Use the first verification method to perform a DID Create Operation.</li>
+        </ol>
+        <p class="note">
+          The Create Operation will often use the first verification or a determinsitc function, such as a hash of it to construct and register the DID.
+        </p>
+      </section>
+
+      <section class="informative">
+        <h2>Examples</h2>
+  
+        <pre class="example" title="Resolution object for application/did+json">
+          {
+            "didDocument": {
+              "@context": [
+                "https://www.w3.org/ns/did/v1",
+                {
+                  "@base": "did:example:123"
+                }
+              ],
+              "id": "did:example:123",
+              "verificationMethod": [
+                {
+                  "id": "#key-g1",
+                  "controller": "did:example:123",
+                  "type": "JsonWebKey2020",
+                  "publicKeyJwk": {
+                    "kty": "EC",
+                    "crv": "BLS12381_G1",
+                    "x": "kIf1PZ8UJzZySnCsZx14cHS3AxiWO2jH26MeJu_WdAF1varePeXYlpr-Qo_dLVJ-"
+                  }
+                },
+                {
+                  "id": "#key-g2",
+                  "controller": "did:example:123",
+                  "type": "JsonWebKey2020",
+                  "publicKeyJwk": {
+                    "kty": "EC",
+                    "crv": "BLS12381_G2",
+                    "x": "lc0FEvffl8o9bKhwVM2bZOzt_p4lz4vTIBtYDyFPQHh1GIx7wmwaSfbgot3eEvi2BS_7ncWoFnoAYBOyIAqMyCDIYHmjs2-LVagsZx-f14je_wGOB1ThaFlUdoA4UAOX"
+                  }
+                }
+              ],
+              "authentication": ["#key-g1", "#key-g2"],
+              "assertionMethod": ["#key-g1", "#key-g2"],
+              "capabilityInvocation": ["#key-g1", "#key-g2"],
+              "capabilityDelegation": ["#key-g1", "#key-g2"]
+            },
+            "didDocumentMetaData": {
+              "content-type": "application/did+json"
+            },
+            "didResolutionMetaData": {}
+          }        
+        </pre>
+  
+        <pre
+          class="example"
+          title="Resolution object for application/did+ld+json"
+        >
+          {
+            "didDocument": {
+              "@context": [
+                "https://www.w3.org/ns/did/v1",
+                {
+                  "@base": "did:example:456"
+                }
+              ],
+              "id": "did:example:456",
+              "verificationMethod": [
+                {
+                  "id": "#key-g1",
+                  "type": "Bls12381G1Key2020",
+                  "controller": "did:example:456",
+                  "publicKeyBase58": "7c98uRcPAjWbPJ7GeHc4Csd3qGKYsbHGjE3G8v2YX6Te3g6Ur2PfDcrpmoBoBmV8yT"
+                },
+                {
+                  "id": "#key-g2",
+                  "type": "Bls12381G2Key2020",
+                  "controller": "did:example:456",
+                  "publicKeyBase58": "yuTSz1w31UYhoAN6v2D16dLtPg2kMGkwbptoZ5z96bpuHrvBNAshsLsgX9GvE6bnG95WPWuRkQJ9oUmL1ytEjfojWPsQBmwKXhd6gxkwHkHfakMNYzGMgyH76rigsu4E62o"
+                }
+              ],
+              "authentication": ["#key-g1", "#key-g2"],
+              "assertionMethod": ["#key-g1", "#key-g2"],
+              "capabilityInvocation": ["#key-g1", "#key-g2"],
+              "capabilityDelegation": ["#key-g1", "#key-g2"]
+            },
+            "didDocumentMetaData": {
+              "content-type": "application/did+ld+json"
+            },
+            "didResolutionMetaData": {}
+          }
+          
+        </pre>
+      </section>
     </section>
 
     <section class="informative">
@@ -613,96 +727,19 @@
       </section>
     </section>
 
-    <section class="informative">
-      <h2>Examples</h2>
+  </section>
 
-      <pre class="example" title="Resolution object for application/did+json">
-        {
-          "didDocument": {
-            "@context": [
-              "https://www.w3.org/ns/did/v1",
-              {
-                "@base": "did:example:123"
-              }
-            ],
-            "id": "did:example:123",
-            "verificationMethod": [
-              {
-                "id": "#key-g1",
-                "controller": "did:example:123",
-                "type": "JsonWebKey2020",
-                "publicKeyJwk": {
-                  "kty": "EC",
-                  "crv": "BLS12381_G1",
-                  "x": "kIf1PZ8UJzZySnCsZx14cHS3AxiWO2jH26MeJu_WdAF1varePeXYlpr-Qo_dLVJ-"
-                }
-              },
-              {
-                "id": "#key-g2",
-                "controller": "did:example:123",
-                "type": "JsonWebKey2020",
-                "publicKeyJwk": {
-                  "kty": "EC",
-                  "crv": "BLS12381_G2",
-                  "x": "lc0FEvffl8o9bKhwVM2bZOzt_p4lz4vTIBtYDyFPQHh1GIx7wmwaSfbgot3eEvi2BS_7ncWoFnoAYBOyIAqMyCDIYHmjs2-LVagsZx-f14je_wGOB1ThaFlUdoA4UAOX"
-                }
-              }
-            ],
-            "authentication": ["#key-g1", "#key-g2"],
-            "assertionMethod": ["#key-g1", "#key-g2"],
-            "capabilityInvocation": ["#key-g1", "#key-g2"],
-            "capabilityDelegation": ["#key-g1", "#key-g2"]
-          },
-          "didDocumentMetaData": {
-            "content-type": "application/did+json"
-          },
-          "didResolutionMetaData": {}
-        }        
-      </pre>
-
-      <pre
-        class="example"
-        title="Resolution object for application/did+ld+json"
-      >
-        {
-          "didDocument": {
-            "@context": [
-              "https://www.w3.org/ns/did/v1",
-              {
-                "@base": "did:example:456"
-              }
-            ],
-            "id": "did:example:456",
-            "verificationMethod": [
-              {
-                "id": "#key-g1",
-                "type": "Bls12381G1Key2020",
-                "controller": "did:example:456",
-                "publicKeyBase58": "7c98uRcPAjWbPJ7GeHc4Csd3qGKYsbHGjE3G8v2YX6Te3g6Ur2PfDcrpmoBoBmV8yT"
-              },
-              {
-                "id": "#key-g2",
-                "type": "Bls12381G2Key2020",
-                "controller": "did:example:456",
-                "publicKeyBase58": "yuTSz1w31UYhoAN6v2D16dLtPg2kMGkwbptoZ5z96bpuHrvBNAshsLsgX9GvE6bnG95WPWuRkQJ9oUmL1ytEjfojWPsQBmwKXhd6gxkwHkHfakMNYzGMgyH76rigsu4E62o"
-              }
-            ],
-            "authentication": ["#key-g1", "#key-g2"],
-            "assertionMethod": ["#key-g1", "#key-g2"],
-            "capabilityInvocation": ["#key-g1", "#key-g2"],
-            "capabilityDelegation": ["#key-g1", "#key-g2"]
-          },
-          "didDocumentMetaData": {
-            "content-type": "application/did+ld+json"
-          },
-          "didResolutionMetaData": {}
-        }
-        
-      </pre>
-    </section>
+   
 
     <section class="informative">
       <h2>Privacy Considerations</h2>
+
+      <p>
+        Decentralized Identifiers, like any other technology, can be used to
+        enhance privacy as well as harm privacy. This section speaks to topics
+        that implementers might consider when thinking about the privacy
+        characteristics of their software systems.
+      </p>
 
       <p class="advisement">
         Never store PII, even in an encrypted format on any immutable storage
@@ -751,6 +788,13 @@
 
     <section class="informative">
       <h2>Security Considerations</h2>
+
+      <p>
+        Decentralized Identifiers are security primitives that are often used to
+        secure important systems. This section speaks to topics that
+        implementers might consider when thinking about the security
+        characteristics of their software systems.
+      </p>
 
       <p>
         Consider defense in depth, cryptographic agility and poltical
@@ -858,6 +902,121 @@
           Hardware isolated keys protected by biometrics on devices may increase
           the usability of DIDs.
         </p>
+      </section>
+    </section>
+
+      <section>
+        <h2>Future Work</h2>
+        <p class="note">
+          This section was copied from
+          <a href="https://github.com/w3c/did-imp-guide/">w3c/did-imp-guide</a>, and adjusted based on changes made to did core.
+        </p>
+
+        <section>
+          <h2>Upper Limits on DID Character Length</h2>
+
+          <p>
+            The current specification does not take a position on maximum length
+            of a
+            <a>DID</a>. The maximum interoperable URL length is currently about
+            2K characters. QR codes can handle about 4K characters. Clients
+            using <a>DIDs</a> will be responsible for storing many <a>DIDs</a>,
+            and some methods would be able to externalize some of their costs
+            onto clients by relying on more complicated signature schemes or by
+            adding state into <a>DIDs</a> intended for temporary use. A future
+            version of this specification should set reasonable limits on
+            <a>DID</a> character length to minimize externalities.
+          </p>
+        </section>
+        <section>
+          <h2>Verifiable Timestamps</h2>
+
+          <p>
+            <a>Verifiable timestamps</a> have significant utility for identifier
+            records. This is a good fit for <a>DLTs</a>, since most offer some
+            type of timestamp mechanism. Despite some transactional cost, they
+            are the among the most censorship-resistant transaction ordering
+            systems at the present, so they are nearly ideal for
+            <a>DID document</a> timestamping. In some cases a <a>DLT</a>'s
+            immediate timing is approximate, however their sense of
+            <a
+              href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki%23Abstract"
+            >
+              "median time past" (see Bitcoin BIP 113)</a
+            >
+            can be precisely defined. A generic <a>DID document</a> timestamping
+            mechanism could would work across all <a>DLTs</a> and might operate
+            via a mechanism including either individual transactions or
+            transaction batches. The generic mechanism was deemed out of scope
+            for this version, although it may be included in a future version of
+            this specification.
+          </p>
+        </section>
+
+        <section>
+          <h2>Time Locks and DID Document Recovery</h2>
+
+          <p>
+            Section <a href="#key-revocation-and-recovery"></a> mentions one
+            possible clever use of time locks to recover control of a
+            <a>DID</a> after a key compromise. The technique relies on an
+            ability to override the most recent update to a
+            <a>DID document</a> with Authorization applied by an earlier version
+            of the <a>DID document</a> in order to defeat the attacker. This
+            protection depends on adding a
+            <a
+              href="https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki%23Abstract"
+            >
+              time lock (see Bitcoin BIP 65)</a
+            >
+            to protect part of the transaction chain, enabling a Authorization
+            block to be used to recover control. We plan to add support for time
+            locks in a future version of this specification.
+          </p>
+        </section>
+
+        <section>
+          <h2>Smart Signatures</h2>
+
+          <p>
+            Not all <a>DLTs</a> can support the Authorization logic in section
+            <a href="#authorization-and-delegation"></a>. Therefore, in this
+            version of the specification, all Authorization logic is delegated
+            to <a>DID method</a> specifications. A potential future solution is
+            a
+            <a href="http://www.weboftrust.info/downloads/smart-signatures.pdf"
+              >Smart Signature</a
+            >
+            specification that specifies the code any conformant <a>DLT</a>
+            may implement to process signature control logic.
+          </p>
+        </section>
+
+        <section>
+          <h2>Verifiable Credentials</h2>
+
+          <p>
+            Although <a>DIDs</a> and <a>DID documents</a> form a foundation for
+            decentralized identity, they are only the first step in describing
+            their subjects. The rest of the descriptive power comes through
+            collecting and selectively using Verifiable Credentials
+            [[VC-DATA-MODEL]]. Future versions of the specification will
+            describe in more detail how <a>DIDs</a> and <a>DID document</a> can
+            be integrated with &mdash; and help enable &mdash; the Verifiable
+            Credentials ecosystem.
+          </p>
+        </section>
+
+        <section>
+          <h2>Alternate Serializations and Graph Models</h2>
+
+          <p>
+            This version of the specification relies on JSON-LD and the RDF
+            graph model for expressing a <a>DID document</a>. Future versions of
+            this specification might specify other semantic graph formats for a
+            <a>DID document</a>.
+          </p>
+        </section>
       </section>
     </section>
   </body>
