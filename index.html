@@ -334,10 +334,10 @@ system isn't compromised through attacks against the creation process.
               "capabilityInvocation": ["#key-g1", "#key-g2"],
               "capabilityDelegation": ["#key-g1", "#key-g2"]
             },
-            "didDocumentMetaData": {
+            "didDocumentMetadata": {
               "content-type": "application/did+json"
             },
-            "didResolutionMetaData": {}
+            "didResolutionMetadata": {}
           }        
         </pre>
   
@@ -374,10 +374,10 @@ system isn't compromised through attacks against the creation process.
               "capabilityInvocation": ["#key-g1", "#key-g2"],
               "capabilityDelegation": ["#key-g1", "#key-g2"]
             },
-            "didDocumentMetaData": {
+            "didDocumentMetadata": {
               "content-type": "application/did+ld+json"
             },
-            "didResolutionMetaData": {}
+            "didResolutionMetadata": {}
           }
           
         </pre>
@@ -401,16 +401,17 @@ system isn't compromised through attacks against the creation process.
 
       <pre class="example" title="Resolution response for did+json">
         {
+          "@context": "https://w3id.org/did-resolution/v1",
           "didDocument": {
             "@context": [
               "https://www.w3.org/ns/did/v1",
             ],
             "id": "did:example:123",
           },
-          "didDocumentMetaData": {
+          "didDocumentMetadata": {
             "content-type": "application/did+json"
           },
-          "didResolutionMetaData": {}
+          "didResolutionMetadata": {}
         }
       </pre>
 
