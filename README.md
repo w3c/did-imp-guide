@@ -14,7 +14,7 @@ An Editor's Draft of this repository is available at
 
 Use the standard fork, branch, and pull request workflow to propose changes to
 the registry. Please make branch names informative—by including the issue or
-bug number for example.
+bug number for example and use the [feature branch strategy](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow) for branch naming.
 
 Editorial changes that improve the readability of the registry or correct
 spelling or grammatical mistakes are welcome.
