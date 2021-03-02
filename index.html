@@ -1,302 +1,312 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>DID Implementation Guide v1.0</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <!--
+
+<head>
+  <title>DID Implementation Guide v1.0</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <!--
       === NOTA BENE ===
       For the three scripts below, if your spec resides on dev.w3 you can check them
       out in the same tree and use relative links so that they'll work offline,
      -->
-    <script
-      class="remove"
-      src="https://www.w3.org/Tools/respec/respec-w3c"
-    ></script>
-    <script
-      class="remove"
-      src="https://unpkg.com/reqlist/lib/reqlist.js"
-    ></script>
+  <script class="remove" src="https://www.w3.org/Tools/respec/respec-w3c"></script>
+  <script class="remove" src="https://unpkg.com/reqlist/lib/reqlist.js"></script>
 
-    <script type="text/javascript" class="remove">
-      var respecConfig = {
-        // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus: "unofficial",
+  <script type="text/javascript" class="remove">
+    var respecConfig = {
+      // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
+      specStatus: "unofficial",
 
-        // the specification's short name, as in http://www.w3.org/TR/short-name/
-        shortName: "did-core-imp-guide",
-        xref: ["did-core"],
+      // the specification's short name, as in http://www.w3.org/TR/short-name/
+      shortName: "did-core-imp-guide",
+      xref: ["did-core"],
 
-        // subtitle for the spec
-        subtitle:
-          "A DID developer's guide to understanding and implementing Decentralized Identifiers",
+      // subtitle for the spec
+      subtitle:
+        "A DID developer's guide to understanding and implementing Decentralized Identifiers",
 
-        // if you wish the publication date to be other than today, set this
-        //publishDate: "2019-03-26",
-        //crEnd: "2019-04-23",
-        //implementationReportURI: "https://w3c.github.io/",
-        previousMaturity: "UNOFFICIAL",
-        previousPublishDate: "2021-01-27",
+      // if you wish the publication date to be other than today, set this
+      //publishDate: "2019-03-26",
+      //crEnd: "2019-04-23",
+      //implementationReportURI: "https://w3c.github.io/",
+      previousMaturity: "UNOFFICIAL",
+      previousPublishDate: "2021-01-27",
 
-        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
-        // and its maturity status
-        // previousPublishDate:  "1977-03-15",
-        // previousMaturity:  "WD",
+      // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+      // and its maturity status
+      // previousPublishDate:  "1977-03-15",
+      // previousMaturity:  "WD",
 
-        // extend the bibliography entries
-        localBiblio: {},
-        doJsonLd: true,
+      // extend the bibliography entries
+      localBiblio: {},
+      doJsonLd: true,
 
-        github: "https://github.com/OR13/did-core-implementation-guide",
-        includePermalinks: false,
+      github: "https://github.com/OR13/did-core-implementation-guide",
+      includePermalinks: false,
 
-        // if there a publicly available Editor's Draft, this is the link
-        edDraftURI: "https://or13.github.io/did-core-implementation-guide/",
+      // if there a publicly available Editor's Draft, this is the link
+      edDraftURI: "https://or13.github.io/did-core-implementation-guide/",
 
-        // if this is a LCWD, uncomment and set the end of its review period
-        // lcEnd: "2009-08-05",
+      // if this is a LCWD, uncomment and set the end of its review period
+      // lcEnd: "2009-08-05",
 
-        // editors, add as many as you like
-        // only "name" is required
-        editors: [
-          {
-            name: "Orie Steele",
-            url: "https://www.linkedin.com/in/or13b/",
-            company: "Transmute",
-            companyURL: "https://www.transmute.industries/",
-            w3cid: 109171,
-          },
-        ],
-        // authors, add as many as you like.
-        // This is optional, uncomment if you have authors as well as editors.
-        // only "name" is required. Same format as editors.
-        authors: [],
-        // name of the WG
-        group: "credentials",
+      // editors, add as many as you like
+      // only "name" is required
+      editors: [
+        {
+          name: "Orie Steele",
+          url: "https://www.linkedin.com/in/or13b/",
+          company: "Transmute",
+          companyURL: "https://www.transmute.industries/",
+          w3cid: 109171,
+        },
+        {
+          name: "Michael Prorock",
+          url: "https://www.linkedin.com/in/mprorock/",
+          company: "mesur.io",
+          companyURL: "https://mesur.io/",
+        },
+      ],
+      // authors, add as many as you like.
+      // This is optional, uncomment if you have authors as well as editors.
+      // only "name" is required. Same format as editors.
+      authors: [],
+      // name of the WG
+      group: "credentials",
 
-        // name (with the @w3c.org) of the public mailing to which comments are due
-        wgPublicList: "public-credentials",
+      // name (with the @w3c.org) of the public mailing to which comments are due
+      wgPublicList: "public-credentials",
 
-        // URI of the patent status for this WG, for Rec-track documents
-        // !!!! IMPORTANT !!!!
-        // This is important for Rec-track documents, do not copy a patent URI from a random
-        // document unless you know what you're doing. If in doubt ask your friendly neighborhood
-        // Team Contact.
-        //wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
-        maxTocLevel: 2,
-        inlineCSS: true,
-      };
-    </script>
-    <style>
-      pre .highlight {
-        font-weight: bold;
-        color: green;
-      }
-      pre .comment {
-        font-weight: bold;
-        color: Gray;
-      }
-      .color-text {
-        font-weight: bold;
-        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-      }
-      .simple {
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <section id="abstract">
-      <p>
-        This document provides guidance to DID Method developers, related to
-        serialization, cryptographic primitive selection, governance and
-        interoperability.
+      // URI of the patent status for this WG, for Rec-track documents
+      // !!!! IMPORTANT !!!!
+      // This is important for Rec-track documents, do not copy a patent URI from a random
+      // document unless you know what you're doing. If in doubt ask your friendly neighborhood
+      // Team Contact.
+      //wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
+      maxTocLevel: 2,
+      inlineCSS: true,
+    };
+  </script>
+  <style>
+    pre .highlight {
+      font-weight: bold;
+      color: green;
+    }
+
+    pre .comment {
+      font-weight: bold;
+      color: Gray;
+    }
+
+    .color-text {
+      font-weight: bold;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+
+    .simple {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <section id="abstract">
+    <p>
+      This document provides guidance to DID Method developers, related to
+      serialization, cryptographic primitive selection, governance and
+      interoperability.
+    </p>
+    <p>
+      Guidance provided in this document does reflect the consenus of the W3C
+      DID WG, although some members of the WG have contributed to it.
+    </p>
+  </section>
+
+  <section id="sotd"></section>
+
+  <section class="informative">
+    <h2>Terminology</h2>
+    <div data-include="https://w3c.github.io/did-core/terms.html"></div>
+  </section>
+
+  <section class="informative">
+    <h2>Methods</h2>
+
+    <p class="note">
+      See [[DID-CORE]] for normative requirements associated with developing
+      <a href="https://www.w3.org/TR/did-core/#methods">DID Methods</a>.
+    </p>
+
+    <p>
+      Avoid introducing requirements in your did method specification that are
+      not described in [[DID-CORE]], or registered in the
+      [[DID-SPEC-REGISTRIES]].
+    </p>
+
+    <p>
+      Avoid constructing a new DID Method that is nearly identical to existing
+      DID Methods.
+    </p>
+
+    <p>
+      There are several "families" of DID Methods, including
+      <a href="https://hyperledger-indy.readthedocs.io/en/latest/index.html">Hyperledger Indy</a>, <a
+        href="https://identity.foundation/sidetree/spec/">Sidetree</a> and
+      various methods that share similar smart contracts or rely on shared
+      content addressing technology.
+    </p>
+
+    <p class="advisement">
+      Implementers are cautioned to write and regularly run integration and
+      interoperability tests that span these "families", in order to ensure
+      methods have sufficient support for open standards and real
+      interoperability.
+    </p>
+
+    <p>
+      The primary user facing aspects of a DID Method are its
+      <a href="#did-syntax">DID Syntax</a>
+      and it's
+      <a href="#verifiable-data-registry">Verifiable Data Registry</a>.
+      Together these determine most of the unique properties of a DID Method,
+      and its privacy and security properties compared to other methods.
+    </p>
+
+    <section class="informative">
+      <h3>DID Syntax</h3>
+      <p class="note">
+        See [[DID-CORE]] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#did-syntax">DID Syntax</a>.
       </p>
       <p>
-        Guidance provided in this document does reflect the consenus of the W3C
-        DID WG, although some members of the WG have contributed to it.
+        Avoid allowing users to control the structure of the DID Unique
+        Suffix, also referred to as the <code>id-char</code> in the ABNF. This
+        can be accomplished by coupling the create operation canonical
+        representation to the the <code>id-char</code>. It can also be
+        accomplished by leveraging sources of entropy.
+      </p>
+
+      <p>
+        Avoid vanity DIDs, for example,
+        <code>did:example:deadbeef1f236...</code>, the structure of the
+        identifier should not be relied on for anything other than collision
+        resistance. Be especially careful of trusting a relationship between a
+        did subject and did controller without relying on a cryptographically
+        secure verification relationship for
+        <a href="authentication">authentication</a>.
+      </p>
+
+      <p>
+        Depending on the nature of the
+        <a href="#verifiable-data-registry">VDR</a>, publishing
+        <code>type</code> or <code>kind</code> might be advantageous for
+        decentralized discovery or mass surveilance. Implementers are not to
+        rely on conformance to specification text while implementing
+        decentralized identifiers.
       </p>
     </section>
 
-    <section id="sotd"></section>
-
     <section class="informative">
-      <h2>Terminology</h2>
-      <div data-include="https://w3c.github.io/did-core/terms.html"></div>
-    </section>
-
-    <section class="informative">
-      <h2>Methods</h2>
+      <h2>Verifiable Data Registry</h2>
 
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#methods">DID Methods</a>.
+        <a href="https://www.w3.org/TR/did-core/#dfn-verifiable-data-registry">Verifiable Data Registry</a>.
       </p>
 
       <p>
-        Avoid introducing requirements in your did method specification that are
-        not described in [[DID-CORE]], or registered in the
-        [[DID-SPEC-REGISTRIES]].
+        The <a href="#verifiable-data-registry">VDR</a> is the system to which
+        DID Operations such as Create, Resolve, Update and Deactivate are
+        applied.
       </p>
 
       <p>
-        Avoid constructing a new DID Method that is nearly identical to existing
-        DID Methods.
+        Typically a globally unique tamper evident immutable log is used to
+        produce a verifiable data registry.
       </p>
 
       <p>
-        There are several "families" of DID Methods, including
-        <a href="https://hyperledger-indy.readthedocs.io/en/latest/index.html"
-          >Hyperledger Indy</a
-        >, <a href="https://identity.foundation/sidetree/spec/">Sidetree</a> and
-        various methods that share similar smart contracts or rely on shared
-        content addressing technology.
+        Blockchains or distributed ledgers are popular choices for building
+        verifiable data registries, but there are other solutions which yield
+        unique security pros and cons.
       </p>
+
+      <p>
+        Some DID methods rely on centralized trusted service providers and
+        merkle proofs, to provide tamper evident logs without the costs
+        associated with distributeted consensus.
+      </p>
+
+      <p>
+        Some DID methods rely on multiple registries, that may not be globally
+        available.
+      </p>
+
+      <p>
+        Some DID methods might rely on legacy security infrastructure, such as
+        TLS or TOR.
+      </p>
+
+      <p>
+        Few DID methods support portability accross verifiable data
+        registries, and altering the VDR associated with a DID will almost
+        certainly impact Privacy and Security considerations.
+      </p>
+
+      <p>
+        Intead of designing complex DID Methods with registry portability,
+        consider supporting multiple did methods that have each been designed
+        to support disjoint security or privacy consideration, for example:
+        globally discoverable, offline, pairwise unique, linked to existing
+        roots of trust such as websites, etc...
+      </p>
+
+      <p>
+        Depending on the nature of the VDR, it may be desirable to store data
+        other than DID Documents, for example: verifiable credentials,
+        templates or schemas for credentials, discovery meta data or integrity
+        or content addresable identifiers for related information.
+      </p>
+    </section>
+
+    <section class="informative">
+      <h2>Establishing a DID</h2>
+
+      <p>
+        In order to create secure DID systems, it is important to consider the process
+        of establishing a Decentralized Identifier.
+      </p>
+
 
       <p class="advisement">
-        Implementers are cautioned to write and regularly run integration and
-        interoperability tests that span these "families", in order to ensure
-        methods have sufficient support for open standards and real
-        interoperability.
+        Establishing cryptographic assurances for the identifier from the
+        inception of the identifier is critical to ensuring that the security of the
+        system isn't compromised through attacks against the creation process.
       </p>
 
-      <p>
-        The primary user facing aspects of a DID Method are its
-        <a href="#did-syntax">DID Syntax</a>
-        and it's
-        <a href="#verifiable-data-registry">Verifiable Data Registry</a>.
-        Together these determine most of the unique properties of a DID Method,
-        and its privacy and security properties compared to other methods.
+      <p>A commonly observed process for establishing a decentralized identifier is:</p>
+      <ol>
+        <li>
+          Obtain <code>entropy</code> from a source of randomness that is as close to actually random as possible.
+        </li>
+        <li>Generate a first verification method from <code>entropy</code>.</li>
+        <li>Use the first verification method to perform a DID Create Operation.</li>
+      </ol>
+      <p class="note">
+        The Create Operation will often use the first verification or a determinsitc function, such as a hash of it to
+        construct and register the DID.
       </p>
+      <p class="note">
+        True randomness is <b>hard</b> to get. Sources such as the
+        <a href="https://csrc.nist.gov/projects/interoperable-randomness-beacons">NIST Randomness Beacon</a>
+        are reliable, but should not be used directly as a secret key.
+      </p>
+</section>
 
-      <section class="informative">
-        <h3>DID Syntax</h3>
-        <p class="note">
-          See [[DID-CORE]] for normative requirements associated with developing
-          <a href="https://www.w3.org/TR/did-core/#did-syntax">DID Syntax</a>.
-        </p>
-        <p>
-          Avoid allowing users to control the structure of the DID Unique
-          Suffix, also referred to as the <code>id-char</code> in the ABNF. This
-          can be accomplished by coupling the create operation canonical
-          representation to the the <code>id-char</code>. It can also be
-          accomplished by leveraging sources of entropy.
-        </p>
+    <section class="informative">
+      <h2>Examples</h2>
 
-        <p>
-          Avoid vanity DIDs, for example,
-          <code>did:example:deadbeef1f236...</code>, the structure of the
-          identifier should not be relied on for anything other than collision
-          resistance. Be especially careful of trusting a relationship between a
-          did subject and did controller without relying on a cryptographically
-          secure verification relationship for
-          <a href="authentication">authentication</a>.
-        </p>
-
-        <p>
-          Depending on the nature of the
-          <a href="#verifiable-data-registry">VDR</a>, publishing
-          <code>type</code> or <code>kind</code> might be advantageous for
-          decentralized discovery or mass surveilance. Implementers are not to
-          rely on conformance to specification text while implementing
-          decentralized identifiers.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h2>Verifiable Data Registry</h2>
-
-        <p class="note">
-          See [[DID-CORE]] for normative requirements associated with developing
-          <a href="https://www.w3.org/TR/did-core/#dfn-verifiable-data-registry"
-            >Verifiable Data Registry</a
-          >.
-        </p>
-
-        <p>
-          The <a href="#verifiable-data-registry">VDR</a> is the system to which
-          DID Operations such as Create, Resolve, Update and Deactivate are
-          applied.
-        </p>
-
-        <p>
-          Typically a globally unique tamper evident immutable log is used to
-          produce a verifiable data registry.
-        </p>
-
-        <p>
-          Blockchains or distributed ledgers are popular choices for building
-          verifiable data registries, but there are other solutions which yield
-          unique security pros and cons.
-        </p>
-
-        <p>
-          Some DID methods rely on centralized trusted service providers and
-          merkle proofs, to provide tamper evident logs without the costs
-          associated with distributeted consensus.
-        </p>
-
-        <p>
-          Some DID methods rely on multiple registries, that may not be globally
-          available.
-        </p>
-
-        <p>
-          Some DID methods might rely on legacy security infrastructure, such as
-          TLS or TOR.
-        </p>
-
-        <p>
-          Few DID methods support portability accross verifiable data
-          registries, and altering the VDR associated with a DID will almost
-          certainly impact Privacy and Security considerations.
-        </p>
-
-        <p>
-          Intead of designing complex DID Methods with registry portability,
-          consider supporting multiple did methods that have each been designed
-          to support disjoint security or privacy consideration, for example:
-          globally discoverable, offline, pairwise unique, linked to existing
-          roots of trust such as websites, etc...
-        </p>
-
-        <p>
-          Depending on the nature of the VDR, it may be desirable to store data
-          other than DID Documents, for example: verifiable credentials,
-          templates or schemas for credentials, discovery meta data or integrity
-          or content addresable identifiers for related information.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h2>Establishing a DID</h2>
-  
-        <p>
-  In order to create secure DID systems, it is important to consider the process
-  of establishing a Decentralized Identifier.
-        </p>
-
-
-        <p class="advisement">
-Establishing cryptographic assurances for the identifier from the
-inception of the identifier is critical to ensuring that the security of the
-system isn't compromised through attacks against the creation process.
-        </p>
-
-        <p>A commonly observed process for establishing a decentralized identifier is:</p>
-        <ol>
-          <li>Obtain <code>entropy</code> from a source of true randomness.</li>
-          <li>Generate a first verification method from <code>entropy</code>.</li>
-          <li>Use the first verification method to perform a DID Create Operation.</li>
-        </ol>
-        <p class="note">
-          The Create Operation will often use the first verification or a determinsitc function, such as a hash of it to construct and register the DID.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h2>Examples</h2>
-  
-        <pre class="example" title="Resolution object for application/did+json">
+      <pre class="example" title="Resolution object for application/did+json">
           {
             "@context": "https://w3id.org/did-resolution/v1",
             "didDocument": {
@@ -340,11 +350,8 @@ system isn't compromised through attacks against the creation process.
             "didResolutionMetadata": {}
           }        
         </pre>
-  
-        <pre
-          class="example"
-          title="Resolution object for application/did+ld+json"
-        >
+
+      <pre class="example" title="Resolution object for application/did+ld+json">
           {
             "@context": "https://w3id.org/did-resolution/v1",
             "didDocument": {
@@ -381,25 +388,23 @@ system isn't compromised through attacks against the creation process.
           }
           
         </pre>
-      </section>
     </section>
+  </section>
 
-    <section class="informative">
-      <h2>DID Resolution</h2>
+  <section class="informative">
+    <h2>DID Resolution</h2>
 
-      <p class="note">
-        See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#did-resolution"
-          >DID Resolution</a
-        >.
-      </p>
+    <p class="note">
+      See [[DID-CORE]] for normative requirements associated with developing
+      <a href="https://www.w3.org/TR/did-core/#did-resolution">DID Resolution</a>.
+    </p>
 
-      <p>
-        DID resolution is a function which takes a DID, and produces a DID
-        Resolution response in a representation, most commonly JSON.
-      </p>
+    <p>
+      DID resolution is a function which takes a DID, and produces a DID
+      Resolution response in a representation, most commonly JSON.
+    </p>
 
-      <pre class="example" title="Resolution response for did+json">
+    <pre class="example" title="Resolution response for did+json">
         {
           "@context": "https://w3id.org/did-resolution/v1",
           "didDocument": {
@@ -415,573 +420,537 @@ system isn't compromised through attacks against the creation process.
         }
       </pre>
 
-      <p>
-        DID resolution can be proxied through intermediariees such as command
-        line tools or http servers. Because the DID Document contains key
-        material, such intermediaries represent excellent targets for attackers,
-        becuase these systems can be used to tamper with verification
-        relationships.
+    <p>
+      DID resolution can be proxied through intermediariees such as command
+      line tools or http servers. Because the DID Document contains key
+      material, such intermediaries represent excellent targets for attackers,
+      becuase these systems can be used to tamper with verification
+      relationships.
+    </p>
+
+    <p>
+      Avoid tampering with a DID Document that as been returned by did method
+      software. It is better to throw an error than attempt problemss in the
+      underlying DID Method.
+    </p>
+
+    <p>
+      Avoid transforming DID Documents without the consent of the did subject
+      or controller.
+    </p>
+
+    <p>
+      Whenever possible, run all software necessary to support a DID Method
+      yourself.
+    </p>
+
+    <section class="informative">
+      <h3>DID URL Syntax</h3>
+
+      <p class="note">
+        See [[DID-CORE]] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#did-url-syntax">DID URL Syntax</a>.
       </p>
 
       <p>
-        Avoid tampering with a DID Document that as been returned by did method
-        software. It is better to throw an error than attempt problemss in the
-        underlying DID Method.
+        DID URLs can be used to identify sub resources inside a DID Document,
+        older versions of a DID Document, or resources outside of a DID
+        Document.
       </p>
 
       <p>
-        Avoid transforming DID Documents without the consent of the did subject
-        or controller.
+        DID URLs can be used to identify sub resources inside a DID Document,
+        older versions of a DID Document, or resources outside of a DID
+        Document.
       </p>
 
-      <p>
-        Whenever possible, run all software necessary to support a DID Method
-        yourself.
-      </p>
-
-      <section class="informative">
-        <h3>DID URL Syntax</h3>
-
-        <p class="note">
-          See [[DID-CORE]] for normative requirements associated with developing
-          <a href="https://www.w3.org/TR/did-core/#did-url-syntax"
-            >DID URL Syntax</a
-          >.
-        </p>
-
-        <p>
-          DID URLs can be used to identify sub resources inside a DID Document,
-          older versions of a DID Document, or resources outside of a DID
-          Document.
-        </p>
-
-        <p>
-          DID URLs can be used to identify sub resources inside a DID Document,
-          older versions of a DID Document, or resources outside of a DID
-          Document.
-        </p>
-
-        <pre
-          class="example"
-          title="DID URL identifying a verification method in a DID Document"
-        >
+      <pre class="example" title="DID URL identifying a verification method in a DID Document">
         did:example:123#primary
         </pre>
 
-        <pre
-          class="example"
-          title="DID URL identifying a service in a DID Document"
-        >
+      <pre class="example" title="DID URL identifying a service in a DID Document">
           did:example:123#agent
-          </pre
-        >
+          </pre>
 
-        <pre
-          class="example"
-          title="DID URL identifying a resource outside a DID Document"
-        >
+      <pre class="example" title="DID URL identifying a resource outside a DID Document">
           did:example:123?service=packages@relativeRef=/jose/versions/v0.1.2/archive.zip
-          </pre
-        >
+          </pre>
 
+      <p>
+        Adjusting any part of a DID URL, including the <code>did</code>,
+        <code>path</code>, <code>query</code>, changes the identifier.
+      </p>
+
+      <p>
+        The resource identifiers <code>did:example:123</code>,
+        <code>did:example:123/path</code> and
+        <code>did:example:123?args=1</code> are for unique resources.
+      </p>
+
+      <section class="informative">
+        <h4>Path</h4>
+
+        <p class="note">
+          See [[DID-CORE]] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#path">Path</a>.
+        </p>
         <p>
-          Adjusting any part of a DID URL, including the <code>did</code>,
-          <code>path</code>, <code>query</code>, changes the identifier.
+          Avoid using <code>path</code>, there are not enough implementations
+          that rely on it.
         </p>
 
-        <p>
-          The resource identifiers <code>did:example:123</code>,
-          <code>did:example:123/path</code> and
-          <code>did:example:123?args=1</code> are for unique resources.
-        </p>
-
-        <section class="informative">
-          <h4>Path</h4>
-
-          <p class="note">
-            See [[DID-CORE]] for normative requirements associated with
-            developing
-            <a href="https://www.w3.org/TR/did-core/#path">Path</a>.
-          </p>
-          <p>
-            Avoid using <code>path</code>, there are not enough implementations
-            that rely on it.
-          </p>
-
-          <pre
-            class="example"
-            title="DID URL identifying a resource outside a DID Document"
-          >
+        <pre class="example" title="DID URL identifying a resource outside a DID Document">
           did:example:123/ephemeral/77d66171-b290-489c-abf1-95ae10725201#primary
           </pre>
-        </section>
-
-        <section class="informative">
-          <h4>Query</h4>
-
-          <p class="note">
-            See [[DID-CORE]] for normative requirements associated with
-            developing
-            <a href="https://www.w3.org/TR/did-core/#query">Query</a>.
-          </p>
-
-          <p>
-            Avoid using <code>query</code>, there are not enough implementations
-            that rely on it.
-          </p>
-
-          <pre
-            class="example"
-            title="DID URL identifying a verification method in an older version of a DID Document"
-          >
-          did:example:123?version-id=77d66171-b290-489c-abf1-95ae10725201#primary
-        </pre
-          >
-        </section>
-
-        <section class="informative">
-          <h4>Fragment</h4>
-
-          <p class="note">
-            See [[DID-CORE]] for normative requirements associated with
-            developing
-            <a href="https://www.w3.org/TR/did-core/#fragment">Fragment</a>.
-          </p>
-
-          <pre
-            class="example"
-            title="DID URL identifying a verification method in a DID Document"
-          >
-          did:example:123#primary
-        </pre
-          >
-
-          <p>
-            Fragments identify sub resources of a resource identified with a DID
-            URL.
-          </p>
-
-          <p>
-            The interpretation of the fragement is determined by the mime type.
-          </p>
-        </section>
       </section>
 
       <section class="informative">
-        <h3>Representations</h3>
+        <h4>Query</h4>
 
         <p class="note">
-          See [[DID-CORE]] for normative requirements associated with developing
-          <a href="https://www.w3.org/TR/did-core/#representations"
-            >Representations</a
-          >.
+          See [[DID-CORE]] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#query">Query</a>.
         </p>
 
         <p>
-          The [[DID-CORE]] specification describes representations and the
-          [[DID-SPEC-REGISTRIES]] supports the registration of an unbounded
-          number of alternative representations.
+          Avoid using <code>query</code>, there are not enough implementations
+          that rely on it.
         </p>
 
-        <p>Each representation has unique pros and cons.</p>
+        <pre class="example" title="DID URL identifying a verification method in an older version of a DID Document">
+          did:example:123?version-id=77d66171-b290-489c-abf1-95ae10725201#primary
+        </pre>
+      </section>
 
-        <p>
-          DID Methods are responsible for producing a DID Document in the
-          requested representation.
+      <section class="informative">
+        <h4>Fragment</h4>
+
+        <p class="note">
+          See [[DID-CORE]] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#fragment">Fragment</a>.
         </p>
 
-        <p>
-          DID Method implementers may choose to return verification methods in
-          alternate formats for representations, for example, an implementer
-          might prefer to return verification material encoded with
-          <code>publicKeyJwk</code> for <code>application/did+json</code> and
-          <code>publicKeyBase58</code> for <code>application/did+ld+json</code>.
-        </p>
+        <pre class="example" title="DID URL identifying a verification method in a DID Document">
+          did:example:123#primary
+        </pre>
 
         <p>
-          If a DID Method supports both <code>application/did+json</code> and
-          <code>application/did+ld+json</code> if it recommended that they both
-          include an <code>@context</code> and that both be capable of
-          supporting linked data proofs.
-        </p>
-
-        <p>
-          Avoid allowing arbitrary unknown properties into
-          <code>application/did+json</code> such as <code>__proto__</code> or
-          other characters that might be used to attack JSON parsing.
+          Fragments identify sub resources of a resource identified with a DID
+          URL.
         </p>
 
         <p>
-          While <code>application/did+json</code> is very flexible, and allows
-          for arbitrary JSON, implementers are cautioned to implement security
-          in depth.
+          The interpretation of the fragement is determined by the mime type.
         </p>
-
-        <p>
-          Implementers are cautioned to review
-          <a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a>
-        </p>
-
-        <p>
-          Implementers should confirm that each representation they decide to
-          support is interoperable with the same representation in other did
-          methods.
-        </p>
-
-        <p>
-          Implementers should avoid guessing about conformance to [[DID-CORE]].
-        </p>
-
-        <section class="informative">
-          <h3>DID URL Dereferencing</h3>
-          <p class="note">
-            See [[DID-CORE]] for normative requirements associated with
-            developing
-            <a href="https://www.w3.org/TR/did-core/#did-url-dereferencing"
-              >DID URL Dereferencing</a
-            >.
-          </p>
-
-          <p>
-            Dereferencing critical to integrating with cryptographic toolkits
-            such as Linked Data Proofs, JOSE, PGP or Anon Creds.
-          </p>
-        </section>
-
-        <section class="informative">
-          <h3>application/did+json</h3>
-        </section>
-
-        <section class="informative">
-          <h3>application/did+ld+json</h3>
-        </section>
       </section>
     </section>
 
     <section class="informative">
-      <h2>Verification Relationships</h2>
+      <h3>Representations</h3>
+
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#verification-relationships"
-          >Verification Relationships</a
-        >.
+        <a href="https://www.w3.org/TR/did-core/#representations">Representations</a>.
       </p>
 
       <p>
-        Verification relationships are loosely equivalent to the concept of key
-        purpose.
+        The [[DID-CORE]] specification describes representations and the
+        [[DID-SPEC-REGISTRIES]] supports the registration of an unbounded
+        number of alternative representations.
+      </p>
+
+      <p>Each representation has unique pros and cons.</p>
+
+      <p>
+        DID Methods are responsible for producing a DID Document in the
+        requested representation.
       </p>
 
       <p>
-        It is considered a security best practice not to reuse the same key for
-        multiple purposes.
+        DID Method implementers may choose to return verification methods in
+        alternate formats for representations, for example, an implementer
+        might prefer to return verification material encoded with
+        <code>publicKeyJwk</code> for <code>application/did+json</code> and
+        <code>publicKeyBase58</code> for <code>application/did+ld+json</code>.
+      </p>
+
+      <p>
+        If a DID Method supports both <code>application/did+json</code> and
+        <code>application/did+ld+json</code> if it recommended that they both
+        include an <code>@context</code> and that both be capable of
+        supporting linked data proofs.
+      </p>
+
+      <p>
+        Avoid allowing arbitrary unknown properties into
+        <code>application/did+json</code> such as <code>__proto__</code> or
+        other characters that might be used to attack JSON parsing.
+      </p>
+
+      <p>
+        While <code>application/did+json</code> is very flexible, and allows
+        for arbitrary JSON, implementers are cautioned to implement security
+        in depth.
+      </p>
+
+      <p>
+        Implementers are cautioned to review
+        <a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a>
+      </p>
+
+      <p>
+        Implementers should confirm that each representation they decide to
+        support is interoperable with the same representation in other did
+        methods.
+      </p>
+
+      <p>
+        Implementers should avoid guessing about conformance to [[DID-CORE]].
       </p>
 
       <section class="informative">
-        <h2>Authentication</h2>
+        <h3>DID URL Dereferencing</h3>
         <p class="note">
-          See [[DID-CORE]] for normative requirements associated with developing
-          <a href="https://www.w3.org/TR/did-core/#authentication"
-            >Authentication</a
-          >.
-        </p>
-        <p>
-          Implementers are advised to implement support for this relationship.
-        </p>
-        <p>
-          This relationship should be used for proofs or signatures associated
-          with did subject authentication.
+          See [[DID-CORE]] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#did-url-dereferencing">DID URL Dereferencing</a>.
         </p>
 
-        <p>Avoid conflating authentication and authorization.</p>
-
         <p>
-          Avoid leveraging alternative relationships for the purpose of
-          authentication.
+          Dereferencing critical to integrating with cryptographic toolkits
+          such as Linked Data Proofs, JOSE, PGP or Anon Creds.
         </p>
       </section>
 
       <section class="informative">
-        <h2>Assertion Method</h2>
-        <p class="note">
-          See [[DID-CORE]] for normative requirements associated with developing
-          <a href="https://www.w3.org/TR/did-core/#assertion">Assertion</a>.
-        </p>
-        <p>
-          Implementers are advised to implement support for this relationship.
-        </p>
-        <p>
-          This relationship should be used for proofs or signatures associated
-          with claims issued by this did subject about another identifier, which
-          might be a DID.
-        </p>
+        <h3>application/did+json</h3>
+      </section>
 
-        <p>
-          This method is described in the [[VC-DATA-MODEL], see
-          <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures-0"
-            >Proofs</a
-          >
-        </p>
-
-        <p>
-          Avoid leveraging alternative relationships for the purpose of issuing
-          credentials.
-        </p>
+      <section class="informative">
+        <h3>application/did+ld+json</h3>
       </section>
     </section>
+  </section>
+
+  <section class="informative">
+    <h2>Verification Relationships</h2>
+    <p class="note">
+      See [[DID-CORE]] for normative requirements associated with developing
+      <a href="https://www.w3.org/TR/did-core/#verification-relationships">Verification Relationships</a>.
+    </p>
+
+    <p>
+      Verification relationships are loosely equivalent to the concept of key
+      purpose.
+    </p>
+
+    <p>
+      It is considered a security best practice not to reuse the same key for
+      multiple purposes.
+    </p>
+
+    <section class="informative">
+      <h2>Authentication</h2>
+      <p class="note">
+        See [[DID-CORE]] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#authentication">Authentication</a>.
+      </p>
+      <p>
+        Implementers are advised to implement support for this relationship.
+      </p>
+      <p>
+        This relationship should be used for proofs or signatures associated
+        with did subject authentication.
+      </p>
+
+      <p>Avoid conflating authentication and authorization.</p>
+
+      <p>
+        Avoid leveraging alternative relationships for the purpose of
+        authentication.
+      </p>
+    </section>
+
+    <section class="informative">
+      <h2>Assertion Method</h2>
+      <p class="note">
+        See [[DID-CORE]] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#assertion">Assertion</a>.
+      </p>
+      <p>
+        Implementers are advised to implement support for this relationship.
+      </p>
+      <p>
+        This relationship should be used for proofs or signatures associated
+        with claims issued by this did subject about another identifier, which
+        might be a DID.
+      </p>
+
+      <p>
+        This method is described in the [[VC-DATA-MODEL], see
+        <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures-0">Proofs</a>
+      </p>
+
+      <p>
+        Avoid leveraging alternative relationships for the purpose of issuing
+        credentials.
+      </p>
+    </section>
+  </section>
 
   </section>
 
-   
+
+
+  <section class="informative">
+    <h2>Privacy Considerations</h2>
+
+    <p>
+      Decentralized Identifiers, like any other technology, can be used to
+      enhance privacy as well as harm privacy. This section speaks to topics
+      that implementers might consider when thinking about the privacy
+      characteristics of their software systems.
+    </p>
+
+    <p class="advisement">
+      Never store PII, even in an encrypted format on any immutable storage
+      backed verifiable datat registry.
+    </p>
+
+    <p class="advisement">
+      Avoid reusing verification methods across did methods.
+    </p>
+
+    <p class="advisement">
+      Avoid reusing services with unique paramaters across did methods.
+    </p>
 
     <section class="informative">
-      <h2>Privacy Considerations</h2>
+      <h3>Anonymity</h3>
 
       <p>
-        Decentralized Identifiers, like any other technology, can be used to
-        enhance privacy as well as harm privacy. This section speaks to topics
-        that implementers might consider when thinking about the privacy
-        characteristics of their software systems.
+        Consider formally modeling the privacy implications assoicated with
+        your implementation usng
+        <a href="https://en.wikipedia.org/wiki/T-closeness">t-closeness</a> or
+        other mechanisms.
       </p>
 
-      <p class="advisement">
-        Never store PII, even in an encrypted format on any immutable storage
-        backed verifiable datat registry.
+      <p>
+        If DID Method supports globaly enumeration and indexing, consider
+        exposing this information publically. You may wish to provide alerts
+        similar to servicess that watch version control systems for sensitive
+        information that is accidentally leaked.
       </p>
-
-      <p class="advisement">
-        Avoid reusing verification methods across did methods.
-      </p>
-
-      <p class="advisement">
-        Avoid reusing services with unique paramaters across did methods.
-      </p>
-
-      <section class="informative">
-        <h3>Anonymity</h3>
-
-        <p>
-          Consider formally modeling the privacy implications assoicated with
-          your implementation usng
-          <a href="https://en.wikipedia.org/wiki/T-closeness">t-closeness</a> or
-          other mechanisms.
-        </p>
-
-        <p>
-          If DID Method supports globaly enumeration and indexing, consider
-          exposing this information publically. You may wish to provide alerts
-          similar to servicess that watch version control systems for sensitive
-          information that is accidentally leaked.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Compliance</h3>
-
-        <p>
-          Review any applicable local law when considering developing or
-          operating a decentralized identifier method.
-        </p>
-
-        <p>Consider <a href="https://gdpr.eu/">GDPR.</a></p>
-
-        <p>Consider <a href="https://oag.ca.gov/privacy/ccpa">CCPA.</a></p>
-      </section>
     </section>
 
     <section class="informative">
-      <h2>Security Considerations</h2>
+      <h3>Compliance</h3>
 
       <p>
-        Decentralized Identifiers are security primitives that are often used to
-        secure important systems. This section speaks to topics that
-        implementers might consider when thinking about the security
-        characteristics of their software systems.
+        Review any applicable local law when considering developing or
+        operating a decentralized identifier method.
+      </p>
+
+      <p>Consider <a href="https://gdpr.eu/">GDPR.</a></p>
+
+      <p>Consider <a href="https://oag.ca.gov/privacy/ccpa">CCPA.</a></p>
+    </section>
+  </section>
+
+  <section class="informative">
+    <h2>Security Considerations</h2>
+
+    <p>
+      Decentralized Identifiers are security primitives that are often used to
+      secure important systems. This section speaks to topics that
+      implementers might consider when thinking about the security
+      characteristics of their software systems.
+    </p>
+
+    <p>
+      Consider defense in depth, cryptographic agility and poltical
+      acceptability of any cryptography you rely on for did method security.
+    </p>
+
+    <p>
+      Avoid complex or slow signature formats, especicially if they are poorly
+      documented, or do not have an open standard with well documented test
+      vectors.
+    </p>
+
+    <p class="advisement">
+      Avoid open source implementations that are declared a "defacto
+      standard", but lack open standard technical specification.
+    </p>
+
+    <p class="advisement">
+      Add support for legacy crypto systems such as
+      <a href="https://www.iana.org/assignments/jose/jose.xhtml">jose</a>
+      and <a href="https://www.openpgp.org/">Open PGP</a>.
+    </p>
+
+    <section class="informative">
+      <h3>Vendor Lock</h3>
+      <p>
+        Competition, direct substitutability, interoperability and mutual
+        feature support are key to reducing the barrier to adoption, and
+        confidence in your DID Method.
       </p>
 
       <p>
-        Consider defense in depth, cryptographic agility and poltical
-        acceptability of any cryptography you rely on for did method security.
+        Avoid inventing "new features", work with others to find a common way
+        to express any new features that is not unqiue to your did method.
       </p>
 
       <p>
-        Avoid complex or slow signature formats, especicially if they are poorly
-        documented, or do not have an open standard with well documented test
-        vectors.
+        Avoid hard coupling to specific networks, such as Bitcoin or Hyper
+        Ledger Fabric. Design your method such that it may be adapted to
+        support multiple ledger systems.
       </p>
-
-      <p class="advisement">
-        Avoid open source implementations that are declared a "defacto
-        standard", but lack open standard technical specification.
-      </p>
-
-      <p class="advisement">
-        Add support for legacy crypto systems such as
-        <a href="https://www.iana.org/assignments/jose/jose.xhtml">jose</a>
-        and <a href="https://www.openpgp.org/">Open PGP</a>.
-      </p>
-
-      <section class="informative">
-        <h3>Vendor Lock</h3>
-        <p>
-          Competition, direct substitutability, interoperability and mutual
-          feature support are key to reducing the barrier to adoption, and
-          confidence in your DID Method.
-        </p>
-
-        <p>
-          Avoid inventing "new features", work with others to find a common way
-          to express any new features that is not unqiue to your did method.
-        </p>
-
-        <p>
-          Avoid hard coupling to specific networks, such as Bitcoin or Hyper
-          Ledger Fabric. Design your method such that it may be adapted to
-          support multiple ledger systems.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Digital Signatures</h3>
-
-        <p class="advisement">
-          Review
-          <a href="https://safecurves.cr.yp.to/">safecurves.cr.yp.to</a> before
-          selecting eliptic curve types.
-        </p>
-
-        <p class="advisement">Avoid secp256k1, RSA, P-256, P-384, P-521.</p>
-
-        <p>
-          Avoid relying on smart contracts for complex data mangement. If you
-          must use a smart contract, keep it simple and architect a solution
-          that supports data migration.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Hashing Algorithms</h3>
-
-        <p>Avoid MD5.</p>
-      </section>
-
-      <section class="informative">
-        <h3>Zero Knowledge Proofs</h3>
-
-        <p>
-          Consider using
-          <a href="https://w3c-ccg.github.io/ldp-bbs2020/">BBS+ Signatures</a>
-          for selective disclosure and linked secret based JSON-LD verifiable
-          credentials.
-        </p>
-
-        <p>
-          Avoid zero knowledge proofs as described in the
-          <a
-            href="https://w3c.github.io/vc-data-model/#example-25-a-verifiable-presentation-that-supports-cl-signatures"
-            >AnonCredDerivedCredentialv1</a
-          >. This proof format is coupled to specific ledger technologies,
-          similar to the concept of an ethereum virtual machine smart contract
-          only running on EVM compatible ledgers. Ledger specific technologies
-          should be avoided when designing forportable, interoperable and open
-          standards based zero knowledge proofs.
-        </p>
-
-        <p>
-          Avoid storing credential schemas on ledgers. Many DID methods cannot
-          store information other than a DID Document, which reduces the direct
-          interoperabiility, substitutability and cost effectiveness of
-          solutions that make use of rare or poorly supported features such as
-          credential schema defintion storage.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Biometrics</h3>
-
-        <p>Avoid relying exclusively on biometrics.</p>
-
-        <p>
-          Hardware isolated keys protected by biometrics on devices may increase
-          the usability of DIDs.
-        </p>
-      </section>
     </section>
 
-      <section>
-        <h2>Future Work</h2>
-        <p class="note">
-          This section was copied from
-          <a href="https://github.com/w3c/did-imp-guide/">w3c/did-imp-guide</a>, and adjusted based on changes made to did core.
-        </p>
+    <section class="informative">
+      <h3>Digital Signatures</h3>
 
-        <section>
-          <h2>Upper Limits on DID Character Length</h2>
+      <p class="advisement">
+        Review
+        <a href="https://safecurves.cr.yp.to/">safecurves.cr.yp.to</a> before
+        selecting eliptic curve types.
+      </p>
 
-          <p>
-            The current specification does not take a position on maximum length
-            of a
-            <a>DID</a>. The maximum interoperable URL length is currently about
-            2K characters. QR codes can handle about 4K characters. Clients
-            using <a>DIDs</a> will be responsible for storing many <a>DIDs</a>,
-            and some methods would be able to externalize some of their costs
-            onto clients by relying on more complicated signature schemes or by
-            adding state into <a>DIDs</a> intended for temporary use. A future
-            version of this specification should set reasonable limits on
-            <a>DID</a> character length to minimize externalities.
-          </p>
-        </section>
-        <section>
-          <h2>Verifiable Timestamps</h2>
+      <p class="advisement">Avoid secp256k1, RSA, P-256, P-384, P-521.</p>
 
-          <p>
-            <a>Verifiable timestamps</a> have significant utility for identifier
-            records. This is a good fit for <a>DLTs</a>, since most offer some
-            type of timestamp mechanism. Despite some transactional cost, they
-            are the among the most censorship-resistant transaction ordering
-            systems at the present, so they are nearly ideal for
-            <a>DID document</a> timestamping. In some cases a <a>DLT</a>'s
-            immediate timing is approximate, however their sense of
-            <a
-              href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki%23Abstract"
-            >
-              "median time past" (see Bitcoin BIP 113)</a
-            >
-            can be precisely defined. A generic <a>DID document</a> timestamping
-            mechanism could would work across all <a>DLTs</a> and might operate
-            via a mechanism including either individual transactions or
-            transaction batches. The generic mechanism was deemed out of scope
-            for this version, although it may be included in a future version of
-            this specification.
-          </p>
-        </section>
-        
-        <section>
-          <h2>Verifiable Credentials</h2>
-
-          <p>
-            Although <a>DIDs</a> and <a>DID documents</a> form a foundation for
-            decentralized identity, they are only the first step in describing
-            their subjects. The rest of the descriptive power comes through
-            collecting and selectively using Verifiable Credentials
-            [[VC-DATA-MODEL]]. Future versions of the specification will
-            describe in more detail how <a>DIDs</a> and <a>DID document</a> can
-            be integrated with &mdash; and help enable &mdash; the Verifiable
-            Credentials ecosystem.
-          </p>
-        </section>
-
-        <section>
-          <h2>Alternate Serializations and Graph Models</h2>
-
-          <p>
-            This version of the specification relies on JSON-LD and the RDF
-            graph model for expressing a <a>DID document</a>. Future versions of
-            this specification might specify other semantic graph formats for a
-            <a>DID document</a>.
-          </p>
-        </section>
-      </section>
+      <p>
+        Avoid relying on smart contracts for complex data mangement. If you
+        must use a smart contract, keep it simple and architect a solution
+        that supports data migration.
+      </p>
     </section>
-  </body>
+
+    <section class="informative">
+      <h3>Hashing Algorithms</h3>
+
+      <p>Avoid MD5.</p>
+    </section>
+
+    <section class="informative">
+      <h3>Zero Knowledge Proofs</h3>
+
+      <p>
+        Consider using
+        <a href="https://w3c-ccg.github.io/ldp-bbs2020/">BBS+ Signatures</a>
+        for selective disclosure and linked secret based JSON-LD verifiable
+        credentials.
+      </p>
+
+      <p>
+        Avoid zero knowledge proofs as described in the
+        <a
+          href="https://w3c.github.io/vc-data-model/#example-25-a-verifiable-presentation-that-supports-cl-signatures">AnonCredDerivedCredentialv1</a>.
+        This proof format is coupled to specific ledger technologies,
+        similar to the concept of an ethereum virtual machine smart contract
+        only running on EVM compatible ledgers. Ledger specific technologies
+        should be avoided when designing forportable, interoperable and open
+        standards based zero knowledge proofs.
+      </p>
+
+      <p>
+        Avoid storing credential schemas on ledgers. Many DID methods cannot
+        store information other than a DID Document, which reduces the direct
+        interoperabiility, substitutability and cost effectiveness of
+        solutions that make use of rare or poorly supported features such as
+        credential schema defintion storage.
+      </p>
+    </section>
+
+    <section class="informative">
+      <h3>Biometrics</h3>
+
+      <p>Avoid relying exclusively on biometrics.</p>
+
+      <p>
+        Hardware isolated keys protected by biometrics on devices may increase
+        the usability of DIDs.
+      </p>
+    </section>
+  </section>
+
+  <section>
+    <h2>Future Work</h2>
+    <p class="note">
+      This section was copied from
+      <a href="https://github.com/w3c/did-imp-guide/">w3c/did-imp-guide</a>, and adjusted based on changes made to did
+      core.
+    </p>
+
+    <section>
+      <h2>Upper Limits on DID Character Length</h2>
+
+      <p>
+        The current specification does not take a position on maximum length
+        of a
+        <a>DID</a>. The maximum interoperable URL length is currently about
+        2K characters. QR codes can handle about 4K characters. Clients
+        using <a>DIDs</a> will be responsible for storing many <a>DIDs</a>,
+        and some methods would be able to externalize some of their costs
+        onto clients by relying on more complicated signature schemes or by
+        adding state into <a>DIDs</a> intended for temporary use. A future
+        version of this specification should set reasonable limits on
+        <a>DID</a> character length to minimize externalities.
+      </p>
+    </section>
+    <section>
+      <h2>Verifiable Timestamps</h2>
+
+      <p>
+        <a>Verifiable timestamps</a> have significant utility for identifier
+        records. This is a good fit for <a>DLTs</a>, since most offer some
+        type of timestamp mechanism. Despite some transactional cost, they
+        are the among the most censorship-resistant transaction ordering
+        systems at the present, so they are nearly ideal for
+        <a>DID document</a> timestamping. In some cases a <a>DLT</a>'s
+        immediate timing is approximate, however their sense of
+        <a href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki%23Abstract">
+          "median time past" (see Bitcoin BIP 113)</a>
+        can be precisely defined. A generic <a>DID document</a> timestamping
+        mechanism could would work across all <a>DLTs</a> and might operate
+        via a mechanism including either individual transactions or
+        transaction batches. The generic mechanism was deemed out of scope
+        for this version, although it may be included in a future version of
+        this specification.
+      </p>
+    </section>
+
+    <section>
+      <h2>Verifiable Credentials</h2>
+
+      <p>
+        Although <a>DIDs</a> and <a>DID documents</a> form a foundation for
+        decentralized identity, they are only the first step in describing
+        their subjects. The rest of the descriptive power comes through
+        collecting and selectively using Verifiable Credentials
+        [[VC-DATA-MODEL]]. Future versions of the specification will
+        describe in more detail how <a>DIDs</a> and <a>DID document</a> can
+        be integrated with &mdash; and help enable &mdash; the Verifiable
+        Credentials ecosystem.
+      </p>
+    </section>
+
+    <section>
+      <h2>Alternate Serializations and Graph Models</h2>
+
+      <p>
+        This version of the specification relies on JSON-LD and the RDF
+        graph model for expressing a <a>DID document</a>. Future versions of
+        this specification might specify other semantic graph formats for a
+        <a>DID document</a>.
+      </p>
+    </section>
+  </section>
+  </section>
+</body>
+
 </html>
