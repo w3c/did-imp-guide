@@ -70,7 +70,13 @@
       // authors, add as many as you like.
       // This is optional, uncomment if you have authors as well as editors.
       // only "name" is required. Same format as editors.
-      authors: [],
+      authors: [
+        {
+          name: "Guillaume Dardelet",
+          company: "Transmute",
+          companyURL: "https://www.transmute.industries/",
+        },
+      ],
       // name of the WG
       group: "credentials",
 
@@ -194,6 +200,10 @@
         did subject and did controller without relying on a cryptographically
         secure verification relationship for
         <a href="authentication">authentication</a>.
+        Anyone can claim a DID, but only someone who controlls the associated
+        keys can authenticate as it.
+        For example `did:example:wallmart` should not be assumed to belong to
+        Wallmart.
       </p>
 
       <p>
@@ -348,7 +358,7 @@
               "content-type": "application/did+json"
             },
             "didResolutionMetadata": {}
-          }        
+          }
         </pre>
 
       <pre class="example" title="Resolution object for application/did+ld+json">
@@ -386,7 +396,7 @@
             },
             "didResolutionMetadata": {}
           }
-          
+
         </pre>
     </section>
   </section>
@@ -421,17 +431,17 @@
       </pre>
 
     <p>
-      DID resolution can be proxied through intermediariees such as command
+      DID resolution can be proxied through intermediaries such as command
       line tools or http servers. Because the DID Document contains key
       material, such intermediaries represent excellent targets for attackers,
-      becuase these systems can be used to tamper with verification
+      because these systems can be used to tamper with verification
       relationships.
     </p>
 
     <p>
       Avoid tampering with a DID Document that as been returned by did method
-      software. It is better to throw an error than attempt problemss in the
-      underlying DID Method.
+      software. It is better to throw an error than attempt to solve problems
+      in the underlying DID Method.
     </p>
 
     <p>
@@ -450,12 +460,6 @@
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
         <a href="https://www.w3.org/TR/did-core/#did-url-syntax">DID URL Syntax</a>.
-      </p>
-
-      <p>
-        DID URLs can be used to identify sub resources inside a DID Document,
-        older versions of a DID Document, or resources outside of a DID
-        Document.
       </p>
 
       <p>
@@ -543,7 +547,7 @@
         </p>
 
         <p>
-          The interpretation of the fragement is determined by the mime type.
+          The interpretation of the fragment is determined by the mime type.
         </p>
       </section>
     </section>
@@ -620,7 +624,7 @@
         </p>
 
         <p>
-          Dereferencing critical to integrating with cryptographic toolkits
+          Dereferencing is critical to integrating with cryptographic toolkits
           such as Linked Data Proofs, JOSE, PGP or Anon Creds.
         </p>
       </section>
@@ -725,15 +729,15 @@
     </p>
 
     <p class="advisement">
-      Avoid reusing services with unique paramaters across did methods.
+      Avoid reusing services with unique parameters across did methods.
     </p>
 
     <section class="informative">
       <h3>Anonymity</h3>
 
       <p>
-        Consider formally modeling the privacy implications assoicated with
-        your implementation usng
+        Consider formally modeling the privacy implications associated with
+        your implementation using
         <a href="https://en.wikipedia.org/wiki/T-closeness">t-closeness</a> or
         other mechanisms.
       </p>
@@ -771,12 +775,12 @@
     </p>
 
     <p>
-      Consider defense in depth, cryptographic agility and poltical
+      Consider defense in depth, cryptographic agility and political
       acceptability of any cryptography you rely on for did method security.
     </p>
 
     <p>
-      Avoid complex or slow signature formats, especicially if they are poorly
+      Avoid complex or slow signature formats, especially if they are poorly
       documented, or do not have an open standard with well documented test
       vectors.
     </p>
@@ -802,7 +806,7 @@
 
       <p>
         Avoid inventing "new features", work with others to find a common way
-        to express any new features that is not unqiue to your did method.
+        to express any new features that is not unique to your did method.
       </p>
 
       <p>
