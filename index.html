@@ -748,6 +748,29 @@
     </section>
 
     <section class="informative">
+      <h3>Avoid correlation</h3>
+
+      <p class="advisement">
+        Avoid reusing verification methods across did methods.
+      </p>
+
+      <p class="advisement">
+        Avoid reusing services with unique parameters across did methods.
+      </p>
+
+      <p>
+        Any anonymous identifier, even if it is generated randomly can be used to infer
+        sensitive information about a <a href="#dfn-did-subjects">DID subject</a> if it is reused
+        enough times.
+      </p>
+
+      <p>
+        A DID method implementer should rotate keys and identifiers as often as possible
+        to avoid correlation
+      </p>
+    </section>
+
+    <section class="informative">
       <h3>Anonymity</h3>
 
       <p>
