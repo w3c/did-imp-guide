@@ -719,18 +719,33 @@
       characteristics of their software systems.
     </p>
 
-    <p class="advisement">
-      Never store PII, even in an encrypted format on any immutable storage
-      backed verifiable datat registry.
-    </p>
+    <section class="informative">
+      <h3>
+        Dealing with Personally Identifiable Information (PII)
+      </h3>
 
-    <p class="advisement">
-      Avoid reusing verification methods across did methods.
-    </p>
+      <p class="advisement">
+        Never store PII, even in an encrypted format on any immutable storage
+        backed verifiable data registry.
+      </p>
 
-    <p class="advisement">
-      Avoid reusing services with unique parameters across did methods.
-    </p>
+      <p>
+        It is the DID method implementer's responsibility to think about and identify
+        the extent to which PII may be included in a DID document
+      </p>
+
+      <p>
+        Software should at least display a warning and ask for confirmation before creating
+        or updating any properties of a did document that depend on user provided inputs
+      </p>
+
+      <p>
+        A DID method specification should have a PII dedicated section covering the extend to
+        which information published on the corresponding ledger can be updated or deleted.
+        It should provide specific instructions on how to do so if it is possible.
+        It should clearly state that it is not possible otherwise.
+      </p>
+    </section>
 
     <section class="informative">
       <h3>Anonymity</h3>
