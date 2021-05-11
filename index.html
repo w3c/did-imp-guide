@@ -312,93 +312,7 @@
       </p>
 </section>
 
-    <section class="informative">
-      <h2>Examples</h2>
-
-      <pre class="example" title="Resolution object for application/did+json">
-          {
-            "@context": "https://w3id.org/did-resolution/v1",
-            "didDocument": {
-              "@context": [
-                "https://www.w3.org/ns/did/v1",
-                {
-                  "@base": "did:example:123"
-                }
-              ],
-              "id": "did:example:123",
-              "verificationMethod": [
-                {
-                  "id": "#key-g1",
-                  "controller": "did:example:123",
-                  "type": "JsonWebKey2020",
-                  "publicKeyJwk": {
-                    "kty": "EC",
-                    "crv": "BLS12381_G1",
-                    "x": "kIf1PZ8UJzZySnCsZx14cHS3AxiWO2jH26MeJu_WdAF1varePeXYlpr-Qo_dLVJ-"
-                  }
-                },
-                {
-                  "id": "#key-g2",
-                  "controller": "did:example:123",
-                  "type": "JsonWebKey2020",
-                  "publicKeyJwk": {
-                    "kty": "EC",
-                    "crv": "BLS12381_G2",
-                    "x": "lc0FEvffl8o9bKhwVM2bZOzt_p4lz4vTIBtYDyFPQHh1GIx7wmwaSfbgot3eEvi2BS_7ncWoFnoAYBOyIAqMyCDIYHmjs2-LVagsZx-f14je_wGOB1ThaFlUdoA4UAOX"
-                  }
-                }
-              ],
-              "authentication": ["#key-g1", "#key-g2"],
-              "assertionMethod": ["#key-g1", "#key-g2"],
-              "capabilityInvocation": ["#key-g1", "#key-g2"],
-              "capabilityDelegation": ["#key-g1", "#key-g2"]
-            },
-            "didDocumentMetadata": {
-              "content-type": "application/did+json"
-            },
-            "didResolutionMetadata": {}
-          }
-        </pre>
-
-      <pre class="example" title="Resolution object for application/did+ld+json">
-          {
-            "@context": "https://w3id.org/did-resolution/v1",
-            "didDocument": {
-              "@context": [
-                "https://www.w3.org/ns/did/v1",
-                {
-                  "@base": "did:example:456"
-                }
-              ],
-              "id": "did:example:456",
-              "verificationMethod": [
-                {
-                  "id": "#key-g1",
-                  "type": "Bls12381G1Key2020",
-                  "controller": "did:example:456",
-                  "publicKeyBase58": "7c98uRcPAjWbPJ7GeHc4Csd3qGKYsbHGjE3G8v2YX6Te3g6Ur2PfDcrpmoBoBmV8yT"
-                },
-                {
-                  "id": "#key-g2",
-                  "type": "Bls12381G2Key2020",
-                  "controller": "did:example:456",
-                  "publicKeyBase58": "yuTSz1w31UYhoAN6v2D16dLtPg2kMGkwbptoZ5z96bpuHrvBNAshsLsgX9GvE6bnG95WPWuRkQJ9oUmL1ytEjfojWPsQBmwKXhd6gxkwHkHfakMNYzGMgyH76rigsu4E62o"
-                }
-              ],
-              "authentication": ["#key-g1", "#key-g2"],
-              "assertionMethod": ["#key-g1", "#key-g2"],
-              "capabilityInvocation": ["#key-g1", "#key-g2"],
-              "capabilityDelegation": ["#key-g1", "#key-g2"]
-            },
-            "didDocumentMetadata": {
-              "content-type": "application/did+ld+json"
-            },
-            "didResolutionMetadata": {}
-          }
-
-        </pre>
-    </section>
-  </section>
+    
 
   <section class="informative">
     <h2>DID Resolution</h2>
@@ -413,21 +327,7 @@
       Resolution response in a representation, most commonly JSON.
     </p>
 
-    <pre class="example" title="Resolution response for did+json">
-        {
-          "@context": "https://w3id.org/did-resolution/v1",
-          "didDocument": {
-            "@context": [
-              "https://www.w3.org/ns/did/v1",
-            ],
-            "id": "did:example:123",
-          },
-          "didDocumentMetadata": {
-            "content-type": "application/did+json"
-          },
-          "didResolutionMetadata": {}
-        }
-      </pre>
+   
 
     <p>
       DID resolution can be proxied through intermediaries such as command
@@ -588,7 +488,7 @@
       </p>
 
       <p class="issue">
-        This sentence above is contested, see <a href="https://github.com/w3c/did-imp-guide/pull/3">
+        This sentence above is contested, see <a href="https://github.com/w3c/did-imp-guide/issues/5">
         this conversation</a>.
       </p>
 
