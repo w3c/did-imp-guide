@@ -639,13 +639,16 @@
     </p>
 
     <p>
-      In contrast to this, the JSON representation (with media type `application/did+json`) does not have this semantic
+      In contrast to this, the (non-LD) JSON representation (with media type `application/did+json`) does not have this semantic
       capability; instead, (non-LD) JSON documents always need agreement on semantics in some out-of-band way that is
-      not part of the document itself. In the case of DID documents using the JSON representation, those semantics are
-      established by the <a href="https://w3c.github.io/did-spec-registries/">DID Spec Registries</a>. Therefore,
-      establishing semantics of DID document properties in the JSON representation does not require any
-      “representation-specific entries”, as is the case with the JSON-LD representation. The same is true for the CBOR
-      representation.
+      not part of the document itself. In the case of DID documents using the (non-LD) JSON representation, those semantics are
+      typically established by the <a href="https://w3c.github.io/did-spec-registries/">DID Spec Registries</a>. Therefore,
+      establishing semantics of DID document properties in the (non-LD) JSON representation does not require
+      the representation-specific `@context` entry, as is required by the JSON-LD representation.
+    </p>
+
+    <p>
+      Similar holds true for the (non-LD) CBOR representation.
     </p>
 
     <p>
