@@ -899,14 +899,14 @@ keyAgreement:
       </p>
 
       <p>DID Methods that support both <code>application/did+ld+json</code> and <code>application/did+json</code> 
-        SHOULD return <code>application/did+json</code> with an <code>@context</code>, because it enables
+        ought to return <code>application/did+json</code> with an <code>@context</code>, because it enables
         both representations to be used with tooling and standards that support semantics (such as [[VC-DATA-MODEL]]), 
         and because the default behavior of JSON processors is to ignore object members that are not understood.
       </p>
 
-      <p>DID Document representations produced by an implementation SHOULD be treated as immutable, 
-        and any tampering, including adding, removing, or reordering core or representation specific entries
-        SHOULD be treated as malicious, since it alters the integrity of the produced DID Document.</p>
+      <p>DID Document representations produced by an implementation ought to be treated as immutable, 
+        since any tampering, including adding, removing, or reordering core or representation specific entries
+        might be considered malicious, since it alters the integrity of the produced DID Document.</p>
 
     </section>  
   </section>
