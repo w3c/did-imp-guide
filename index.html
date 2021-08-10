@@ -15,11 +15,12 @@
   <script type="text/javascript" class="remove">
     var respecConfig = {
       // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
-      specStatus: "unofficial",
+      specStatus: "FPWD-NOTE",
+      publishDate: "2021-08-19",
 
       // the specification's short name, as in http://www.w3.org/TR/short-name/
       shortName: "did-imp-guide",
-      xref: ["did-core"],
+      //xref: ["did-core"],
 
       // subtitle for the spec
       subtitle:
@@ -29,8 +30,6 @@
       //publishDate: "2019-03-26",
       //crEnd: "2019-04-23",
       //implementationReportURI: "https://w3c.github.io/",
-      previousMaturity: "UNOFFICIAL",
-      previousPublishDate: "2021-01-27",
 
       // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
       // and its maturity status
@@ -41,7 +40,10 @@
       localBiblio: {},
       doJsonLd: true,
 
-      github: "https://github.com/w3c/did-imp-guide",
+      github: {
+        repoURL: "https://github.com/w3c/did-imp-guide/",
+        branch: "main"
+      },
       includePermalinks: false,
 
       // if there a publicly available Editor's Draft, this is the link
@@ -76,12 +78,19 @@
           company: "Transmute",
           companyURL: "https://www.transmute.industries/",
         },
+        {
+          name: "Markus Sabadello",
+          url: "https://www.linkedin.com/in/markus-sabadello-353a0821",
+          company: "Danube Tech",
+          companyURL: "https://danubetech.com/",
+          w3cid: 46729
+        }
       ],
       // name of the WG
-      group: "credentials",
+      group: "did",
 
       // name (with the @w3c.org) of the public mailing to which comments are due
-      wgPublicList: "public-credentials",
+      wgPublicList: "public-did-wg",
 
       // URI of the patent status for this WG, for Rec-track documents
       // !!!! IMPORTANT !!!!
