@@ -89,7 +89,7 @@
       // document unless you know what you're doing. If in doubt ask your friendly neighborhood
       // Team Contact.
       //wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
-      maxTocLevel: 2,
+      maxTocLevel: 5,
       inlineCSS: true,
     };
   </script>
@@ -621,11 +621,11 @@
     <p class="advisement">
       There is no strong consensus regarding preserving data model properties across representations.
       Removing properties when converting a did document can result in an inability to maintain 
-      interoperability with [[VC-DATA-MODEL]].
+      interoperability with [[VC-DATA-MODEL]]. See Drawbacks and Benefits.
     </p>
 
     <section>
-      <h2>Drawbacks of representation-foreign entries</h2>
+      <h2>Drawbacks</h2>
 
     <p>
       The DID document data model contains “properties” (such as `id`, `verificationMethod`, and `service`), which are
@@ -900,159 +900,10 @@ Examples of representation-specific and representation-foreign entries in variou
       </figcaption>
     </figure>
 
-    <section class="informative">
-      <h3>
-        Avoid representation-foreign entries
-      </h3>
-
-      <p class="advisement">
-        It is bad practice and potentially harmful for producers to include "representation-foreign entries" in DID
-        documents.
-      </p>
-
-      <p>
-        Different implementations of DID document consumers may or may not be able to properly understand the meaning
-        and processing rules of representation-foreign entries. Since DIDs and DID documents form an open ecosystem with
-        many producers and consumers, a producer cannot anticipate the behavior of a consumer with regard to
-        representation-foreign entries.
-      </p>
-
-      <p>
-        For example, if a producer adds an `@context` entry to a DID document in the `application/did+json`
-        representation, some consumers (those that understand JSON-LD, such as JSON-LD document loaders) may process it
-        in one way, while other consumers (those that only understand plain JSON, without any JSON-LD specific rules)
-        may process it in a different way.
-      </p>
-
-      <p>
-        This can lead to inconsistent behavior by consumers that cannot be predicted by a producer.
-      </p>
-
-    </section>
-
-    <section class="informative">
-      <h3>
-        Reliance on representation-foreign entries
-      </h3>
-
-      <p class="advisement">
-        It is bad practice and potentially harmful for consumers to rely on "representation-foreign entries" in DID
-        documents.
-      </p>
-
-      <p>
-        As a special case of the previous section, certain consumers may go as far as relying on the presence of
-        representation-foreign entries. For example, an incorrectly implemented consumer of DID documents in the
-        `application/did+json` representation may attempt to apply JSON-LD tooling to that representation. That tooling
-        is dependent on the presence of the `@context` representation-foreign entry, which is not actually required (and
-        in fact discouraged) to be used in the `application/did+json` representation.
-      </p>
-
-      <p>
-        The result is lack of interoperability, since such consumers will throw errors even if the returned DID document
-        representation is actually conformant.
-      </p>
-
-    </section>
-
-    <section class="informative">
-      <h3>
-        Security problems with representation-foreign entries
-      </h3>
-
-      <p>
-        If some implementations of DID document consumers process representation-foreign entries, and others don’t, then
-        this can lead to security holes, since the semantics of DID document properties will not be interpreted in a
-        predictable way.
-      </p>
-
-      <p>
-        For example, consider the following DID document, and assume that the JSON-LD context
-        `https://myextensions.com/other-definitions.jsonld` defines `blockchainAccountId` in a way that is different
-        from the <a href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property listed in the DID
-        Specification Registries</a>.
-      </p>
-
-      <pre class="example nohighlight" title="A DID document in the `application/did+json` representation with the `@context` representation-foreign entry">
-{
-  "@context":[
-    "https://www.w3.org/ns/did/v1",
-    "https://myextensions.com/other-definitions.jsonld"
-  ],
-  "id":"did:example:123456789abcdefghi",
-  "verificationMethod":[{
-    "id": "did:example:123456789abcdefghi#vm-3",
-    "controller": "did:example:123456789abcdefghi",
-    "type": "EcdsaSecp256k1RecoveryMethod2020",
-    "blockchainAccountId": "0xF3beAC30C498D9E26865F34fCAa57dBB935b0D74"
-  }]
-}
-      </pre>
-
-      <p>
-        If this DID document is consumed as `application/did+json` by an implementation that doesn't understand JSON-LD,
-        it will interpret `blockchainAccountId` as the <a
-              href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property listed in the DID
-        Specification Registries</a>, and it will process it accordingly.
-      </p>
-
-      <p>
-        If the exact same DID document is consumed as `application/did+json` by an implementation that understands
-        JSON-LD, it may interpret `blockchainAccountId` using the provided JSON-LD context, and therefore process it
-        differently.
-      </p>
-
-      <p>
-        It is a common mistake to claim that "JSON-LD is just JSON", and to justify injecting the `@context`
-        representation-foreign entry into a DID document in the `application/did+json` representation. This claim
-        however is true only on the syntax level, but wrong and dangerous on the semantic level, especially when
-        security-related properties are involved. In the example above, different consumer implementations are likely to
-        come to different conclusions on how the DID can be controlled.
-      </p>
-
-      <p class="advisement">
-        Representation-foreign entries in DID documents should be avoided, since they can lead to inconsistent and
-        unpredictable DID control decisions.
-      </p>
-
-    </section>
-
-    <section class="informative">
-      <h3>
-        Conversion between Representations
-      </h3>
-
-      <p>
-        The DID document data model and the production/consumption rules of representations have been designed to enable
-        lossless conversion between representations. Conversion between representations is achieved by executing the
-        consumption rules of the source representation, and then the production rules of the target representation.
-      </p>
-
-      <p>
-        The <a href="https://w3c.github.io/did-spec-registries/">DID Specification Registries</a> provide additional
-        information about properties as well as representation-specific entries that help with such conversion. For
-        example, a DID document in the `application/did+json` representation can be converted to the
-        `application/did+ld+json` representation by adding a `@context` representation-specific entry during production,
-        using the JSON-LD context information in the DID <a href="https://w3c.github.io/did-spec-registries/">Specification
-        Registries</a>.
-      </p>
-
-      <p>
-        Conversely, a DID document in the `application/did+ld+json` representation can be converted to the
-        `application/did+json` representation by removing the `@context` representation-specific entry during
-        consumption.
-      </p>
-
-      <p class="advisement">
-        Representation-foreign entries in DID documents should be avoided, since the implications on lossless conversion
-        between representations is unclear.
-      </p>
-
-    </section>
     </section>
 
     <section>
-      <h2>Benefits of representation-foreign entries</h2>
+      <h2>Benefits</h2>
       
       <p>
         Implementers are not required to support all representations. 
