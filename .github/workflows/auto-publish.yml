@@ -15,4 +15,4 @@ jobs:
           W3C_WG_DECISION_URL: https://www.w3.org/2019/did-wg/Meetings/Minutes/2020-06-09-did#resolution1
           W3C_BUILD_OVERRIDE: |
             shortName: did-imp-guide
-            specStatus: WG-NOTE
+            specStatus: FPWG-NOTE
