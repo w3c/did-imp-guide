@@ -1,0 +1,2700 @@
+<!DOCTYPE html><html lang="en" dir="ltr"><head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="generator" content="ReSpec 26.13.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style>
+span.example-title{text-transform:none}
+aside.example,div.example,div.illegal-example{padding:.5em;margin:1em 0;position:relative;clear:both}
+div.illegal-example{color:red}
+div.illegal-example p{color:#000}
+aside.example,div.example{padding:.5em;border-left-width:.5em;border-left-style:solid;border-color:#e0cb52;background:#fcfaee}
+aside.example div.example{border-left-width:.1em;border-color:#999;background:#fff}
+aside.example div.example span.example-title{color:#999}
+.example pre{background-color:rgba(0,0,0,.03)}
+</style>
+<style>
+.issue-label{text-transform:initial}
+.warning>p:first-child{margin-top:0}
+.warning{padding:.5em;border-left-width:.5em;border-left-style:solid}
+span.warning{padding:.1em .5em .15em}
+.issue.closed span.issue-number{text-decoration:line-through}
+.warning{border-color:#f11;border-width:.2em;border-style:solid;background:#fbe9e9}
+.warning-title:before{content:"⚠";font-size:1.3em;float:left;padding-right:.3em;margin-top:-.3em}
+li.task-list-item{list-style:none}
+input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}
+.issue a.respec-gh-label{padding:5px;margin:0 2px 0 2px;font-size:10px;text-transform:none;text-decoration:none;font-weight:700;border-radius:4px;position:relative;bottom:2px;border:none;display:inline-block}
+</style>
+<style>
+dfn{cursor:pointer}
+.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font:small Helvetica Neue,sans-serif,Droid Sans Fallback;background:#fff;color:#000;box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);border-radius:2px}
+.dfn-panel:not(.docked)>.caret{position:absolute;top:-9px}
+.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;top:0}
+.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1}
+.dfn-panel *{margin:0}
+.dfn-panel b{display:block;color:#000;margin-top:.25em}
+.dfn-panel ul a[href]{color:#333}
+.dfn-panel>div{display:flex}
+.dfn-panel a.self-link{font-weight:700;margin-right:auto}
+.dfn-panel .marker{padding:.1em;margin-left:.5em;border-radius:.2em;text-align:center;white-space:nowrap;font-size:90%;color:#040b1c}
+.dfn-panel .marker.dfn-exported{background:#d1edfd;box-shadow:0 0 0 .125em #1ca5f940}
+.dfn-panel .marker.idl-block{background:#8ccbf2;box-shadow:0 0 0 .125em #0670b161}
+.dfn-panel a:not(:hover){text-decoration:none!important;border-bottom:none!important}
+.dfn-panel a[href]:hover{border-bottom-width:1px}
+.dfn-panel ul{padding:0}
+.dfn-panel li{margin-left:1em}
+.dfn-panel.docked{position:fixed;left:.5em;top:unset;bottom:2em;margin:0 auto;max-width:calc(100vw - .75em * 2 - .5em - .2em * 2);max-height:30vh;overflow:auto}
+</style>
+  
+<title>DID Implementation Guide v1.0</title>
+  
+  
+
+  
+<style id="respec-mainstyle">
+@keyframes pop{
+0%{transform:scale(1,1)}
+25%{transform:scale(1.25,1.25);opacity:.75}
+100%{transform:scale(1,1)}
+}
+.hljs{background:0 0!important}
+a abbr,h1 abbr,h2 abbr,h3 abbr,h4 abbr,h5 abbr,h6 abbr{border:none}
+dfn{font-weight:700}
+a.internalDFN{color:inherit;border-bottom:1px solid #99c;text-decoration:none}
+a.externalDFN{color:inherit;border-bottom:1px dotted #ccc;text-decoration:none}
+a.bibref{text-decoration:none}
+.respec-offending-element:target{animation:pop .25s ease-in-out 0s 1}
+.respec-offending-element,a[href].respec-offending-element{text-decoration:red wavy underline}
+@supports not (text-decoration:red wavy underline){
+.respec-offending-element:not(pre){display:inline-block}
+.respec-offending-element{background:url(data:image/gif;base64,R0lGODdhBAADAPEAANv///8AAP///wAAACwAAAAABAADAEACBZQjmIAFADs=) bottom repeat-x}
+}
+#references :target{background:#eaf3ff;animation:pop .4s ease-in-out 0s 1}
+cite .bibref{font-style:normal}
+code{color:#c63501}
+th code{color:inherit}
+a[href].orcid{padding-left:4px;padding-right:4px}
+a[href].orcid>svg{margin-bottom:-2px}
+.toc a,.tof a{text-decoration:none}
+a .figno,a .secno{color:#000}
+ol.tof,ul.tof{list-style:none outside none}
+.caption{margin-top:.5em;font-style:italic}
+table.simple{border-spacing:0;border-collapse:collapse;border-bottom:3px solid #005a9c}
+.simple th{background:#005a9c;color:#fff;padding:3px 5px;text-align:left}
+.simple th a{color:#fff;padding:3px 5px;text-align:left}
+.simple th[scope=row]{background:inherit;color:inherit;border-top:1px solid #ddd}
+.simple td{padding:3px 10px;border-top:1px solid #ddd}
+.simple tr:nth-child(even){background:#f0f6ff}
+.section dd>p:first-child{margin-top:0}
+.section dd>p:last-child{margin-bottom:0}
+.section dd{margin-bottom:1em}
+.section dl.attrs dd,.section dl.eldef dd{margin-bottom:0}
+#issue-summary>ul{column-count:2}
+#issue-summary li{list-style:none;display:inline-block}
+details.respec-tests-details{margin-left:1em;display:inline-block;vertical-align:top}
+details.respec-tests-details>*{padding-right:2em}
+details.respec-tests-details[open]{z-index:999999;position:absolute;border:thin solid #cad3e2;border-radius:.3em;background-color:#fff;padding-bottom:.5em}
+details.respec-tests-details[open]>summary{border-bottom:thin solid #cad3e2;padding-left:1em;margin-bottom:1em;line-height:2em}
+details.respec-tests-details>ul{width:100%;margin-top:-.3em}
+details.respec-tests-details>li{padding-left:1em}
+a[href].self-link:hover{opacity:1;text-decoration:none;background-color:transparent}
+h2,h3,h4,h5,h6{position:relative}
+aside.example .marker>a.self-link{color:inherit}
+h2>a.self-link,h3>a.self-link,h4>a.self-link,h5>a.self-link,h6>a.self-link{border:none;color:inherit;font-size:83%;height:2em;left:-1.6em;opacity:.5;position:absolute;text-align:center;text-decoration:none;top:0;transition:opacity .2s;width:2em}
+h2>a.self-link::before,h3>a.self-link::before,h4>a.self-link::before,h5>a.self-link::before,h6>a.self-link::before{content:"§";display:block}
+@media (max-width:767px){
+dd{margin-left:0}
+h2>a.self-link,h3>a.self-link,h4>a.self-link,h5>a.self-link,h6>a.self-link{left:auto;top:auto}
+}
+@media print{
+.removeOnSave{display:none}
+}
+</style>
+  
+
+  
+  
+<style>
+
+    pre .highlight {
+      font-weight: bold;
+      color: green;
+    }
+
+    pre .comment {
+      font-weight: bold;
+      color: Gray;
+    }
+
+    .color-text {
+      font-weight: bold;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+
+    .simple {
+      width: 100%;
+    }
+  
+</style>
+
+<meta name="description" content="This document provides guidance to DID Method developers, related to
+      serialization, cryptographic primitive selection, governance, and
+      interoperability.">
+<link rel="canonical" href="https://www.w3.org/TR/did-imp-guide/">
+<script type="application/ld+json">{
+  "@context": [
+    "http://schema.org",
+    {
+      "@vocab": "http://schema.org/",
+      "@language": "en",
+      "w3p": "http://www.w3.org/2001/02pd/rec54#",
+      "foaf": "http://xmlns.com/foaf/0.1/",
+      "datePublished": {
+        "@type": "http://www.w3.org/2001/XMLSchema#date"
+      },
+      "inLanguage": {
+        "@language": null
+      },
+      "isBasedOn": {
+        "@type": "@id"
+      },
+      "license": {
+        "@type": "@id"
+      }
+    }
+  ],
+  "id": "https://www.w3.org/TR/did-imp-guide/",
+  "type": [
+    "TechArticle"
+  ],
+  "name": "DID Implementation Guide v1.0",
+  "inLanguage": "en",
+  "license": "https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document",
+  "datePublished": "2021-08-26",
+  "copyrightHolder": {
+    "name": "World Wide Web Consortium",
+    "url": "https://www.w3.org/"
+  },
+  "discussionUrl": "https://github.com/w3c/did-imp-guide/issues/",
+  "alternativeHeadline": "A DID developer's guide to understanding and implementing Decentralized Identifiers",
+  "isBasedOn": "",
+  "description": "This document provides guidance to DID Method developers, related to\n      serialization, cryptographic primitive selection, governance, and\n      interoperability.",
+  "editor": [
+    {
+      "type": "Person",
+      "name": "Orie Steele",
+      "url": "https://www.linkedin.com/in/or13b/",
+      "worksFor": {
+        "name": "Transmute",
+        "url": "https://www.transmute.industries/"
+      }
+    },
+    {
+      "type": "Person",
+      "name": "Michael Prorock",
+      "url": "https://www.linkedin.com/in/mprorock/",
+      "worksFor": {
+        "name": "mesur.io",
+        "url": "https://mesur.io/"
+      }
+    }
+  ],
+  "contributor": [
+    {
+      "type": "Person",
+      "name": "Guillaume Dardelet",
+      "worksFor": {
+        "name": "Transmute",
+        "url": "https://www.transmute.industries/"
+      }
+    },
+    {
+      "type": "Person",
+      "name": "Markus Sabadello",
+      "url": "https://www.linkedin.com/in/markus-sabadello-353a0821",
+      "worksFor": {
+        "name": "Danube Tech",
+        "url": "https://danubetech.com/"
+      }
+    }
+  ],
+  "citation": [
+    {
+      "id": "https://www.w3.org/TR/vc-data-model/",
+      "type": "TechArticle",
+      "name": "Verifiable Credentials Data Model 1.0",
+      "url": "https://www.w3.org/TR/vc-data-model/",
+      "creator": [
+        {
+          "name": "Manu Sporny"
+        },
+        {
+          "name": "Grant Noble"
+        },
+        {
+          "name": "Dave Longley"
+        },
+        {
+          "name": "Daniel Burnett"
+        },
+        {
+          "name": "Brent Zundel"
+        }
+      ],
+      "publisher": {
+        "name": "W3C"
+      }
+    },
+    {
+      "id": "https://tools.ietf.org/html/rfc2119",
+      "type": "TechArticle",
+      "name": "Key words for use in RFCs to Indicate Requirement Levels",
+      "url": "https://tools.ietf.org/html/rfc2119",
+      "creator": [
+        {
+          "name": "S. Bradner"
+        }
+      ],
+      "publisher": {
+        "name": "IETF"
+      }
+    },
+    {
+      "id": "https://tools.ietf.org/html/rfc8174",
+      "type": "TechArticle",
+      "name": "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words",
+      "url": "https://tools.ietf.org/html/rfc8174",
+      "creator": [
+        {
+          "name": "B. Leiba"
+        }
+      ],
+      "publisher": {
+        "name": "IETF"
+      }
+    },
+    {
+      "id": "https://www.w3.org/TR/did-spec-registries/",
+      "type": "TechArticle",
+      "name": "DID Specification Registries",
+      "url": "https://www.w3.org/TR/did-spec-registries/",
+      "creator": [
+        {
+          "name": "Orie Steele"
+        },
+        {
+          "name": "Manu Sporny"
+        }
+      ],
+      "publisher": {
+        "name": "W3C"
+      }
+    },
+    {
+      "id": "https://www.rfc-editor.org/rfc/rfc3986",
+      "type": "TechArticle",
+      "name": "Uniform Resource Identifier (URI): Generic Syntax",
+      "url": "https://www.rfc-editor.org/rfc/rfc3986",
+      "creator": [
+        {
+          "name": "T. Berners-Lee"
+        },
+        {
+          "name": "R. Fielding"
+        },
+        {
+          "name": "L. Masinter"
+        }
+      ],
+      "publisher": {
+        "name": "IETF"
+      }
+    },
+    {
+      "id": "https://httpwg.org/specs/rfc7231.html",
+      "type": "TechArticle",
+      "name": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
+      "url": "https://httpwg.org/specs/rfc7231.html",
+      "creator": [
+        {
+          "name": "R. Fielding, Ed."
+        },
+        {
+          "name": "J. Reschke, Ed."
+        }
+      ],
+      "publisher": {
+        "name": "IETF"
+      }
+    },
+    {
+      "id": "https://datatracker.ietf.org/doc/html/rfc4122",
+      "type": "TechArticle",
+      "name": "A Universally Unique IDentifier (UUID) URN Namespace",
+      "url": "https://datatracker.ietf.org/doc/html/rfc4122",
+      "creator": [
+        {
+          "name": "P. Leach"
+        },
+        {
+          "name": "M. Mealling"
+        },
+        {
+          "name": "R. Salz"
+        }
+      ],
+      "publisher": {
+        "name": "IETF"
+      }
+    },
+    {
+      "id": "https://www.w3.org/TR/did-core/",
+      "type": "TechArticle",
+      "name": "Decentralized Identifiers (DIDs) v1.0",
+      "url": "https://www.w3.org/TR/did-core/",
+      "creator": [
+        {
+          "name": "Drummond Reed"
+        },
+        {
+          "name": "Manu Sporny"
+        },
+        {
+          "name": "Markus Sabadello"
+        },
+        {
+          "name": "Dave Longley"
+        },
+        {
+          "name": "Christopher Allen"
+        }
+      ],
+      "publisher": {
+        "name": "W3C"
+      }
+    }
+  ]
+}</script>
+<style>
+.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;background:#fafafa}
+.hljs-comment,.hljs-quote{color:#717277;font-style:italic}
+.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4}
+.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;font-weight:700}
+.hljs-literal{color:#0b76c5}
+.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c}
+.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01}
+.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801}
+.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3}
+.hljs-emphasis{font-style:italic}
+.hljs-strong{font-weight:700}
+.hljs-link{text-decoration:underline}
+</style>
+<style>
+var{position:relative;cursor:pointer}
+var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}
+var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#000}
+var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#000;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
+var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
+</style>
+<script id="initialUserConfig" type="application/json">{
+  "specStatus": "FPWD-NOTE",
+  "publishDate": "2021-08-26",
+  "shortName": "did-imp-guide",
+  "subtitle": "A DID developer's guide to understanding and implementing Decentralized Identifiers",
+  "localBiblio": {},
+  "doJsonLd": true,
+  "github": {
+    "repoURL": "https://github.com/w3c/did-imp-guide/",
+    "branch": "main"
+  },
+  "includePermalinks": false,
+  "edDraftURI": "https://w3c.github.io/did-imp-guide/",
+  "editors": [
+    {
+      "name": "Orie Steele",
+      "url": "https://www.linkedin.com/in/or13b/",
+      "company": "Transmute",
+      "companyURL": "https://www.transmute.industries/",
+      "w3cid": 109171
+    },
+    {
+      "name": "Michael Prorock",
+      "url": "https://www.linkedin.com/in/mprorock/",
+      "company": "mesur.io",
+      "companyURL": "https://mesur.io/",
+      "w3cid": 130636
+    }
+  ],
+  "authors": [
+    {
+      "name": "Guillaume Dardelet",
+      "company": "Transmute",
+      "companyURL": "https://www.transmute.industries/"
+    },
+    {
+      "name": "Markus Sabadello",
+      "url": "https://www.linkedin.com/in/markus-sabadello-353a0821",
+      "company": "Danube Tech",
+      "companyURL": "https://danubetech.com/",
+      "w3cid": 46729
+    }
+  ],
+  "group": "did",
+  "wgPublicList": "public-did-wg",
+  "maxTocLevel": 5,
+  "inlineCSS": true,
+  "noRecTrack": true,
+  "publishISODate": "2021-08-26T00:00:00.000Z",
+  "generatedSubtitle": "First Public Working Group Note 26 August 2021"
+}</script>
+<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/W3C-WG-NOTE.css"></head>
+
+<body class="h-entry"><div class="head">
+    <a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72">
+  </a> <h1 id="title" class="title">DID Implementation Guide v1.0</h1>
+    <h2 id="subtitle" class="subtitle">A DID developer's guide to understanding and implementing Decentralized Identifiers</h2>
+    <h2>
+      W3C Working Group Note
+      <time class="dt-published" datetime="2021-08-26">26 August 2021</time>
+    </h2>
+    <dl>
+      <dt>This version:</dt><dd>
+              <a class="u-url" href="https://www.w3.org/TR/2021/NOTE-did-imp-guide-20210826/">https://www.w3.org/TR/2021/NOTE-did-imp-guide-20210826/</a>
+            </dd><dt>Latest published version:</dt><dd>
+              <a href="https://www.w3.org/TR/did-imp-guide/">https://www.w3.org/TR/did-imp-guide/</a>
+            </dd>
+      <dt>Latest editor's draft:</dt><dd><a href="https://w3c.github.io/did-imp-guide/">https://w3c.github.io/did-imp-guide/</a></dd>
+      
+      
+      
+      
+      
+      <dt>Editors:</dt>
+      <dd class="editor p-author h-card vcard" data-editor-id="109171">
+    <a class="u-url url p-name fn" href="https://www.linkedin.com/in/or13b/">Orie Steele</a> (<a class="p-org org h-org" href="https://www.transmute.industries/">Transmute</a>)
+  </dd><dd class="editor p-author h-card vcard" data-editor-id="130636">
+    <a class="u-url url p-name fn" href="https://www.linkedin.com/in/mprorock/">Michael Prorock</a> (<a class="p-org org h-org" href="https://mesur.io/">mesur.io</a>)
+  </dd>
+      
+      <dt>Authors:</dt><dd class="editor p-author h-card vcard">
+    <span class="p-name fn">Guillaume Dardelet</span> (<a class="p-org org h-org" href="https://www.transmute.industries/">Transmute</a>)
+  </dd><dd class="editor p-author h-card vcard" data-editor-id="46729">
+    <a class="u-url url p-name fn" href="https://www.linkedin.com/in/markus-sabadello-353a0821">Markus Sabadello</a> (<a class="p-org org h-org" href="https://danubetech.com/">Danube Tech</a>)
+  </dd>
+      <dt>Participate:</dt><dd>
+    <a href="https://github.com/w3c/did-imp-guide/">GitHub w3c/did-imp-guide</a>
+  </dd><dd>
+    <a href="https://github.com/w3c/did-imp-guide/issues/">File an issue</a>
+  </dd><dd>
+    <a href="https://github.com/w3c/did-imp-guide/commits/main">Commit history</a>
+  </dd><dd>
+    <a href="https://github.com/w3c/did-imp-guide/pulls/">Pull requests</a>
+  </dd>
+    </dl>
+    
+    
+    
+    <p class="copyright">
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+    ©
+    2021
+    
+    <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+    <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>,
+    <a href="https://ev.buaa.edu.cn/">Beihang</a>). 
+    W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a rel="license" href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">permissive document license</a> rules
+    apply.
+  </p>
+    <hr title="Separator for header">
+  </div>
+  <section id="abstract" class="introductory"><h2>Abstract</h2>
+    <p>
+      This document provides guidance to DID Method developers, related to
+      serialization, cryptographic primitive selection, governance, and
+      interoperability.
+    </p>
+    <p>
+      Guidance provided in this document does not reflect the consenus of the <abbr title="World Wide Web Consortium">W3C</abbr>
+      DID WG, although some members of the WG have contributed to it.
+    </p>
+  </section>
+
+  <section id="sotd" class="introductory"><h2>Status of This Document</h2><p><em>This section describes the status of this
+      document at the time of its publication. Other documents may supersede
+      this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications and the latest revision
+      of this technical report can be found in the
+      <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports index</a> at
+      https://www.w3.org/TR/.</em></p>
+    <p>
+      This guide is under active development and implementers are advised
+      against using the guide unless they are directly involved with the
+      <abbr title="World Wide Web Consortium">W3C</abbr> DID Working Group.
+    </p>
+  <p>
+    This document was published by the <a href="https://www.w3.org/2019/did-wg/">Decentralized Identifier Working Group</a> as a
+    First Public Working Group Note. 
+    
+  </p><p>
+    <a href="https://github.com/w3c/did-imp-guide/issues/">GitHub Issues</a> are preferred for
+          discussion of this specification.
+        
+    Alternatively, you can send comments to our mailing list.
+          Please send them to
+          <a href="mailto:public-did-wg@w3.org">public-did-wg@w3.org</a>
+          (<a href="mailto:public-did-wg-request@w3.org?subject=subscribe">subscribe</a>,
+          <a href="https://lists.w3.org/Archives/Public/public-did-wg/">archives</a>).
+        
+  </p><p>
+      Publication as a Working Group Note does not imply endorsement
+      by the <abbr title="World Wide Web Consortium">W3C</abbr> Membership. 
+    </p><p>This is a draft document and may be updated, replaced
+  or obsoleted by other documents at any time. It is inappropriate to cite this
+  document as other than work in progress.
+  </p><p></p><p data-deliverer="117488">
+    
+        This document was produced by a group
+        operating under the
+        <a href="https://www.w3.org/Consortium/Patent-Policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent
+          Policy</a>.
+       The group does not expect this document to become a <abbr title="World Wide Web Consortium">W3C</abbr> Recommendation.
+    
+    
+  </p><p>
+                  This document is governed by the
+                  <a id="w3c_process_revision" href="https://www.w3.org/2020/Process-20200915/">15 September 2020 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+                </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">1. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#terminology"><bdi class="secno">2. </bdi>Terminology</a></li><li class="tocline"><a class="tocxref" href="#methods"><bdi class="secno">3. </bdi>Methods</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#did-syntax"><bdi class="secno">3.1 </bdi>DID Syntax</a></li><li class="tocline"><a class="tocxref" href="#verifiable-data-registry"><bdi class="secno">3.2 </bdi>Verifiable Data Registry</a></li><li class="tocline"><a class="tocxref" href="#establishing-a-did"><bdi class="secno">3.3 </bdi>Establishing a DID</a></li><li class="tocline"><a class="tocxref" href="#did-resolution"><bdi class="secno">3.4 </bdi>DID Resolution</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#did-url-syntax"><bdi class="secno">3.4.1 </bdi>DID URL Syntax</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#path"><bdi class="secno">3.4.1.1 </bdi>Path</a></li><li class="tocline"><a class="tocxref" href="#query"><bdi class="secno">3.4.1.2 </bdi>Query</a></li><li class="tocline"><a class="tocxref" href="#fragment"><bdi class="secno">3.4.1.3 </bdi>Fragment</a></li></ol></li><li class="tocline"><a class="tocxref" href="#representations"><bdi class="secno">3.4.2 </bdi>Representations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#did-url-dereferencing"><bdi class="secno">3.4.2.1 </bdi>DID URL Dereferencing</a></li><li class="tocline"><a class="tocxref" href="#application-did-json"><bdi class="secno">3.4.2.2 </bdi>application/did+json</a></li><li class="tocline"><a class="tocxref" href="#application-did-ld-json"><bdi class="secno">3.4.2.3 </bdi>application/did+ld+json</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#verification-relationships"><bdi class="secno">3.5 </bdi>Verification Relationships</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#authentication"><bdi class="secno">3.5.1 </bdi>Authentication</a></li><li class="tocline"><a class="tocxref" href="#assertion-method"><bdi class="secno">3.5.2 </bdi>Assertion Method</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#data-model-and-representations"><bdi class="secno">4. </bdi>Data Model and Representations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#drawbacks"><bdi class="secno">4.1 </bdi>Drawbacks</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#avoid-representation-foreign-entries"><bdi class="secno">4.1.1 </bdi>
+        Avoid representation-foreign entries
+      </a></li><li class="tocline"><a class="tocxref" href="#reliance-on-representation-foreign-entries"><bdi class="secno">4.1.2 </bdi>
+        Reliance on representation-foreign entries
+      </a></li><li class="tocline"><a class="tocxref" href="#security-problems-with-representation-foreign-entries"><bdi class="secno">4.1.3 </bdi>
+        Security problems with representation-foreign entries
+      </a></li><li class="tocline"><a class="tocxref" href="#conversion-between-representations"><bdi class="secno">4.1.4 </bdi>
+        Conversion between Representations
+      </a></li></ol></li><li class="tocline"><a class="tocxref" href="#benefits"><bdi class="secno">4.2 </bdi>Benefits</a></li></ol></li><li class="tocline"><a class="tocxref" href="#privacy-considerations"><bdi class="secno">5. </bdi>Privacy Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#dealing-with-personal-data"><bdi class="secno">5.1 </bdi>
+        Dealing with Personal Data
+      </a></li><li class="tocline"><a class="tocxref" href="#avoid-correlation"><bdi class="secno">5.2 </bdi>Avoid correlation</a></li><li class="tocline"><a class="tocxref" href="#anonymity"><bdi class="secno">5.3 </bdi>Anonymity</a></li><li class="tocline"><a class="tocxref" href="#compliance"><bdi class="secno">5.4 </bdi>Compliance</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">6. </bdi>Security Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#vendor-lock-in"><bdi class="secno">6.1 </bdi>Vendor Lock In</a></li><li class="tocline"><a class="tocxref" href="#digital-signatures"><bdi class="secno">6.2 </bdi>Digital Signatures</a></li><li class="tocline"><a class="tocxref" href="#hashing-algorithms"><bdi class="secno">6.3 </bdi>Hashing Algorithms</a></li><li class="tocline"><a class="tocxref" href="#randomness"><bdi class="secno">6.4 </bdi>Randomness</a></li><li class="tocline"><a class="tocxref" href="#zero-knowledge-proofs"><bdi class="secno">6.5 </bdi>Zero Knowledge Proofs</a></li><li class="tocline"><a class="tocxref" href="#biometrics"><bdi class="secno">6.6 </bdi>Biometrics</a></li></ol></li><li class="tocline"><a class="tocxref" href="#future-work"><bdi class="secno">7. </bdi>Future Work</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#upper-limits-on-did-character-length"><bdi class="secno">7.1 </bdi>Upper Limits on DID Character Length</a></li><li class="tocline"><a class="tocxref" href="#verifiable-timestamps"><bdi class="secno">7.2 </bdi>Verifiable Timestamps</a></li><li class="tocline"><a class="tocxref" href="#verifiable-credentials"><bdi class="secno">7.3 </bdi>Verifiable Credentials</a></li><li class="tocline"><a class="tocxref" href="#alternate-serializations-and-graph-models"><bdi class="secno">7.4 </bdi>Alternate Serializations and Graph Models</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">A. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">A.1 </bdi>Normative references</a></li><li class="tocline"><a class="tocxref" href="#informative-references"><bdi class="secno">A.2 </bdi>Informative references</a></li></ol></li></ol></nav>
+
+   <section id="conformance"><h2 id="x1-conformance"><bdi class="secno">1. </bdi>Conformance<a class="self-link" aria-label="§" href="#conformance"></a></h2><p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.</p><p>
+        The key word <em class="rfc2119">SHOULD</em> in this document
+        is to be interpreted as described in
+        <a href="https://datatracker.ietf.org/doc/html/bcp14">BCP 14</a>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc2119" title="Key words for use in RFCs to Indicate Requirement Levels">RFC2119</a></cite>] [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc8174" title="Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words">RFC8174</a></cite>]
+        when, and only when, they appear in all capitals, as shown here.
+      </p></section>
+
+  <section class="informative" id="terminology">
+    <h2 id="x2-terminology"><bdi class="secno">2. </bdi>Terminology<a class="self-link" aria-label="§" href="#terminology"></a></h2><p><em>This section is non-normative.</em></p>
+    <div><p>
+This section defines the terms used in this specification and throughout
+<a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-1">decentralized identifier</a> infrastructure. A link to these terms is
+included whenever they appear in this specification.
+</p>
+
+<dl class="termlist">
+
+  <dt><dfn data-lt="amplification|amplification attack" id="dfn-amplification" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">amplification attack</dfn></dt>
+  <dd>
+A class of attack where the attacker attempts to exhaust a target system's
+CPU, storage, network, or other resources by providing small, valid inputs into
+the system that result in damaging effects that can be exponentially more costly
+to process than the inputs themselves.
+  </dd>
+
+  <dt><dfn data-lt="authenticated|authenticate" id="dfn-authenticated" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">authenticate</dfn></dt>
+  <dd>
+Authentication is a process by which an entity can prove it has a specific
+attribute or controls a specific secret using one or more <a href="#dfn-verification-method" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verification-method-1">verification
+methods</a>. With <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-2">DIDs</a>, a common example would be proving control of the
+cryptographic private key associated with a public key published in a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-1">DID
+document</a>.
+  </dd>
+
+  <dt><dfn id="dfn-binding" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">binding</dfn></dt>
+  <dd>
+A concrete mechanism used by a caller to invoke a <a href="#dfn-did-resolvers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-resolvers-1">DID resolver</a> or a
+<a href="#dfn-did-url-dereferencers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-url-dereferencers-1">DID URL dereferencer</a>. This could be a local command line tool, a software
+library, or a network call such as an HTTPS request.
+  </dd>
+
+  <dt><dfn data-lt="cryptosuite|cryptographic suite" id="dfn-cryptosuite" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">cryptographic suite</dfn></dt>
+  <dd>
+A specification defining the usage of specific cryptographic primitives in
+order to achieve a particular security goal. These documents are often used
+to specify <a href="#dfn-verification-method" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verification-method-2">verification methods</a>, digital signature types,
+their identifiers, and other related properties.
+  </dd>
+
+  <dt><dfn data-lt="decentralized identifiers|DID|DIDs|decentralized identifier" data-plurals="dids|did" id="dfn-decentralized-identifiers" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">decentralized identifier</dfn> (DID)</dt>
+
+  <dd>
+A globally unique persistent identifier that does not require a centralized
+registration authority and is often generated and/or registered
+cryptographically. The generic format of a DID is defined in <a href="#did-syntax" class="sec-ref">§&nbsp;<bdi class="secno">3.1 </bdi>DID Syntax</a>. A specific <a href="#dfn-did-schemes" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-schemes-1">DID scheme</a> is defined in a <a href="#dfn-did-methods" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-methods-1">DID
+method</a> specification. Many—but not all—DID methods make use of
+<a href="#dfn-distributed-ledger-technology" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-distributed-ledger-technology-1">distributed ledger technology</a> (DLT) or some other form of decentralized
+network.
+  </dd>
+
+  <dt><dfn id="dfn-decentralized-identity-management" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">decentralized identity management</dfn></dt>
+
+  <dd>
+<a href="https://en.wikipedia.org/wiki/Identity_management">Identity
+management</a> that is based on the use of <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-3">decentralized identifiers</a>.
+Decentralized identity management extends authority for identifier generation,
+registration, and assignment beyond traditional roots of trust such as
+<a href="https://en.wikipedia.org/wiki/X.500">X.500 directory services</a>,
+the <a href="https://en.wikipedia.org/wiki/Domain_Name_System">Domain Name System</a>,
+and most national ID systems.
+  </dd>
+
+  <dt><dfn id="dfn-decentralized-public-key-infrastructure" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">decentralized public key infrastructure</dfn> (DPKI)</dt>
+
+  <dd>
+<a href="https://en.wikipedia.org/wiki/Public_key_infrastructure">Public key
+infrastructure</a> that does not rely on traditional <a href="https://en.wikipedia.org/wiki/Certificate_authority">certificate
+authorities</a> because it uses <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-4">decentralized identifiers</a> and <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-2">DID
+documents</a> to discover and verify <a href="#dfn-public-key-description" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-public-key-description-1">public key descriptions</a>.
+  </dd>
+
+  <dt><dfn data-lt="did controllers|did controller(s)|DID controller" id="dfn-did-controllers" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID controller</dfn></dt>
+
+  <dd>
+An entity that has the capability to make changes to a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-3">DID document</a>. A
+<a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-5">DID</a> might have more than one DID controller. The DID controller(s)
+can be denoted by the optional <code>controller</code> property at the top level of the
+<a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-4">DID document</a>. Note that a DID controller might be the <a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-1">DID
+subject</a>.
+  </dd>
+
+  <dt><dfn id="dfn-did-delegate" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID delegate</dfn></dt>
+
+  <dd>
+An entity to whom a <a href="#dfn-did-controllers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-controllers-1">DID controller</a> has granted permission to use a
+<a href="#dfn-verification-method" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verification-method-3">verification method</a> associated with a <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-6">DID</a> via a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-5">DID
+document</a>. For example, a parent who controls a child's <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-6">DID document</a>
+might permit the child to use their personal device in order to
+<a href="#dfn-authenticated" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-authenticated-1">authenticate</a>. In this case, the child is the <a href="#dfn-did-delegate" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-delegate-1">DID delegate</a>. The
+child's personal device would contain the private cryptographic material
+enabling the child to <a href="#dfn-authenticated" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-authenticated-2">authenticate</a> using the <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-7">DID</a>. However, the child
+might not be permitted to add other personal devices without the parent's
+permission.
+  </dd>
+
+  <dt><dfn data-lt="DID documents|DID document" data-plurals="did documents" id="dfn-did-documents" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID document</dfn></dt>
+
+  <dd>
+A set of data describing the <a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-2">DID subject</a>, including mechanisms, such as
+cryptographic public keys, that the <a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-3">DID subject</a> or a <a href="#dfn-did-delegate" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-delegate-2">DID delegate</a>
+can use to <a href="#dfn-authenticated" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-authenticated-3">authenticate</a> itself and prove its association with the
+<a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-8">DID</a>. A DID document might have one or more different
+<a href="#dfn-representations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-representations-1">representations</a> as defined in <a href="#representations" class="sec-ref">§&nbsp;<bdi class="secno">3.4.2 </bdi>Representations</a> or in the
+<abbr title="World Wide Web Consortium">W3C</abbr> DID Specification Registries [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-spec-registries" title="DID Specification Registries">DID-SPEC-REGISTRIES</a></cite>].
+  </dd>
+
+  <dt><dfn data-lt="DID fragments|DID fragment" id="dfn-did-fragments" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID fragment</dfn></dt>
+
+  <dd>
+The portion of a <a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-1">DID URL</a> that follows the first hash sign character
+(<code>#</code>). DID fragment syntax is identical to URI fragment syntax.
+  </dd>
+
+  <dt><dfn data-lt="DID methods|DID method" id="dfn-did-methods" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID method</dfn></dt>
+
+  <dd>
+A definition of how a specific <a href="#dfn-did-schemes" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-schemes-2">DID method scheme</a> is implemented. A DID method is
+defined by a DID method specification, which specifies the precise operations by
+which <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-9">DIDs</a> and <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-7">DID documents</a> are created, resolved, updated,
+and deactivated. See <a href="#methods" class="sec-ref">§&nbsp;<bdi class="secno">3. </bdi>Methods</a>.
+  </dd>
+
+  <dt><dfn data-lt="DID paths|DID path" id="dfn-did-paths" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID path</dfn></dt>
+
+  <dd>
+The portion of a <a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-2">DID URL</a> that begins with and includes the first forward
+slash (<code>/</code>) character and ends with either a question mark
+(<code>?</code>) character, a fragment hash sign (<code>#</code>) character,
+or the end of the <a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-3">DID URL</a>. DID path syntax is identical to URI path syntax.
+See <a href="#path" class="sec-ref">§&nbsp;<bdi class="secno">3.4.1.1 </bdi>Path</a>.
+  </dd>
+
+  <dt><dfn data-lt="DID queries|DID query" id="dfn-did-queries" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID query</dfn></dt>
+
+  <dd>
+The portion of a <a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-4">DID URL</a> that follows and includes the first question
+mark character (<code>?</code>). DID query syntax is identical to URI query
+syntax. See <a href="#query" class="sec-ref">§&nbsp;<bdi class="secno">3.4.1.2 </bdi>Query</a>.
+  </dd>
+
+  <dt><dfn id="dfn-did-resolution" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID resolution</dfn></dt>
+
+  <dd>
+The process that takes as its input a <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-10">DID</a> and a set of resolution
+options and returns a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-8">DID document</a> in a conforming <a href="#dfn-representations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-representations-2">representation</a>
+plus additional metadata. This process relies on the "Read" operation of the
+applicable <a href="#dfn-did-methods" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-methods-2">DID method</a>. The inputs and outputs of this process are
+defined in <a href="#did-resolution" class="sec-ref">§&nbsp;<bdi class="secno">3.4 </bdi>DID Resolution</a>.
+  </dd>
+
+  <dt><dfn data-lt="DID resolvers|DID resolver" id="dfn-did-resolvers" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID resolver</dfn></dt>
+
+  <dd>
+A <a href="#dfn-did-resolvers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-resolvers-2">DID resolver</a> is a software and/or hardware component that performs the
+<a href="#dfn-did-resolution" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-resolution-1">DID resolution</a> function by taking a <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-11">DID</a> as input and producing a
+conforming <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-9">DID document</a> as output.
+  </dd>
+
+  <dt><dfn data-lt="DID schemes|DID method scheme|DID scheme" id="dfn-did-schemes" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID scheme</dfn></dt>
+
+  <dd>
+The formal syntax of a <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-12">decentralized identifier</a>. The generic DID scheme
+begins with the prefix <code>did:</code> as defined in <a href="#did-syntax" class="sec-ref">§&nbsp;<bdi class="secno">3.1 </bdi>DID Syntax</a>. Each <a href="#dfn-did-methods" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-methods-3">DID method</a> specification defines a specific
+DID method scheme that works with that specific <a href="#dfn-did-methods" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-methods-4">DID method</a>. In a specific DID
+method scheme, the DID method name follows the first colon and terminates with
+the second colon, e.g., <code>did:example:</code>
+  </dd>
+
+  <dt><dfn data-lt="DID subjects|DID subject" id="dfn-did-subjects" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID subject</dfn></dt>
+
+  <dd>
+The entity identified by a <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-13">DID</a> and described by a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-10">DID document</a>.
+Anything can be a DID subject: person, group, organization, physical thing,
+digital thing, logical thing, etc.
+  </dd>
+
+  <dt><dfn data-lt="DID URLs|DID URL" id="dfn-did-urls" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID URL</dfn></dt>
+
+  <dd>
+A <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-14">DID</a> plus any additional syntactic component that conforms to the
+definition in <a href="#did-url-syntax" class="sec-ref">§&nbsp;<bdi class="secno">3.4.1 </bdi>DID URL Syntax</a>. This includes an optional <a href="#dfn-did-paths" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-paths-1">DID
+path</a> (with its leading <code>/</code> character), optional <a href="#dfn-did-queries" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-queries-1">DID query</a>
+(with its leading <code>?</code> character), and optional <a href="#dfn-did-fragments" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-fragments-1">DID fragment</a>
+(with its leading <code>#</code> character).
+  </dd>
+
+  <dt><dfn id="dfn-did-url-dereferencing" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID URL dereferencing</dfn></dt>
+
+  <dd>
+The process that takes as its input a <a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-5">DID URL</a> and a set of input
+metadata, and returns a <a href="#dfn-resources" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-resources-1">resource</a>. This resource might be a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-11">DID
+document</a> plus additional metadata, a secondary resource
+contained within the <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-12">DID document</a>, or a resource entirely
+external to the <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-13">DID document</a>. The process uses <a href="#dfn-did-resolution" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-resolution-2">DID resolution</a> to
+fetch a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-14">DID document</a> indicated by the <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-15">DID</a> contained within the
+<a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-6">DID URL</a>. The dereferencing process can then perform additional processing
+on the <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-15">DID document</a> to return the dereferenced resource indicated by the
+<a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-7">DID URL</a>. The inputs and outputs of this process are defined in
+<a href="#did-url-dereferencing" class="sec-ref">§&nbsp;<bdi class="secno">3.4.2.1 </bdi>DID URL Dereferencing</a>.
+  </dd>
+
+  <dt><dfn data-lt="DID URL dereferencers|DID URL dereferencer" id="dfn-did-url-dereferencers" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">DID URL dereferencer</dfn></dt>
+
+  <dd>
+A software and/or hardware system that performs the <a href="#dfn-did-url-dereferencing" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-url-dereferencing-1">DID URL dereferencing</a>
+function for a given <a href="#dfn-did-urls" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-urls-8">DID URL</a> or <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-16">DID document</a>.
+  </dd>
+
+  <dt><dfn data-lt="distributed ledger technology|DLT|distributed ledger" data-plurals="dlts" id="dfn-distributed-ledger-technology" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">distributed ledger</dfn> (DLT)</dt>
+
+  <dd>
+A non-centralized system for recording events. These systems establish
+sufficient confidence for participants to rely upon the data recorded by others
+to make operational decisions. They typically use distributed databases where
+different nodes use a consensus protocol to confirm the ordering of
+cryptographically signed transactions. The linking of digitally signed
+transactions over time often makes the history of the ledger effectively
+immutable.
+  </dd>
+
+  <dt><dfn data-plurals="public key descriptions" id="dfn-public-key-description" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">public key description</dfn></dt>
+
+  <dd>
+A data object contained inside a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-17">DID document</a> that contains all the
+metadata necessary to use a public key or a verification key.
+  </dd>
+
+  <dt><dfn data-lt="resources|resource" id="dfn-resources" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">resource</dfn></dt>
+
+  <dd>
+As defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc3986" title="Uniform Resource Identifier (URI): Generic Syntax">RFC3986</a></cite>]: "...the term 'resource' is used in a general sense
+for whatever might be identified by a URI." Similarly, any resource might serve
+as a <a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-4">DID subject</a> identified by a <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-16">DID</a>.
+  </dd>
+
+    <dt><dfn data-lt="representations|representation" id="dfn-representations" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">representation</dfn></dt>
+
+  <dd>
+As defined for HTTP by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc7231" title="Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content">RFC7231</a></cite>]: "information that is intended to reflect a
+past, current, or desired state of a given resource, in a format that can be
+readily communicated via the protocol, and that consists of a set of
+representation metadata and a potentially unbounded stream of representation
+data." A <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-18">DID document</a> is a representation of information describing a
+<a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-5">DID subject</a>. See <a href="#representations" class="sec-ref">§&nbsp;<bdi class="secno">3.4.2 </bdi>Representations</a>.
+  </dd>
+
+  <dt><dfn data-lt="service|services" id="dfn-service" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">services</dfn></dt>
+  <dd>
+Means of communicating or interacting with the <a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-6">DID subject</a> or
+associated entities via one or more <a href="#dfn-service-endpoints" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-service-endpoints-1">service endpoints</a>.
+Examples include discovery services, agent services, social networking
+services, file storage services, and verifiable credential repository services.
+  </dd>
+
+  <dt><dfn data-lt="service endpoints|service endpoint" id="dfn-service-endpoints" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">service endpoint</dfn></dt>
+
+  <dd>
+A network address, such as an HTTP URL, at which <a href="#dfn-service" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-service-1">services</a> operate on
+behalf of a <a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-7">DID subject</a>.
+  </dd>
+
+  <dt><dfn data-lt="URI|URIs|Uniform Resource Identifier" id="dfn-uri" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">Uniform Resource Identifier</dfn> (URI)</dt>
+
+  <dd>
+The standard identifier format for all resources on the World Wide Web as
+defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc3986" title="Uniform Resource Identifier (URI): Generic Syntax">RFC3986</a></cite>]. A <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-17">DID</a> is a type of URI scheme.
+  </dd>
+
+    <dt><dfn data-lt="verifiable credentials|verifiable credential" id="dfn-verifiable-credentials" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">verifiable credential</dfn></dt>
+
+  <dd>
+A standard data model and representation format for cryptographically-verifiable
+digital credentials as defined by the <abbr title="World Wide Web Consortium">W3C</abbr> Verifiable Credentials specification
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-model" title="Verifiable Credentials Data Model 1.0">VC-DATA-MODEL</a></cite>].
+  </dd>
+
+  <dt>
+    <dfn data-lt="verifiable data registry|verifiable data registries" id="dfn-verifiable-data-registry" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">
+    verifiable data registry</dfn>
+  </dt>
+
+  <dd>
+A system that facilitates the creation, verification, updating, and/or
+deactivation of <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-18">decentralized identifiers</a> and <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-19">DID documents</a>. A
+verifiable data registry might also be used for other
+cryptographically-verifiable data structures such as <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-1">verifiable
+credentials</a>. For more information, see the <abbr title="World Wide Web Consortium">W3C</abbr> Verifiable Credentials
+specification [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-model" title="Verifiable Credentials Data Model 1.0">VC-DATA-MODEL</a></cite>].
+  </dd>
+
+  <dt><dfn data-plurals="verifiable timestamps" id="dfn-verifiable-timestamp" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">verifiable timestamp</dfn></dt>
+
+  <dd>
+A verifiable timestamp enables a third-party to verify that a data object
+existed at a specific moment in time and that it has not been modified or
+corrupted since that moment in time.&nbsp;If the data integrity could reasonably have
+been modified or corrupted since that moment in time, the timestamp is not
+verifiable.
+  </dd>
+
+  <dt><dfn data-lt="" data-plurals="verification methods" id="dfn-verification-method" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">verification method</dfn></dt>
+
+  <dd>
+    <p>
+A set of parameters that can be used together with a process to independently
+verify a proof. For example, a cryptographic public key can be used as a
+verification method with respect to a digital signature; in such usage, it
+verifies that the signer possessed the associated cryptographic private key.
+    </p>
+    <p>
+"Verification" and "proof" in this definition are intended to apply broadly. For
+example, a cryptographic public key might be used during Diffie-Hellman key
+exchange to negotiate a shared symmetric key for encryption. This guarantees the
+integrity of the key agreement process. It is thus another type of verification
+method, even though descriptions of the process might not use the words
+"verification" or "proof."
+    </p>
+  </dd>
+
+  <dt><dfn data-lt="" id="dfn-verification-relationship" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">verification relationship</dfn></dt>
+
+  <dd>
+    <p>
+An expression of the relationship between the <a href="#dfn-did-subjects" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-subjects-8">DID subject</a> and a
+<a href="#dfn-verification-method" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verification-method-4">verification method</a>. An example of a verification relationship is
+<a href="#authentication" class="sec-ref">§&nbsp;<bdi class="secno">3.5.1 </bdi>Authentication</a>.
+    </p>
+  </dd>
+
+  <dt><dfn data-lt="UUID|UUIDs|Universally Unique Identifier" id="dfn-uuid" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">Universally Unique Identifier</dfn> (UUID)</dt>
+
+  <dd>
+A type of globally unique identifier defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc4122" title="A Universally Unique IDentifier (UUID) URN Namespace">RFC4122</a></cite>]. UUIDs are similar
+to DIDs in that they do not require a centralized registration authority. UUIDs
+differ from DIDs in that they are not resolvable or
+cryptographically-verifiable.
+  </dd>
+
+</dl>
+</div>
+  </section>
+
+  <section class="informative" id="methods">
+    <h2 id="x3-methods"><bdi class="secno">3. </bdi>Methods<a class="self-link" aria-label="§" href="#methods"></a></h2><p><em>This section is non-normative.</em></p>
+
+    <div class="note" role="note" id="issue-container-generatedID"><div role="heading" class="note-title marker" id="h-note" aria-level="3"><span>Note</span></div><p class="">
+      See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+      <a href="https://www.w3.org/TR/did-core/#methods">DID Methods</a>.
+    </p></div>
+
+    <p>
+      Avoid introducing requirements in your DID method specification that are
+      neither described in [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] nor registered in the
+      [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-spec-registries" title="DID Specification Registries">DID-SPEC-REGISTRIES</a></cite>].
+    </p>
+
+    <p>
+      Avoid constructing a new DID Method that is nearly identical to an existing
+      DID Method.
+    </p>
+
+    <p>
+      There are several "families" of DID Methods, including
+      <a href="https://hyperledger-indy.readthedocs.io/en/latest/index.html">Hyperledger Indy</a>, <a href="https://identity.foundation/sidetree/spec/">Sidetree</a>, and
+      various methods that share similar smart contracts or rely on shared
+      content addressing technology.
+    </p>
+
+    <p class="advisement">
+      Implementers are cautioned to write and regularly run integration and
+      interoperability tests that span these "families", in order to ensure
+      methods have sufficient support for open standards and real
+      interoperability.
+    </p>
+
+    <p>
+      The primary user-facing aspects of a DID Method are its
+      <a href="#did-syntax">DID Syntax</a> and its
+      <a href="#verifiable-data-registry">Verifiable Data Registry</a>.
+      Together these determine most of the unique properties of a DID Method,
+      and its privacy and security properties for comparison to other methods.
+    </p>
+
+    <section class="informative" id="did-syntax">
+      <h3 id="x3-1-did-syntax"><bdi class="secno">3.1 </bdi>DID Syntax<a class="self-link" aria-label="§" href="#did-syntax"></a></h3><p><em>This section is non-normative.</em></p>
+      <div class="note" role="note" id="issue-container-generatedID-0"><div role="heading" class="note-title marker" id="h-note-0" aria-level="4"><span>Note</span></div><p class="">
+        See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#did-syntax">DID Syntax</a>.
+      </p></div>
+      <p>
+        Avoid allowing users to control the structure of the DID Unique
+        Suffix, also referred to as the <code>id-char</code> in the ABNF. This
+        can be accomplished by coupling the create operation canonical
+        representation to the <code>id-char</code>. It can also be
+        accomplished by leveraging sources of entropy.
+      </p>
+
+      <p>
+        Avoid vanity DIDs such as, for example,
+        <code>did:example:deadbeef1f236...</code>. The structure of the
+        identifier should not be relied on for anything other than collision
+        resistance. Be especially careful of trusting a relationship between a
+        DID subject and DID controller without relying on a cryptographically
+        secure verification relationship for
+        <a href="authentication">authentication</a>.
+        Anyone can claim a DID, but only someone who controls the associated
+        keys can authenticate their association with the DID.
+        For example <code>did:example:xyzcorp</code> should not be assumed to belong to
+        XYZ Corp.
+      </p>
+
+      <p>
+        Depending on the nature of the
+        <a href="#verifiable-data-registry">VDR</a>, publishing
+        <code>type</code> or <code>kind</code> might be advantageous for
+        decentralized discovery or mass surveillance. Implementers are not to
+        rely on conformance to specification text while implementing
+        decentralized identifiers.
+      </p>
+    </section>
+
+    <section class="informative" id="verifiable-data-registry">
+      <h3 id="x3-2-verifiable-data-registry"><bdi class="secno">3.2 </bdi>Verifiable Data Registry<a class="self-link" aria-label="§" href="#verifiable-data-registry"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <div class="note" role="note" id="issue-container-generatedID-1"><div role="heading" class="note-title marker" id="h-note-1" aria-level="4"><span>Note</span></div><p class="">
+        See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#dfn-verifiable-data-registry">Verifiable Data Registry</a>.
+      </p></div>
+
+      <p>
+        The <a href="#verifiable-data-registry">VDR</a> is the system to which
+        DID Operations such as Create, Resolve, Update, and Deactivate are
+        applied.
+      </p>
+
+      <p>
+        Typically a globally-unique, tamper-evident, immutable log is used to
+        produce a verifiable data registry.
+      </p>
+
+      <p>
+        Blockchains or distributed ledgers are popular choices for building
+        verifiable data registries, but there are other solutions which yield
+        unique security pros and cons.
+      </p>
+
+      <p>
+        Some DID methods rely on centralized trusted service providers and
+        Merkle proofs to provide tamper-evident logs without the costs
+        associated with distributeted consensus.
+      </p>
+
+      <p>
+        Some DID methods rely on multiple registries that may not be globally
+        available.
+      </p>
+
+      <p>
+        Some DID methods might rely on legacy security infrastructure, such as
+        TLS or TOR.
+      </p>
+
+      <p>
+        Few DID methods support portability accross verifiable data
+        registries, and altering the VDR associated with a DID will almost
+        certainly impact Privacy and Security considerations.
+      </p>
+
+      <p>
+        Intead of designing complex DID Methods with registry portability,
+        consider supporting multiple DID methods that have each been designed
+        to support disjoint security and/or privacy consideration, such as
+        global discoverability, offline functionality, pairwise uniqueness, 
+        linkage to existing roots of trust such as websites, etc.
+      </p>
+
+      <p>
+        Depending on the nature of the VDR, it may be desirable to store data
+        other than DID Documents, such as verifiable credentials,
+        templates or schemas for credentials, discovery metadata, or integrity-
+        or content-addressable identifiers for related information.
+      </p>
+    </section>
+
+    <section class="informative" id="establishing-a-did">
+      <h3 id="x3-3-establishing-a-did"><bdi class="secno">3.3 </bdi>Establishing a DID<a class="self-link" aria-label="§" href="#establishing-a-did"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p>
+        In order to create secure DID systems, it is important to consider the process
+        of establishing a Decentralized Identifier.
+      </p>
+
+
+      <p class="advisement">
+        Establishing cryptographic assurances for the identifier from its
+        inception is critical to ensuring that the security of the system isn't
+        compromised through attacks against the creation process.
+      </p>
+
+      <p>A commonly observed process for establishing a decentralized identifier is:</p>
+      <ol>
+        <li>
+          Obtain <code>entropy</code> from a source of randomness that is as close to actually random as possible.
+        </li>
+        <li>Generate a first verification method from <code>entropy</code>.</li>
+        <li>Use the first verification method to perform a DID Create Operation.</li>
+      </ol>
+      <div class="note" role="note" id="issue-container-generatedID-2"><div role="heading" class="note-title marker" id="h-note-2" aria-level="4"><span>Note</span></div><p class="">
+        The Create Operation will often use the first verification directly, or a deterministic 
+        function thereof, such as a hash, to construct and register the DID.
+      </p></div>
+      <div class="note" role="note" id="issue-container-generatedID-3"><div role="heading" class="note-title marker" id="h-note-3" aria-level="4"><span>Note</span></div><p class="">
+        True randomness is <b>hard</b> to get. Sources such as the
+        <a href="https://csrc.nist.gov/projects/interoperable-randomness-beacons">NIST Randomness Beacon</a>
+        are reliable, but should not be used directly as a secret key.  See the 
+        section on <a href="#randomness">Randomness</a> for more information.
+      </p></div>
+</section>
+
+    
+
+  <section class="informative" id="did-resolution">
+    <h3 id="x3-4-did-resolution"><bdi class="secno">3.4 </bdi>DID Resolution<a class="self-link" aria-label="§" href="#did-resolution"></a></h3><p><em>This section is non-normative.</em></p>
+
+    <div class="note" role="note" id="issue-container-generatedID-4"><div role="heading" class="note-title marker" id="h-note-4" aria-level="4"><span>Note</span></div><p class="">
+      See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+      <a href="https://www.w3.org/TR/did-core/#did-resolution">DID Resolution</a>.
+    </p></div>
+
+    <p>
+      DID resolution is a function which takes a DID, and produces a DID
+      Resolution response in a representation, most commonly JSON.
+    </p>
+
+   
+
+    <p>
+      DID resolution can be proxied through intermediaries such as command
+      line tools or http servers. Because the DID Document contains key
+      material, such intermediaries represent excellent targets for attackers,
+      who can use the intermediaries to tamper with verification relationships.
+    </p>
+
+    <p>
+      Avoid tampering with a DID Document that as been returned by DID Method
+      software. It is better to throw an error than to attempt to solve problems
+      in the underlying DID Method.
+    </p>
+
+    <p>
+      Avoid transforming DID Documents without the consent of the DID subject
+      or controller.
+    </p>
+
+    <p>
+      Whenever possible, run all software necessary to support a DID Method
+      yourself.
+    </p>
+
+    <section class="informative" id="did-url-syntax">
+      <h4 id="x3-4-1-did-url-syntax"><bdi class="secno">3.4.1 </bdi>DID URL Syntax<a class="self-link" aria-label="§" href="#did-url-syntax"></a></h4><p><em>This section is non-normative.</em></p>
+
+      <div class="note" role="note" id="issue-container-generatedID-5"><div role="heading" class="note-title marker" id="h-note-5" aria-level="5"><span>Note</span></div><p class="">
+        See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#did-url-syntax">DID URL Syntax</a>.
+      </p></div>
+
+      <p>
+        DID URLs can be used to identify sub-resources inside a DID Document,
+        older versions of a DID Document, or resources outside of a DID
+        Document.
+      </p>
+
+      <div class="example" id="example-1-did-url-identifying-a-verification-method-in-a-did-document">
+        <div class="marker">
+    <a class="self-link" href="#example-1-did-url-identifying-a-verification-method-in-a-did-document">Example<bdi> 1</bdi></a><span class="example-title">: DID URL identifying a verification method in a DID Document</span>
+  </div> <pre aria-busy="false"><code class="hljs">did:example:123#primary</code></pre>
+      </div>
+
+      <div class="example" id="example-2-did-url-identifying-a-service-in-a-did-document">
+        <div class="marker">
+    <a class="self-link" href="#example-2-did-url-identifying-a-service-in-a-did-document">Example<bdi> 2</bdi></a><span class="example-title">: DID URL identifying a service in a DID Document</span>
+  </div> <pre aria-busy="false"><code class="hljs">did:example:123#agent</code></pre>
+      </div>
+
+      <div class="example" id="example-3-did-url-identifying-a-resource-outside-a-did-document">
+        <div class="marker">
+    <a class="self-link" href="#example-3-did-url-identifying-a-resource-outside-a-did-document">Example<bdi> 3</bdi></a><span class="example-title">: DID URL identifying a resource outside a DID Document</span>
+  </div> <pre aria-busy="false"><code class="hljs javascript">did:example:<span class="hljs-number">123</span>?service=packages@relativeRef=<span class="hljs-regexp">/jose/</span>versions/v0<span class="hljs-number">.1</span><span class="hljs-number">.2</span>/archive.zip</code></pre>
+      </div>
+
+      <p>
+        Adjusting any part of a DID URL, including the <code>did</code>,
+        <code>path</code>, or <code>query</code>, changes the identifier.
+      </p>
+
+      <p>
+        The resource identifiers <code>did:example:123</code>,
+        <code>did:example:123/path</code> and
+        <code>did:example:123?args=1</code> each identify a unique resource.
+      </p>
+
+      <section class="informative" id="path">
+        <h5 id="x3-4-1-1-path"><bdi class="secno">3.4.1.1 </bdi>Path<a class="self-link" aria-label="§" href="#path"></a></h5><p><em>This section is non-normative.</em></p>
+
+        <div class="note" role="note" id="issue-container-generatedID-6"><div role="heading" class="note-title marker" id="h-note-6" aria-level="6"><span>Note</span></div><p class="">
+          See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#path">Path</a>.
+        </p></div>
+        <p>
+          Avoid using <code>path</code>; as of this writing, there are not enough 
+          implementations that make use of it.
+        </p>
+
+        <div class="example" id="example-4-did-url-identifying-a-resource-outside-a-did-document">
+        <div class="marker">
+    <a class="self-link" href="#example-4-did-url-identifying-a-resource-outside-a-did-document">Example<bdi> 4</bdi></a><span class="example-title">: DID URL identifying a resource outside a DID Document</span>
+  </div> <pre aria-busy="false"><code class="hljs">did:example:123/ephemeral/77d66171-b290-489c-abf1-95ae10725201#primary</code></pre>
+      </div>
+      </section>
+
+      <section class="informative" id="query">
+        <h5 id="x3-4-1-2-query"><bdi class="secno">3.4.1.2 </bdi>Query<a class="self-link" aria-label="§" href="#query"></a></h5><p><em>This section is non-normative.</em></p>
+
+        <div class="note" role="note" id="issue-container-generatedID-7"><div role="heading" class="note-title marker" id="h-note-7" aria-level="6"><span>Note</span></div><p class="">
+          See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#query">Query</a>.
+        </p></div>
+
+        <p>
+          Avoid using <code>query</code>; as of this writing, there are not enough 
+          implementations that make use of it.
+        </p>
+
+        <div class="example" id="example-5-did-url-identifying-a-verification-method-in-an-older-version-of-a-did-document">
+        <div class="marker">
+    <a class="self-link" href="#example-5-did-url-identifying-a-verification-method-in-an-older-version-of-a-did-document">Example<bdi> 5</bdi></a><span class="example-title">: DID URL identifying a verification method in an older version of a DID Document</span>
+  </div> <pre aria-busy="false"><code class="hljs">did:example:123?version-id=77d66171-b290-489c-abf1-95ae10725201#primary</code></pre>
+      </div>
+      </section>
+
+      <section class="informative" id="fragment">
+        <h5 id="x3-4-1-3-fragment"><bdi class="secno">3.4.1.3 </bdi>Fragment<a class="self-link" aria-label="§" href="#fragment"></a></h5><p><em>This section is non-normative.</em></p>
+
+        <div class="note" role="note" id="issue-container-generatedID-8"><div role="heading" class="note-title marker" id="h-note-8" aria-level="6"><span>Note</span></div><p class="">
+          See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#fragment">Fragment</a>.
+        </p></div>
+
+        <div class="example" id="example-6-did-url-identifying-a-verification-method-in-a-did-document">
+        <div class="marker">
+    <a class="self-link" href="#example-6-did-url-identifying-a-verification-method-in-a-did-document">Example<bdi> 6</bdi></a><span class="example-title">: DID URL identifying a verification method in a DID Document</span>
+  </div> <pre aria-busy="false"><code class="hljs">did:example:123#primary</code></pre>
+      </div>
+
+        <p>
+          Fragments identify sub-resources of a resource identified with a DID
+          URL.
+        </p>
+
+        <p>
+          The interpretation of the fragment is determined by the Media Type 
+          (formerly known as a MIME type).
+        </p>
+      </section>
+    </section>
+
+    <section class="informative" id="representations">
+      <h4 id="x3-4-2-representations"><bdi class="secno">3.4.2 </bdi>Representations<a class="self-link" aria-label="§" href="#representations"></a></h4><p><em>This section is non-normative.</em></p>
+
+      <div class="note" role="note" id="issue-container-generatedID-9"><div role="heading" class="note-title marker" id="h-note-9" aria-level="5"><span>Note</span></div><p class="">
+        See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#representations">Representations</a>.
+      </p></div>
+
+      <p>
+        The [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] specification describes representations and the
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-spec-registries" title="DID Specification Registries">DID-SPEC-REGISTRIES</a></cite>] supports the registration of an unbounded
+        number of alternative representations.
+      </p>
+
+      <p>Each representation has unique pros and cons.</p>
+
+      <p>
+        DID Methods are responsible for producing a DID Document in the
+        requested representation.
+      </p>
+
+      <p>
+        DID Method implementers may choose to return verification methods in
+        alternate formats for representations, for example, an implementer
+        might prefer to return verification material encoded with
+        <code>publicKeyJwk</code> for <code>application/did+json</code> and
+        <code>publicKeyBase58</code> for <code>application/did+ld+json</code>.
+      </p>
+
+
+      <div class="issue" id="issue-container-number-1"><div role="heading" class="issue-title marker" id="h-issue" aria-level="5"><span>Issue 1</span></div><p class="">
+        This sentence above is contested, see <a href="https://github.com/w3c/did-imp-guide/issues/5">
+        this conversation</a>.
+      </p></div>
+
+      <p>
+        Avoid allowing arbitrary unknown properties such as <code>__proto__</code>
+        or other characters that might be used to attack JSON parsing into 
+        <code>application/did+json</code> .
+      </p>
+
+      <p>
+        While <code>application/did+json</code> is very flexible and allows
+        for arbitrary JSON, implementers are cautioned to implement security
+        in depth.
+      </p>
+
+      <p>
+        Implementers are cautioned to review
+        <a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a>
+      </p>
+
+      <p>
+        Implementers should confirm that each representation they decide to
+        support is interoperable with the same representation in other DID
+        Methods.
+      </p>
+
+      <p>
+        Implementers should avoid guessing about conformance to [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>].
+      </p>
+
+      <section class="informative" id="did-url-dereferencing">
+        <h5 id="x3-4-2-1-did-url-dereferencing"><bdi class="secno">3.4.2.1 </bdi>DID URL Dereferencing<a class="self-link" aria-label="§" href="#did-url-dereferencing"></a></h5><p><em>This section is non-normative.</em></p>
+        <div class="note" role="note" id="issue-container-generatedID-10"><div role="heading" class="note-title marker" id="h-note-10" aria-level="6"><span>Note</span></div><p class="">
+          See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with
+          developing
+          <a href="https://www.w3.org/TR/did-core/#did-url-dereferencing">DID URL Dereferencing</a>.
+        </p></div>
+
+        <p>
+          Dereferencing is critical to integrating with cryptographic toolkits
+          such as Linked Data Proofs, JOSE, PGP, or Anon Creds.
+        </p>
+      </section>
+
+      <section class="informative" id="application-did-json">
+        <h5 id="x3-4-2-2-application-did-json"><bdi class="secno">3.4.2.2 </bdi>application/did+json<a class="self-link" aria-label="§" href="#application-did-json"></a></h5><p><em>This section is non-normative.</em></p>
+      </section>
+
+      <section class="informative" id="application-did-ld-json">
+        <h5 id="x3-4-2-3-application-did-ld-json"><bdi class="secno">3.4.2.3 </bdi>application/did+ld+json<a class="self-link" aria-label="§" href="#application-did-ld-json"></a></h5><p><em>This section is non-normative.</em></p>
+      </section>
+    </section>
+  </section>
+
+  <section class="informative" id="verification-relationships">
+    <h3 id="x3-5-verification-relationships"><bdi class="secno">3.5 </bdi>Verification Relationships<a class="self-link" aria-label="§" href="#verification-relationships"></a></h3><p><em>This section is non-normative.</em></p>
+    <div class="note" role="note" id="issue-container-generatedID-11"><div role="heading" class="note-title marker" id="h-note-11" aria-level="4"><span>Note</span></div><p class="">
+      See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+      <a href="https://www.w3.org/TR/did-core/#verification-relationships">Verification Relationships</a>.
+    </p></div>
+
+    <p>
+      Verification relationships are loosely equivalent to the concept of key
+      purpose.
+    </p>
+
+    <p>
+      It is considered a security best practice not to reuse the same key for
+      multiple purposes.
+    </p>
+
+    <section class="informative" id="authentication">
+      <h4 id="x3-5-1-authentication"><bdi class="secno">3.5.1 </bdi>Authentication<a class="self-link" aria-label="§" href="#authentication"></a></h4><p><em>This section is non-normative.</em></p>
+      <div class="note" role="note" id="issue-container-generatedID-12"><div role="heading" class="note-title marker" id="h-note-12" aria-level="5"><span>Note</span></div><p class="">
+        See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#authentication">Authentication</a>.
+      </p></div>
+      <p>
+        Implementers are advised to implement support for this relationship.
+      </p>
+      <p>
+        This relationship should be used for proofs or signatures associated
+        with DID Subject authentication.
+      </p>
+
+      <p>Avoid conflating authentication and authorization.</p>
+
+      <p>
+        Avoid leveraging alternative relationships for the purpose of
+        authentication.
+      </p>
+    </section>
+
+    <section class="informative" id="assertion-method">
+      <h4 id="x3-5-2-assertion-method"><bdi class="secno">3.5.2 </bdi>Assertion Method<a class="self-link" aria-label="§" href="#assertion-method"></a></h4><p><em>This section is non-normative.</em></p>
+      <div class="note" role="note" id="issue-container-generatedID-13"><div role="heading" class="note-title marker" id="h-note-13" aria-level="5"><span>Note</span></div><p class="">
+        See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with developing
+        <a href="https://www.w3.org/TR/did-core/#assertion">Assertion</a>.
+      </p></div>
+      <p>
+        Implementers are advised to implement support for this relationship.
+      </p>
+      <p>
+        This relationship should be used for proofs or signatures associated
+        with claims issued by this DID Subject about another identifier, which
+        might be a DID.
+      </p>
+
+      <p>
+        This method is described in the [[VC-DATA-MODEL], see
+        <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures-0">Proofs</a>
+      </p>
+
+      <p>
+        Avoid leveraging alternative relationships for the purpose of issuing
+        credentials.
+      </p>
+    </section>
+  </section>
+
+  </section>
+
+  <section class="informative" id="data-model-and-representations">
+    <h2 id="x4-data-model-and-representations"><bdi class="secno">4. </bdi>Data Model and Representations<a class="self-link" aria-label="§" href="#data-model-and-representations"></a></h2><p><em>This section is non-normative.</em></p>
+
+    <div class="note" role="note" id="issue-container-generatedID-14"><div role="heading" class="note-title marker" id="h-note-14" aria-level="3"><span>Note</span></div><p class="">
+      See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with the
+      <a href="https://www.w3.org/TR/did-core/#data-model">Data Model</a>.
+    </p></div>
+
+    <div class="note" role="note" id="issue-container-generatedID-15"><div role="heading" class="note-title marker" id="h-note-15" aria-level="3"><span>Note</span></div><p class="">
+      See [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>] for normative requirements associated with
+      <a href="https://www.w3.org/TR/did-core/#representations">Representations</a>.
+    </p></div>
+
+    <p class="advisement">
+      There is no strong consensus regarding preserving data model properties across representations.
+      Removing properties when converting a did document can result in an inability to maintain 
+      interoperability with [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-model" title="Verifiable Credentials Data Model 1.0">VC-DATA-MODEL</a></cite>]. See Drawbacks and Benefits.
+    </p>
+
+    <section id="drawbacks">
+      <h3 id="x4-1-drawbacks"><bdi class="secno">4.1 </bdi>Drawbacks<a class="self-link" aria-label="§" href="#drawbacks"></a></h3>
+
+    <p>
+      The DID document data model contains “properties” (such as <code>id</code>, <code>verificationMethod</code>, and <code>service</code>), which are
+      defined in a way that is independent of a concrete representation. There are a number of known representations,
+      including JSON and JSON-LD (defined by DID Core), and CBOR (defined by a DID WG Note). Additional representations
+      (such as XML, YAML, CBOR-LD, and others) are possible and may be defined in the future. For each of these
+      representations, a combination of production and consumption rules defines the concrete syntax of properties, but
+      the semantics of properties are independent of any given representation. In other words, in every representation
+      of a DID document, there is always a way to represent a <code>service</code> or a <code>verificationMethod</code>, and their meanings
+      are consistent across conformant representations.
+    </p>
+
+    <p>
+      In addition to “properties”, a DID document may contain “representation-specific entries” which may be
+      required by certain representations in order to fully represent the DID document data model and its
+      properties. For example, the JSON-LD representation of a DID document (with media type <code>application/did+ld+json</code>) requires the
+      <code>@context</code> representation-specific entry, in order to correctly express the semantics of properties such as <code>id</code>,
+      <code>verificationMethod</code> or <code>service</code> within the JSON-LD representation. This enables JSON-LD’s semantics which are
+      based on a decentralized, permissionless, open-world data model.
+    </p>
+
+    <p>
+      In contrast to this, the (non-LD) JSON representation (with media type <code>application/did+json</code>) does not have this semantic
+      capability; instead, (non-LD) JSON documents always need agreement on semantics in some out-of-band way that is
+      not part of the document itself. In the case of DID documents using the (non-LD) JSON representation, those semantics are
+      typically established by the <a href="https://w3c.github.io/did-spec-registries/">DID Spec Registries</a>. Therefore,
+      establishing semantics of DID document properties in the (non-LD) JSON representation does not require
+      the representation-specific <code>@context</code> entry, as is required by the JSON-LD representation.
+    </p>
+
+    <p>
+      Similar holds true for the (non-LD) CBOR representation.
+    </p>
+
+    <p>
+      Other examples of “representation-specific entries” could be XML namespace definitions or YAML tags, although
+      these particular representations have not been defined at the time of this writing.
+    </p>
+
+    <p>
+      If an entry that is specific to one representation appears in another representation, it can be called a
+      "representation-foreign entry". An example of this is an <code>@context</code> entry appearing in the <code>application/did+json</code>
+      representation.
+    </p>
+
+    <p>
+      Examples of “representation-specific entries” and “representation-foreign entries”:
+    </p>
+
+    <figure id="representation-entries">
+      <img style="margin: auto; display: block;" src="diagrams/representation-specific-and-foreign-entries.png" alt="
+Examples of representation-specific and representation-foreign entries in various representations." height="834" width="1467">
+      <figcaption>Figure <bdi class="figno">1</bdi> <span class="fig-title">
+        Representation-specific and representation-foreign entries.
+      </span></figcaption>
+    </figure>
+
+    <section class="informative" id="avoid-representation-foreign-entries">
+      <h4 id="x4-1-1-avoid-representation-foreign-entries"><bdi class="secno">4.1.1 </bdi>
+        Avoid representation-foreign entries
+      <a class="self-link" aria-label="§" href="#avoid-representation-foreign-entries"></a></h4><p><em>This section is non-normative.</em></p>
+
+      <p class="advisement">
+        It is bad practice and potentially harmful for producers to include "representation-foreign entries" in DID
+        documents.
+      </p>
+
+      <p>
+        Different implementations of DID document consumers may or may not be able to properly understand the meaning
+        and processing rules of representation-foreign entries. Since DIDs and DID documents form an open ecosystem with
+        many producers and consumers, a producer cannot anticipate the behavior of a consumer with regard to
+        representation-foreign entries.
+      </p>
+
+      <p>
+        For example, if a producer adds an <code>@context</code> entry to a DID document in the <code>application/did+json</code>
+        representation, some consumers (those that understand JSON-LD, such as JSON-LD document loaders) may process it
+        in one way, while other consumers (those that only understand plain JSON, without any JSON-LD specific rules)
+        may process it in a different way.
+      </p>
+
+      <p>
+        This can lead to inconsistent behavior by consumers that cannot be predicted by a producer.
+      </p>
+
+    </section>
+
+    <section class="informative" id="reliance-on-representation-foreign-entries">
+      <h4 id="x4-1-2-reliance-on-representation-foreign-entries"><bdi class="secno">4.1.2 </bdi>
+        Reliance on representation-foreign entries
+      <a class="self-link" aria-label="§" href="#reliance-on-representation-foreign-entries"></a></h4><p><em>This section is non-normative.</em></p>
+
+      <p class="advisement">
+        It is bad practice and potentially harmful for consumers to rely on "representation-foreign entries" in DID
+        documents.
+      </p>
+
+      <p>
+        As a special case of the previous section, certain consumers may go as far as relying on the presence of
+        representation-foreign entries. For example, an incorrectly implemented consumer of DID documents in the
+        <code>application/did+json</code> representation may attempt to apply JSON-LD tooling to that representation. That tooling
+        is dependent on the presence of the <code>@context</code> representation-foreign entry, which is not actually required (and
+        in fact discouraged) to be used in the <code>application/did+json</code> representation.
+      </p>
+
+      <p>
+        The result is lack of interoperability, since such consumers will throw errors even if the returned DID document
+        representation is actually conformant.
+      </p>
+
+    </section>
+
+    <section class="informative" id="security-problems-with-representation-foreign-entries">
+      <h4 id="x4-1-3-security-problems-with-representation-foreign-entries"><bdi class="secno">4.1.3 </bdi>
+        Security problems with representation-foreign entries
+      <a class="self-link" aria-label="§" href="#security-problems-with-representation-foreign-entries"></a></h4><p><em>This section is non-normative.</em></p>
+
+      <p>
+        If some implementations of DID document consumers process representation-foreign entries, and others don’t, then
+        this can lead to security holes, since the semantics of DID document properties will not be interpreted in a
+        predictable way.
+      </p>
+
+      <p>
+        For example, consider the following DID document, and assume that the JSON-LD context
+        <code>https://myextensions.com/other-definitions.jsonld</code> defines <code>blockchainAccountId</code> in a way that is different
+        from the <a href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property listed in the DID
+        Specification Registries</a>.
+      </p>
+
+      <div class="example" id="example-7-a-did-document-in-the-application-did-json-representation-with-the-context-representation-foreign-entry">
+        <div class="marker">
+    <a class="self-link" href="#example-7-a-did-document-in-the-application-did-json-representation-with-the-context-representation-foreign-entry">Example<bdi> 7</bdi></a><span class="example-title">: A DID document in the `application/did+json` representation with the `@context` representation-foreign entry</span>
+  </div> <pre class="nohighlight">{
+  "@context":[
+    "https://www.w3.org/ns/did/v1",
+    "https://myextensions.com/other-definitions.jsonld"
+  ],
+  "id":"did:example:123456789abcdefghi",
+  "verificationMethod":[{
+    "id": "did:example:123456789abcdefghi#vm-3",
+    "controller": "did:example:123456789abcdefghi",
+    "type": "EcdsaSecp256k1RecoveryMethod2020",
+    "blockchainAccountId": "0xF3beAC30C498D9E26865F34fCAa57dBB935b0D74"
+  }]
+}</pre>
+      </div>
+
+      <p>
+        If this DID document is consumed as <code>application/did+json</code> by an implementation that doesn't understand JSON-LD,
+        it will interpret <code>blockchainAccountId</code> as the <a href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property listed in the DID
+        Specification Registries</a>, and it will process it accordingly.
+      </p>
+
+      <p>
+        If the exact same DID document is consumed as <code>application/did+json</code> by an implementation that understands
+        JSON-LD, it may interpret <code>blockchainAccountId</code> using the provided JSON-LD context, and therefore process it
+        differently.
+      </p>
+
+      <p>
+        It is a common mistake to claim that "JSON-LD is just JSON", and to justify injecting the <code>@context</code>
+        representation-foreign entry into a DID document in the <code>application/did+json</code> representation. This claim
+        however is true only on the syntax level, but wrong and dangerous on the semantic level, especially when
+        security-related properties are involved. In the example above, different consumer implementations are likely to
+        come to different conclusions on how the DID can be controlled.
+      </p>
+
+      <p class="advisement">
+        Representation-foreign entries in DID documents should be avoided, since they can lead to inconsistent and
+        unpredictable DID control decisions.
+      </p>
+
+    </section>
+
+    <section class="informative" id="conversion-between-representations">
+      <h4 id="x4-1-4-conversion-between-representations"><bdi class="secno">4.1.4 </bdi>
+        Conversion between Representations
+      <a class="self-link" aria-label="§" href="#conversion-between-representations"></a></h4><p><em>This section is non-normative.</em></p>
+
+      <p>
+        The DID document data model and the production/consumption rules of representations have been designed to enable
+        lossless conversion between representations. Conversion between representations is achieved by executing the
+        consumption rules of the source representation, and then the production rules of the target representation.
+      </p>
+
+      <p>
+        The <a href="https://w3c.github.io/did-spec-registries/">DID Specification Registries</a> provide additional
+        information about properties as well as representation-specific entries that help with such conversion. For
+        example, a DID document in the <code>application/did+json</code> representation can be converted to the
+        <code>application/did+ld+json</code> representation by adding a <code>@context</code> representation-specific entry during production,
+        using the JSON-LD context information in the DID <a href="https://w3c.github.io/did-spec-registries/">Specification
+        Registries</a>.
+      </p>
+
+      <p>
+        Conversely, a DID document in the <code>application/did+ld+json</code> representation can be converted to the
+        <code>application/did+json</code> representation by removing the <code>@context</code> representation-specific entry during
+        consumption.
+      </p>
+
+      <p class="advisement">
+        Representation-foreign entries in DID documents should be avoided, since the implications on lossless conversion
+        between representations is unclear.
+      </p>
+
+    </section>
+    
+    </section>
+
+    <section id="benefits">
+      <h3 id="x4-2-benefits"><bdi class="secno">4.2 </bdi>Benefits<a class="self-link" aria-label="§" href="#benefits"></a></h3>
+      
+      <p>
+        Implementers are not required to support all representations. 
+        For example, an implementation might choose to only support <code>application/did+json</code>, 
+        and choose not to support <code>application/did+ld+json</code>, <code>application/did+dag+cbor</code>,
+         <code>application/did+xml</code>, <code>application/did+yaml</code>, etc...
+      </p>
+
+      <p>
+        Implementers might prefer to use JSON or YAML representations to implement both the 
+         abstract data model and concrete reprepresentations.
+      </p>
+
+      <p>
+        When converting between an implementation of the abstract data model and a
+        representation that is capable of preserving all properties, 
+        all properties <em class="rfc2119">SHOULD</em> be preserved.
+      </p>
+
+      <p>For example, preserving <code>@context</code> in YAML, 
+        allows for the document to later be used with 
+        <a href="https://www.w3.org/TR/json-ld11-api/#loaddocumentcallback">documentLoaders</a> that use 
+        <a href="https://www.w3.org/TR/json-ld11-framing/">frame</a> to perform dereferencing.
+      </p>  
+
+      <div class="example" id="example-8">
+        <div class="marker">
+    <a class="self-link" href="#example-8">Example<bdi> 8</bdi></a>
+  </div> <pre aria-busy="false"><code class="hljs javascript">---
+<span class="hljs-string">"@context"</span>:
+- https:<span class="hljs-comment">//www.w3.org/ns/did/v1</span>
+- https:<span class="hljs-comment">//w3id.org/security/suites/jws-2020/v1</span>
+id: did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6
+<span class="hljs-attr">verificationMethod</span>:
+- id: did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6#z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6
+  <span class="hljs-attr">type</span>: JsonWebKey2020
+  <span class="hljs-attr">controller</span>: did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6
+  <span class="hljs-attr">publicKeyJwk</span>:
+    kty: EC
+    <span class="hljs-attr">crv</span>: P-<span class="hljs-number">384</span>
+    <span class="hljs-attr">x</span>: ELYfgFzSi43VGgKlyuYBKeoW00DmNqf5VuMWD1iUTTHQ8NRQrR4KHShzH_DrvOhh
+    <span class="hljs-attr">y</span>: sftqdHdso4JPQO3MLnsXmWbAFqjmHLgP8H_DZSLxx3ei9kLj_W3R6NhtH03bwE1C
+<span class="hljs-attr">assertionMethod</span>:
+- did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6#z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6
+<span class="hljs-attr">authentication</span>:
+- did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6#z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6
+<span class="hljs-attr">capabilityInvocation</span>:
+- did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6#z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6
+<span class="hljs-attr">capabilityDelegation</span>:
+- did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6#z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6
+<span class="hljs-attr">keyAgreement</span>:
+- did:key:z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6#z82Lkm8gN2PGD7WbUiTUKRHgSptPhGPAQG9HT9HybYE9LoKYwcikh5rAU9gGo3qTne3ZHf6</code></pre>
+      </div>
+
+      <div class="note" role="note" id="issue-container-generatedID-16"><div role="heading" class="note-title marker" id="h-note-16" aria-level="4"><span>Note</span></div><p class="">Preserving members across representations is also common in 
+        <a href="https://swagger.io/specification/">OpenAPI Specification 3.0.3</a>,
+      which supports 
+      <a href="https://datatracker.ietf.org/doc/html/draft-wright-json-schema-00#section-4.2">JSON Schema</a>
+      represented as YAML or JSON.
+      </p></div>
+
+      <p>DID Methods that support both <code>application/did+ld+json</code> and <code>application/did+json</code> 
+        ought to return <code>application/did+json</code> with an <code>@context</code>, because it enables
+        both representations to be used with tooling and standards that support semantics (such as [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-model" title="Verifiable Credentials Data Model 1.0">VC-DATA-MODEL</a></cite>]), 
+        and because the default behavior of JSON processors is to ignore object members that are not understood.
+      </p>
+
+      <p>DID Document representations produced by an implementation ought to be treated as immutable, 
+        since any tampering, including adding, removing, or reordering core or representation specific entries
+        might be considered malicious, since it alters the integrity of the produced DID Document.</p>
+
+    </section>  
+  </section>
+
+  <section class="informative" id="privacy-considerations">
+    <h2 id="x5-privacy-considerations"><bdi class="secno">5. </bdi>Privacy Considerations<a class="self-link" aria-label="§" href="#privacy-considerations"></a></h2><p><em>This section is non-normative.</em></p>
+
+    <p>
+      Decentralized Identifiers, like any other technology, can be used to
+      enhance privacy as well as harm privacy. This section speaks to topics
+      that implementers might consider when thinking about the privacy
+      characteristics of their software systems.
+    </p>
+
+    <section class="informative" id="dealing-with-personal-data">
+      <h3 id="x5-1-dealing-with-personal-data"><bdi class="secno">5.1 </bdi>
+        Dealing with Personal Data
+      <a class="self-link" aria-label="§" href="#dealing-with-personal-data"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p class="advisement">
+        Never store personal data, even in an encrypted format, on any verifiable data
+        registry backed by immutable storage.
+      </p>
+
+      <p>
+        It is the DID method implementer's responsibility to think about and identify
+        the extent to which personal data may be included in a DID document.
+      </p>
+
+      <p>
+        Software should at least display a warning and ask for confirmation before creating
+        or updating any properties of a DID document that depend on user provided inputs.
+      </p>
+
+      <p>
+        A DID method specification should have a section dedicated to personal data covering the extent to
+        which information published on the corresponding ledger can be updated or deleted.
+        It should provide specific instructions of how to do so, if it is possible.
+        Otherwise, it should clearly state that it is not possible.
+      </p>
+
+      <p>
+        A DID method should avoid "phone home" or tracking characteristics that would 
+        permit tracing of a user in manner not understood or authorized by the user
+        by some third party.
+      </p>
+    </section>
+
+    <section class="informative" id="avoid-correlation">
+      <h3 id="x5-2-avoid-correlation"><bdi class="secno">5.2 </bdi>Avoid correlation<a class="self-link" aria-label="§" href="#avoid-correlation"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p class="advisement">
+        Avoid reusing verification methods across DID Methods.
+      </p>
+
+      <p class="advisement">
+        Avoid reusing services with unique parameters across DID Methods.
+      </p>
+
+      <p>
+        Any anonymous identifier, even if it is generated randomly, can be used to
+        infer sensitive information about a <a href="#dfn-did-subjects" id="ref-for-dfn-did-subjects-9">DID subject</a> 
+        if it is reused enough times.
+      </p>
+
+      <p>
+        A DID method implementer should rotate keys and identifiers as often as possible
+        to avoid correlation
+      </p>
+    </section>
+
+    <section class="informative" id="anonymity">
+      <h3 id="x5-3-anonymity"><bdi class="secno">5.3 </bdi>Anonymity<a class="self-link" aria-label="§" href="#anonymity"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p>
+        Consider formally modeling the privacy implications associated with
+        your implementation using
+        <a href="https://en.wikipedia.org/wiki/T-closeness">t-closeness</a> or
+        other mechanisms.
+      </p>
+
+      <p>
+        If your DID Method supports global enumeration and indexing, consider
+        exposing this information publicly. You may wish to provide alerts
+        similar to services that watch version control systems for sensitive
+        information that is accidentally leaked.
+      </p>
+    </section>
+
+    <section class="informative" id="compliance">
+      <h3 id="x5-4-compliance"><bdi class="secno">5.4 </bdi>Compliance<a class="self-link" aria-label="§" href="#compliance"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p>
+        Review any applicable local law when considering developing or
+        operating a decentralized identifier method.
+      </p>
+
+      <p>Consider <a href="https://gdpr.eu/">GDPR</a>.</p>
+
+      <p>Consider <a href="https://oag.ca.gov/privacy/ccpa">CCPA</a>.</p>
+
+      <p>Consider <a href="https://www.bis.doc.gov/index.php/policy-guidance/encryption">EAR</a>.</p>
+    </section>
+  </section>
+
+  <section class="informative" id="security-considerations">
+    <h2 id="x6-security-considerations"><bdi class="secno">6. </bdi>Security Considerations<a class="self-link" aria-label="§" href="#security-considerations"></a></h2><p><em>This section is non-normative.</em></p>
+
+    <p>
+      Decentralized Identifiers are security primitives that are often used to
+      secure important systems. This section speaks to topics that
+      implementers might consider when thinking about the security
+      characteristics of their software systems.
+    </p>
+
+    <p>
+      Pay very close attention to the defense, cryptographic agility, and political
+      acceptability of any cryptography you rely on for DID Method security.
+    </p>
+
+    <p>
+      Avoid complex or slow signature formats, especially if they are poorly
+      documented, or do not have an open standard with well documented test
+      vectors.
+    </p>
+
+    <p class="advisement">
+      Avoid open source implementations that are declared a "defacto
+      standard", but lack open standard technical specifications.
+    </p>
+
+    <p class="advisement">
+      Support for legacy cryptography systems such as
+      <a href="https://www.iana.org/assignments/jose/jose.xhtml">JOSE</a>
+      and <a href="https://www.openpgp.org/">OpenPGP</a> should be considered
+      due to their prevalence in existing systems.
+    </p>
+
+    <section class="informative" id="vendor-lock-in">
+      <h3 id="x6-1-vendor-lock-in"><bdi class="secno">6.1 </bdi>Vendor Lock In<a class="self-link" aria-label="§" href="#vendor-lock-in"></a></h3><p><em>This section is non-normative.</em></p>
+      <p>
+        Competition, direct substitutability, interoperability, and mutual
+        feature support are key to reducing the barriers to adoption of, and
+        increasing confidence in, your DID Method.
+      </p>
+
+      <p>
+        Avoid inventing "new features". Work with others to find a common way
+        to express any new features that are not unique to your DID Method.
+      </p>
+
+      <p>
+        Avoid hard coupling to specific networks, such as Bitcoin or
+        Hyperledger Fabric. Design your method such that it may be adapted
+        to support multiple ledger systems.
+      </p>
+
+      <p class="advisement">
+        Transparency and openness in approaches related to security not only
+        lead to greater security, but promote interoprability and adoption.
+      </p>
+    </section>
+
+    <section class="informative" id="digital-signatures">
+      <h3 id="x6-2-digital-signatures"><bdi class="secno">6.2 </bdi>Digital Signatures<a class="self-link" aria-label="§" href="#digital-signatures"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p class="advisement">
+        We recommend the user review
+        <a href="https://safecurves.cr.yp.to/">safecurves.cr.yp.to</a> before
+        selecting elliptic curve types.  A key note however, is that several
+        items on safecurves are less frequently updated.  
+        In addition to safecurves you should always check the top level standards 
+        and any docs which superseed referenced standards in safecurves, especially 
+        <a href="https://csrc.nist.gov/publications/detail/fips/186/4/final">
+        FIPS 186-4</a> and 
+        <a href="https://csrc.nist.gov/publications/detail/sp/800-56a/rev-3/final">
+        SP 800-56A Rev 3</a> when evalutating curves for use.
+      </p>
+
+      <p class="advisement">Avoid secp256k1, RSA, P-256, P-384 and P-521.</p>
+
+      <p>
+        Avoid relying on smart contracts for complex data management. If you
+        must use a smart contract, keep it simple and architect a solution
+        that supports data migration.
+      </p>
+    </section>
+
+    <section class="informative" id="hashing-algorithms">
+      <h3 id="x6-3-hashing-algorithms"><bdi class="secno">6.3 </bdi>Hashing Algorithms<a class="self-link" aria-label="§" href="#hashing-algorithms"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p>Avoid MD5, SHA1, and other legacy hashing algorithms with known weaknesses
+        or high collision rates.
+      </p>
+      <p class="advisement">
+        When in doubt in selection of a hashing algorithm, consult the 
+        <a href="https://csrc.nist.gov/projects/hash-functions">
+          NIST documentation</a> related to hash function selection,
+        <a href="https://csrc.nist.gov/publications/detail/fips/202/final">
+          SHA-3 as described in FIPS 202</a> 
+        should be strongly considered for new implementations
+      </p>
+    </section>
+
+    <section class="informative" id="randomness">
+      <h3 id="x6-4-randomness"><bdi class="secno">6.4 </bdi>Randomness<a class="self-link" aria-label="§" href="#randomness"></a></h3><p><em>This section is non-normative.</em></p>
+      When making an implemention carefully consider how you are sourcing
+      random numbers.  Consult 
+      <a href="https://datatracker.ietf.org/doc/html/rfc4086">RFC 4086</a>
+      when selecting an approach to get random bits, and pay careful attention
+      to the platform and any underlying hardware that may be in use as multiple
+      attacks have been performed in the wild due to improper selection of 
+      random values in key material and other aspects of cryptography.  
+    </section>
+
+    <section class="informative" id="zero-knowledge-proofs">
+      <h3 id="x6-5-zero-knowledge-proofs"><bdi class="secno">6.5 </bdi>Zero Knowledge Proofs<a class="self-link" aria-label="§" href="#zero-knowledge-proofs"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p>
+        Consider using
+        <a href="https://w3c-ccg.github.io/ldp-bbs2020/">BBS+ Signatures</a>
+        for selective disclosure and linked-secret–based JSON-LD verifiable
+        credentials.
+      </p>
+
+      <p class="advisement">
+        The IETF document on 
+        <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-10.txt">
+          Pairing Friendly Curves
+        </a> should be consulted when selecting curves for usage with zero knowledge proofs,
+        especially to ensure that appropriate embedding degrees are selected, and that 
+        the resulting equivalent bit characteristics are sufficient.
+      </p>
+
+      <p>
+        Avoid zero knowledge proofs as described in the
+        <a href="https://w3c.github.io/vc-data-model/#example-25-a-verifiable-presentation-that-supports-cl-signatures">AnonCredDerivedCredentialv1</a>.
+        This proof format is coupled to specific ledger technologies,
+        similar to the concept of an ethereum virtual machine smart contract
+        only running on EVM compatible ledgers. Ledger-specific technologies
+        should be avoided when designing for portable, interoperable, and 
+        open-standards–based zero knowledge proofs.
+      </p>
+
+      <p>
+        Avoid storing credential schemas on ledgers. Many DID methods cannot
+        store information other than a DID Document, which reduces the direct
+        interoperability, substitutability, and cost effectiveness of
+        solutions that make use of rare or poorly supported features such as
+        credential schema definition storage.
+      </p>
+    </section>
+
+    <section class="informative" id="biometrics">
+      <h3 id="x6-6-biometrics"><bdi class="secno">6.6 </bdi>Biometrics<a class="self-link" aria-label="§" href="#biometrics"></a></h3><p><em>This section is non-normative.</em></p>
+
+      <p>Avoid relying exclusively on biometrics.</p>
+
+      <p>
+        Hardware-isolated keys protected by biometrics on devices may increase
+        the usability of DIDs.
+      </p>
+
+      <p class="advisement">
+        The addition of biometrics to other techniques can aid in certain tasks
+        such as reauthentication.  
+        <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP 800-63B</a>
+        deals directly with digital identity and has several useful sections 
+        that address appropriate language for describing biometrics usage as well 
+        as techniques for incorporating biometrics into an approach for solving 
+        problems related to digital identity.
+      </p>
+    </section>
+  </section>
+
+  <section id="future-work">
+    <h2 id="x7-future-work"><bdi class="secno">7. </bdi>Future Work<a class="self-link" aria-label="§" href="#future-work"></a></h2>
+    <div class="note" role="note" id="issue-container-generatedID-17"><div role="heading" class="note-title marker" id="h-note-17" aria-level="3"><span>Note</span></div><p class="">
+      This section was copied from
+      <a href="https://github.com/w3c/did-imp-guide/">w3c/did-imp-guide</a>, and adjusted based on changes made to DID
+      Core.
+    </p></div>
+
+    <section id="upper-limits-on-did-character-length">
+      <h3 id="x7-1-upper-limits-on-did-character-length"><bdi class="secno">7.1 </bdi>Upper Limits on DID Character Length<a class="self-link" aria-label="§" href="#upper-limits-on-did-character-length"></a></h3>
+
+      <p>
+        The current specification does not take a position on the maximum length
+        of a
+        <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-19">DID</a>. The maximum interoperable URL length is currently about
+        2048 characters. QR codes can handle about 4096 characters. Clients
+        using <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-20">DIDs</a> will be responsible for storing many <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-21">DIDs</a>,
+        and some methods would be able to externalize some of their costs
+        onto clients by relying on more complicated signature schemes or by
+        adding state into <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-22">DIDs</a> intended for temporary use. A future
+        version of this specification should set reasonable limits on
+        <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-23">DID</a> character length to minimize externalities.
+      </p>
+    </section>
+    <section id="verifiable-timestamps">
+      <h3 id="x7-2-verifiable-timestamps"><bdi class="secno">7.2 </bdi>Verifiable Timestamps<a class="self-link" aria-label="§" href="#verifiable-timestamps"></a></h3>
+
+      <p>
+        <a href="#dfn-verifiable-timestamp" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-timestamp-1">Verifiable timestamps</a> have significant utility for identifier
+        records. This is a good fit for <a href="#dfn-distributed-ledger-technology" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-distributed-ledger-technology-2">DLTs</a>, since most offer some
+        type of timestamp mechanism. Despite some transactional cost, they
+        are the among the most censorship-resistant transaction ordering
+        systems at the present, so they are nearly ideal for
+        <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-20">DID document</a> timestamping. In some cases a <a href="#dfn-distributed-ledger-technology" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-distributed-ledger-technology-3">DLT</a>'s
+        immediate timing is approximate, however their sense of
+        <a href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki%23Abstract">
+          "median time past" (see Bitcoin BIP 113)</a>
+        can be precisely defined. A generic <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-21">DID document</a> timestamping
+        mechanism could would work across all <a href="#dfn-distributed-ledger-technology" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-distributed-ledger-technology-4">DLTs</a> and might operate
+        via a mechanism including either individual transactions or
+        transaction batches. Such a generic mechanism was deemed out of scope
+        for this version, although it may be included in a future version of
+        this specification.
+      </p>
+    </section>
+
+    <section id="verifiable-credentials">
+      <h3 id="x7-3-verifiable-credentials"><bdi class="secno">7.3 </bdi>Verifiable Credentials<a class="self-link" aria-label="§" href="#verifiable-credentials"></a></h3>
+
+      <p>
+        Although <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-24">DIDs</a> and <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-22">DID documents</a> form a foundation for
+        decentralized identity, they are only the first step in describing
+        their subjects. The rest of the descriptive power comes through
+        collecting and selectively using Verifiable Credentials
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-model" title="Verifiable Credentials Data Model 1.0">VC-DATA-MODEL</a></cite>]. Future versions of the specification will
+        describe in more detail how <a href="#dfn-decentralized-identifiers" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-decentralized-identifiers-25">DIDs</a> and <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-23">DID document</a> can
+        be integrated with — and help enable — the Verifiable
+        Credentials ecosystem.
+      </p>
+    </section>
+
+    <section id="alternate-serializations-and-graph-models">
+      <h3 id="x7-4-alternate-serializations-and-graph-models"><bdi class="secno">7.4 </bdi>Alternate Serializations and Graph Models<a class="self-link" aria-label="§" href="#alternate-serializations-and-graph-models"></a></h3>
+
+      <p>
+        This version of the specification relies on JSON-LD and the RDF
+        graph model for expressing a <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-24">DID document</a>. Future versions of
+        this specification might specify other semantic graph formats for a
+        <a href="#dfn-did-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-did-documents-25">DID document</a>.
+      </p>
+    </section>
+  </section>
+  
+
+
+
+<section id="references" class="appendix"><h2 id="a-references"><bdi class="secno">A. </bdi>References<a class="self-link" aria-label="§" href="#references"></a></h2><section id="normative-references">
+    <h3 id="a-1-normative-references"><bdi class="secno">A.1 </bdi>Normative references<a class="self-link" aria-label="§" href="#normative-references"></a></h3>
+    <dl class="bibliography"><dt id="bib-rfc2119">[RFC2119]</dt><dd><a href="https://tools.ietf.org/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. S. Bradner.  IETF. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a></dd><dt id="bib-rfc8174">[RFC8174]</dt><dd><a href="https://tools.ietf.org/html/rfc8174"><cite>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</cite></a>. B. Leiba.  IETF. May 2017. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc8174">https://tools.ietf.org/html/rfc8174</a></dd><dt id="bib-vc-data-model">[VC-DATA-MODEL]</dt><dd><a href="https://www.w3.org/TR/vc-data-model/"><cite>Verifiable Credentials Data Model 1.0</cite></a>. Manu Sporny; Grant Noble; Dave Longley; Daniel Burnett; Brent Zundel.  W3C. 19 November 2019. W3C Recommendation. URL: <a href="https://www.w3.org/TR/vc-data-model/">https://www.w3.org/TR/vc-data-model/</a></dd></dl>
+  </section><section id="informative-references">
+    <h3 id="a-2-informative-references"><bdi class="secno">A.2 </bdi>Informative references<a class="self-link" aria-label="§" href="#informative-references"></a></h3>
+    <dl class="bibliography"><dt id="bib-did-core">[DID-CORE]</dt><dd><a href="https://www.w3.org/TR/did-core/"><cite>Decentralized Identifiers (DIDs) v1.0</cite></a>. Drummond Reed; Manu Sporny; Markus Sabadello; Dave Longley; Christopher Allen.  W3C. 9 December 2019. W3C Working Draft. URL: <a href="https://www.w3.org/TR/did-core/">https://www.w3.org/TR/did-core/</a></dd><dt id="bib-did-spec-registries">[DID-SPEC-REGISTRIES]</dt><dd><a href="https://www.w3.org/TR/did-spec-registries/"><cite>DID Specification Registries</cite></a>. Orie Steele; Manu Sporny.  W3C. 18 June 2020. W3C Note. URL: <a href="https://www.w3.org/TR/did-spec-registries/">https://www.w3.org/TR/did-spec-registries/</a></dd><dt id="bib-rfc3986">[RFC3986]</dt><dd><a href="https://www.rfc-editor.org/rfc/rfc3986"><cite>Uniform Resource Identifier (URI): Generic Syntax</cite></a>. T. Berners-Lee; R. Fielding; L. Masinter.  IETF. January 2005. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a></dd><dt id="bib-rfc4122">[RFC4122]</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc4122"><cite>A Universally Unique IDentifier (UUID) URN Namespace</cite></a>. P. Leach; M. Mealling; R. Salz.  IETF. July 2005. Proposed Standard. URL: <a href="https://datatracker.ietf.org/doc/html/rfc4122">https://datatracker.ietf.org/doc/html/rfc4122</a></dd><dt id="bib-rfc7231">[RFC7231]</dt><dd><a href="https://httpwg.org/specs/rfc7231.html"><cite>Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</cite></a>. R. Fielding, Ed.; J. Reschke, Ed..  IETF. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7231.html">https://httpwg.org/specs/rfc7231.html</a></dd></dl>
+  </section></section><p role="navigation" id="back-to-top">
+    <a href="#title"><abbr title="Back to Top">↑</abbr></a>
+  </p><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-amplification" aria-label="Links in this document to definition: amplification attack">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-amplification" aria-label="Permalink for definition: amplification attack. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-authenticated" aria-label="Links in this document to definition: authenticate">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-authenticated" aria-label="Permalink for definition: authenticate. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-authenticated-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-authenticated-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-authenticated-3" title="Reference 3">(3)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-binding" aria-label="Links in this document to definition: binding">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-binding" aria-label="Permalink for definition: binding. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-cryptosuite" aria-label="Links in this document to definition: cryptographic suite">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-cryptosuite" aria-label="Permalink for definition: cryptographic suite. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-decentralized-identifiers" aria-label="Links in this document to definition: decentralized identifier">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-decentralized-identifiers" aria-label="Permalink for definition: decentralized identifier. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-decentralized-identifiers-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-decentralized-identifiers-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-decentralized-identifiers-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-decentralized-identifiers-4" title="Reference 4">(4)</a> <a href="#ref-for-dfn-decentralized-identifiers-5" title="Reference 5">(5)</a> <a href="#ref-for-dfn-decentralized-identifiers-6" title="Reference 6">(6)</a> <a href="#ref-for-dfn-decentralized-identifiers-7" title="Reference 7">(7)</a> <a href="#ref-for-dfn-decentralized-identifiers-8" title="Reference 8">(8)</a> <a href="#ref-for-dfn-decentralized-identifiers-9" title="Reference 9">(9)</a> <a href="#ref-for-dfn-decentralized-identifiers-10" title="Reference 10">(10)</a> <a href="#ref-for-dfn-decentralized-identifiers-11" title="Reference 11">(11)</a> <a href="#ref-for-dfn-decentralized-identifiers-12" title="Reference 12">(12)</a> <a href="#ref-for-dfn-decentralized-identifiers-13" title="Reference 13">(13)</a> <a href="#ref-for-dfn-decentralized-identifiers-14" title="Reference 14">(14)</a> <a href="#ref-for-dfn-decentralized-identifiers-15" title="Reference 15">(15)</a> <a href="#ref-for-dfn-decentralized-identifiers-16" title="Reference 16">(16)</a> <a href="#ref-for-dfn-decentralized-identifiers-17" title="Reference 17">(17)</a> <a href="#ref-for-dfn-decentralized-identifiers-18" title="Reference 18">(18)</a> 
+  </li><li>
+    <a href="#ref-for-dfn-decentralized-identifiers-19" title="§ 7.1 Upper Limits on DID Character Length">§ 7.1 Upper Limits on DID Character Length</a> <a href="#ref-for-dfn-decentralized-identifiers-20" title="Reference 2">(2)</a> <a href="#ref-for-dfn-decentralized-identifiers-21" title="Reference 3">(3)</a> <a href="#ref-for-dfn-decentralized-identifiers-22" title="Reference 4">(4)</a> <a href="#ref-for-dfn-decentralized-identifiers-23" title="Reference 5">(5)</a> 
+  </li><li>
+    <a href="#ref-for-dfn-decentralized-identifiers-24" title="§ 7.3 Verifiable Credentials">§ 7.3 Verifiable Credentials</a> <a href="#ref-for-dfn-decentralized-identifiers-25" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-decentralized-identity-management" aria-label="Links in this document to definition: decentralized identity management">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-decentralized-identity-management" aria-label="Permalink for definition: decentralized identity management. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-decentralized-public-key-infrastructure" aria-label="Links in this document to definition: decentralized public key infrastructure">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-decentralized-public-key-infrastructure" aria-label="Permalink for definition: decentralized public key infrastructure. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-controllers" aria-label="Links in this document to definition: DID controller">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-controllers" aria-label="Permalink for definition: DID controller. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-controllers-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-delegate" aria-label="Links in this document to definition: DID delegate">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-delegate" aria-label="Permalink for definition: DID delegate. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-delegate-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-delegate-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-documents" aria-label="Links in this document to definition: DID document">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-documents" aria-label="Permalink for definition: DID document. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-documents-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-documents-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-did-documents-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-did-documents-4" title="Reference 4">(4)</a> <a href="#ref-for-dfn-did-documents-5" title="Reference 5">(5)</a> <a href="#ref-for-dfn-did-documents-6" title="Reference 6">(6)</a> <a href="#ref-for-dfn-did-documents-7" title="Reference 7">(7)</a> <a href="#ref-for-dfn-did-documents-8" title="Reference 8">(8)</a> <a href="#ref-for-dfn-did-documents-9" title="Reference 9">(9)</a> <a href="#ref-for-dfn-did-documents-10" title="Reference 10">(10)</a> <a href="#ref-for-dfn-did-documents-11" title="Reference 11">(11)</a> <a href="#ref-for-dfn-did-documents-12" title="Reference 12">(12)</a> <a href="#ref-for-dfn-did-documents-13" title="Reference 13">(13)</a> <a href="#ref-for-dfn-did-documents-14" title="Reference 14">(14)</a> <a href="#ref-for-dfn-did-documents-15" title="Reference 15">(15)</a> <a href="#ref-for-dfn-did-documents-16" title="Reference 16">(16)</a> <a href="#ref-for-dfn-did-documents-17" title="Reference 17">(17)</a> <a href="#ref-for-dfn-did-documents-18" title="Reference 18">(18)</a> <a href="#ref-for-dfn-did-documents-19" title="Reference 19">(19)</a> 
+  </li><li>
+    <a href="#ref-for-dfn-did-documents-20" title="§ 7.2 Verifiable Timestamps">§ 7.2 Verifiable Timestamps</a> <a href="#ref-for-dfn-did-documents-21" title="Reference 2">(2)</a> 
+  </li><li>
+    <a href="#ref-for-dfn-did-documents-22" title="§ 7.3 Verifiable Credentials">§ 7.3 Verifiable Credentials</a> <a href="#ref-for-dfn-did-documents-23" title="Reference 2">(2)</a> 
+  </li><li>
+    <a href="#ref-for-dfn-did-documents-24" title="§ 7.4 Alternate Serializations and Graph Models">§ 7.4 Alternate Serializations and Graph Models</a> <a href="#ref-for-dfn-did-documents-25" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-fragments" aria-label="Links in this document to definition: DID fragment">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-fragments" aria-label="Permalink for definition: DID fragment. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-fragments-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-methods" aria-label="Links in this document to definition: DID method">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-methods" aria-label="Permalink for definition: DID method. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-methods-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-methods-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-did-methods-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-did-methods-4" title="Reference 4">(4)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-paths" aria-label="Links in this document to definition: DID path">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-paths" aria-label="Permalink for definition: DID path. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-paths-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-queries" aria-label="Links in this document to definition: DID query">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-queries" aria-label="Permalink for definition: DID query. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-queries-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-resolution" aria-label="Links in this document to definition: DID resolution">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-resolution" aria-label="Permalink for definition: DID resolution. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-resolution-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-resolution-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-resolvers" aria-label="Links in this document to definition: DID resolver">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-resolvers" aria-label="Permalink for definition: DID resolver. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-resolvers-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-resolvers-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-schemes" aria-label="Links in this document to definition: DID scheme">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-schemes" aria-label="Permalink for definition: DID scheme. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-schemes-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-schemes-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-subjects" aria-label="Links in this document to definition: DID subject">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-subjects" aria-label="Permalink for definition: DID subject. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-subjects-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-subjects-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-did-subjects-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-did-subjects-4" title="Reference 4">(4)</a> <a href="#ref-for-dfn-did-subjects-5" title="Reference 5">(5)</a> <a href="#ref-for-dfn-did-subjects-6" title="Reference 6">(6)</a> <a href="#ref-for-dfn-did-subjects-7" title="Reference 7">(7)</a> <a href="#ref-for-dfn-did-subjects-8" title="Reference 8">(8)</a> 
+  </li><li>
+    <a href="#ref-for-dfn-did-subjects-9" title="§ 5.2 Avoid correlation">§ 5.2 Avoid correlation</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-urls" aria-label="Links in this document to definition: DID URL">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-urls" aria-label="Permalink for definition: DID URL. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-urls-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-did-urls-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-did-urls-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-did-urls-4" title="Reference 4">(4)</a> <a href="#ref-for-dfn-did-urls-5" title="Reference 5">(5)</a> <a href="#ref-for-dfn-did-urls-6" title="Reference 6">(6)</a> <a href="#ref-for-dfn-did-urls-7" title="Reference 7">(7)</a> <a href="#ref-for-dfn-did-urls-8" title="Reference 8">(8)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-url-dereferencing" aria-label="Links in this document to definition: DID URL dereferencing">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-url-dereferencing" aria-label="Permalink for definition: DID URL dereferencing. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-url-dereferencing-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-did-url-dereferencers" aria-label="Links in this document to definition: DID URL dereferencer">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-did-url-dereferencers" aria-label="Permalink for definition: DID URL dereferencer. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-did-url-dereferencers-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-distributed-ledger-technology" aria-label="Links in this document to definition: distributed ledger">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-distributed-ledger-technology" aria-label="Permalink for definition: distributed ledger. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-distributed-ledger-technology-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li><li>
+    <a href="#ref-for-dfn-distributed-ledger-technology-2" title="§ 7.2 Verifiable Timestamps">§ 7.2 Verifiable Timestamps</a> <a href="#ref-for-dfn-distributed-ledger-technology-3" title="Reference 2">(2)</a> <a href="#ref-for-dfn-distributed-ledger-technology-4" title="Reference 3">(3)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-public-key-description" aria-label="Links in this document to definition: public key description">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-public-key-description" aria-label="Permalink for definition: public key description. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-public-key-description-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-resources" aria-label="Links in this document to definition: resource">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-resources" aria-label="Permalink for definition: resource. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-resources-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-representations" aria-label="Links in this document to definition: representation">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-representations" aria-label="Permalink for definition: representation. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-representations-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-representations-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-service" aria-label="Links in this document to definition: services">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-service" aria-label="Permalink for definition: services. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-service-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-service-endpoints" aria-label="Links in this document to definition: service endpoint">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-service-endpoints" aria-label="Permalink for definition: service endpoint. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-service-endpoints-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-uri" aria-label="Links in this document to definition: Uniform Resource Identifier">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-uri" aria-label="Permalink for definition: Uniform Resource Identifier. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-verifiable-credentials" aria-label="Links in this document to definition: verifiable credential">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-verifiable-credentials" aria-label="Permalink for definition: verifiable credential. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-verifiable-credentials-1" title="§ 2. Terminology">§ 2. Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-verifiable-data-registry" aria-label="Links in this document to definition: verifiable data registry">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-verifiable-data-registry" aria-label="Permalink for definition: verifiable data registry. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-verifiable-timestamp" aria-label="Links in this document to definition: verifiable timestamp">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-verifiable-timestamp" aria-label="Permalink for definition: verifiable timestamp. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-verifiable-timestamp-1" title="§ 7.2 Verifiable Timestamps">§ 7.2 Verifiable Timestamps</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-verification-method" aria-label="Links in this document to definition: verification method">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-verification-method" aria-label="Permalink for definition: verification method. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-verification-method-1" title="§ 2. Terminology">§ 2. Terminology</a> <a href="#ref-for-dfn-verification-method-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-verification-method-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-verification-method-4" title="Reference 4">(4)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-verification-relationship" aria-label="Links in this document to definition: verification relationship">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-verification-relationship" aria-label="Permalink for definition: verification relationship. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-uuid" aria-label="Links in this document to definition: Universally Unique Identifier">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-uuid" aria-label="Permalink for definition: Universally Unique Identifier. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+      <li>Not referenced in this document.</li>
+    </ul>
+    </div><script id="respec-dfn-panel">(() => {
+// @ts-check
+if (document.respec) {
+  document.respec.ready.then(setupPanel);
+} else {
+  setupPanel();
+}
+
+function setupPanel() {
+  const listener = panelListener();
+  document.body.addEventListener("keydown", listener);
+  document.body.addEventListener("click", listener);
+}
+
+function panelListener() {
+  /** @type {HTMLElement} */
+  let panel = null;
+  return event => {
+    const { target, type } = event;
+
+    if (!(target instanceof HTMLElement)) return;
+
+    // For keys, we only care about Enter key to activate the panel
+    // otherwise it's activated via a click.
+    if (type === "keydown" && event.key !== "Enter") return;
+
+    const action = deriveAction(event);
+
+    switch (action) {
+      case "show": {
+        hidePanel(panel);
+        /** @type {HTMLElement} */
+        const dfn = target.closest("dfn, .index-term");
+        panel = document.getElementById(`dfn-panel-for-${dfn.id}`);
+        const coords = deriveCoordinates(event);
+        displayPanel(dfn, panel, coords);
+        break;
+      }
+      case "dock": {
+        panel.style.left = null;
+        panel.style.top = null;
+        panel.classList.add("docked");
+        break;
+      }
+      case "hide": {
+        hidePanel(panel);
+        panel = null;
+        break;
+      }
+    }
+  };
+}
+
+/**
+ * @param {MouseEvent|KeyboardEvent} event
+ */
+function deriveCoordinates(event) {
+  const target = /** @type HTMLElement */ (event.target);
+
+  // We prevent synthetic AT clicks from putting
+  // the dialog in a weird place. The AT events sometimes
+  // lack coordinates, so they have clientX/Y = 0
+  const rect = target.getBoundingClientRect();
+  if (
+    event instanceof MouseEvent &&
+    event.clientX >= rect.left &&
+    event.clientY >= rect.top
+  ) {
+    // The event probably happened inside the bounding rect...
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  // Offset to the middle of the element
+  const x = rect.x + rect.width / 2;
+  // Placed at the bottom of the element
+  const y = rect.y + rect.height;
+  return { x, y };
+}
+
+/**
+ * @param {Event} event
+ */
+function deriveAction(event) {
+  const target = /** @type {HTMLElement} */ (event.target);
+  const hitALink = !!target.closest("a");
+  if (target.closest("dfn:not([data-cite]), .index-term")) {
+    return hitALink ? "none" : "show";
+  }
+  if (target.closest(".dfn-panel")) {
+    if (hitALink) {
+      return target.classList.contains("self-link") ? "hide" : "dock";
+    }
+    const panel = target.closest(".dfn-panel");
+    return panel.classList.contains("docked") ? "hide" : "none";
+  }
+  if (document.querySelector(".dfn-panel:not([hidden])")) {
+    return "hide";
+  }
+  return "none";
+}
+
+/**
+ * @param {HTMLElement} dfn
+ * @param {HTMLElement} panel
+ * @param {{ x: number, y: number }} clickPosition
+ */
+function displayPanel(dfn, panel, { x, y }) {
+  panel.hidden = false;
+  // distance (px) between edge of panel and the pointing triangle (caret)
+  const MARGIN = 20;
+
+  const dfnRects = dfn.getClientRects();
+  // Find the `top` offset when the `dfn` can be spread across multiple lines
+  let closestTop = 0;
+  let minDiff = Infinity;
+  for (const rect of dfnRects) {
+    const { top, bottom } = rect;
+    const diffFromClickY = Math.abs((top + bottom) / 2 - y);
+    if (diffFromClickY < minDiff) {
+      minDiff = diffFromClickY;
+      closestTop = top;
+    }
+  }
+
+  const top = window.scrollY + closestTop + dfnRects[0].height;
+  const left = x - MARGIN;
+  panel.style.left = `${left}px`;
+  panel.style.top = `${top}px`;
+
+  // Find if the panel is flowing out of the window
+  const panelRect = panel.getBoundingClientRect();
+  const SCREEN_WIDTH = Math.min(window.innerWidth, window.screen.width);
+  if (panelRect.right > SCREEN_WIDTH) {
+    const newLeft = Math.max(MARGIN, x + MARGIN - panelRect.width);
+    const newCaretOffset = left - newLeft;
+    panel.style.left = `${newLeft}px`;
+    /** @type {HTMLElement} */
+    const caret = panel.querySelector(".caret");
+    caret.style.left = `${newCaretOffset}px`;
+  }
+
+  // As it's a dialog, we trap focus.
+  // TODO: when <dialog> becomes a implemented, we should really
+  // use that.
+  trapFocus(panel, dfn);
+}
+
+/**
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function trapFocus(panel, dfn) {
+  /** @type NodeListOf<HTMLAnchorElement> elements */
+  const anchors = panel.querySelectorAll("a[href]");
+  // No need to trap focus
+  if (!anchors.length) return;
+
+  // Move focus to first anchor element
+  const first = anchors.item(0);
+  first.focus();
+
+  const trapListener = createTrapListener(anchors, panel, dfn);
+  panel.addEventListener("keydown", trapListener);
+
+  // Hiding the panel releases the trap
+  const mo = new MutationObserver(records => {
+    const [record] = records;
+    const target = /** @type HTMLElement */ (record.target);
+    if (target.hidden) {
+      panel.removeEventListener("keydown", trapListener);
+      mo.disconnect();
+    }
+  });
+  mo.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+}
+
+/**
+ *
+ * @param {NodeListOf<HTMLAnchorElement>} anchors
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function createTrapListener(anchors, panel, dfn) {
+  const lastIndex = anchors.length - 1;
+  let currentIndex = 0;
+  return event => {
+    switch (event.key) {
+      // Hitting "Tab" traps us in a nice loop around elements.
+      case "Tab": {
+        event.preventDefault();
+        currentIndex += event.shiftKey ? -1 : +1;
+        if (currentIndex < 0) {
+          currentIndex = lastIndex;
+        } else if (currentIndex > lastIndex) {
+          currentIndex = 0;
+        }
+        anchors.item(currentIndex).focus();
+        break;
+      }
+
+      // Hitting "Enter" on an anchor releases the trap.
+      case "Enter":
+        hidePanel(panel);
+        break;
+
+      // Hitting "Escape" returns focus to dfn.
+      case "Escape":
+        hidePanel(panel);
+        dfn.focus();
+        return;
+    }
+  };
+}
+
+/** @param {HTMLElement} panel */
+function hidePanel(panel) {
+  if (!panel) return;
+  panel.hidden = true;
+  panel.classList.remove("docked");
+}
+})()</script><script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script></body></html>
