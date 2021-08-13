@@ -327,7 +327,8 @@
       <p class="note">
         True randomness is <b>hard</b> to get. Sources such as the
         <a href="https://csrc.nist.gov/projects/interoperable-randomness-beacons">NIST Randomness Beacon</a>
-        are reliable, but should not be used directly as a secret key.
+        are reliable, but should not be used directly as a secret key.  See the 
+        section on <a href="#randomness">Randomness</a> for more information.
       </p>
 </section>
 
@@ -966,6 +967,12 @@ keyAgreement:
         It should provide specific instructions of how to do so, if it is possible.
         Otherwise, it should clearly state that it is not possible.
       </p>
+
+      <p>
+        A DID method should avoid "phone home" or tracking characteristics that would 
+        permit tracing of a user in manner not understood or authorized by the user
+        by some third party.
+      </p>
     </section>
 
     <section class="informative">
@@ -1017,9 +1024,11 @@ keyAgreement:
         operating a decentralized identifier method.
       </p>
 
-      <p>Consider <a href="https://gdpr.eu/">GDPR.</a></p>
+      <p>Consider <a href="https://gdpr.eu/">GDPR</a>.</p>
 
-      <p>Consider <a href="https://oag.ca.gov/privacy/ccpa">CCPA.</a></p>
+      <p>Consider <a href="https://oag.ca.gov/privacy/ccpa">CCPA</a>.</p>
+
+      <p>Consider <a href="https://www.bis.doc.gov/index.php/policy-guidance/encryption">EAR</a>.</p>
     </section>
   </section>
 
@@ -1034,7 +1043,7 @@ keyAgreement:
     </p>
 
     <p>
-      Consider in depth the defense, cryptographic agility, and political
+      Pay very close attention to the defense, cryptographic agility, and political
       acceptability of any cryptography you rely on for DID Method security.
     </p>
 
@@ -1046,17 +1055,18 @@ keyAgreement:
 
     <p class="advisement">
       Avoid open source implementations that are declared a "defacto
-      standard", but lack open standard technical specification.
+      standard", but lack open standard technical specifications.
     </p>
 
     <p class="advisement">
-      Add support for legacy cryptography systems such as
+      Support for legacy cryptography systems such as
       <a href="https://www.iana.org/assignments/jose/jose.xhtml">JOSE</a>
-      and <a href="https://www.openpgp.org/">OpenPGP</a>.
+      and <a href="https://www.openpgp.org/">OpenPGP</a> should be considered
+      due to their prevalence in existing systems.
     </p>
 
     <section class="informative">
-      <h3>Vendor Lock</h3>
+      <h3>Vendor Lock In</h3>
       <p>
         Competition, direct substitutability, interoperability, and mutual
         feature support are key to reducing the barriers to adoption of, and
@@ -1073,18 +1083,30 @@ keyAgreement:
         Hyperledger Fabric. Design your method such that it may be adapted
         to support multiple ledger systems.
       </p>
+
+      <p class="advisement">
+        Transparency and openness in approaches related to security not only
+        lead to greater security, but promote interoprability and adoption.
+      </p>
     </section>
 
     <section class="informative">
       <h3>Digital Signatures</h3>
 
       <p class="advisement">
-        Review
+        We recommend the user review
         <a href="https://safecurves.cr.yp.to/">safecurves.cr.yp.to</a> before
-        selecting elliptic curve types.
+        selecting elliptic curve types.  A key note however, is that several
+        items on safecurves are less frequently updated.  
+        In addition to safecurves you should always check the top level standards 
+        and any docs which superseed referenced standards in safecurves, especially 
+        <a href="https://csrc.nist.gov/publications/detail/fips/186/4/final">
+        FIPS 186-4</a> and 
+        <a href="https://csrc.nist.gov/publications/detail/sp/800-56a/rev-3/final">
+        SP 800-56A Rev 3</a> when evalutating curves for use.
       </p>
 
-      <p class="advisement">Avoid secp256k1, RSA, P-256, P-384, P-521.</p>
+      <p class="advisement">Avoid secp256k1, RSA, P-256, P-384 and P-521.</p>
 
       <p>
         Avoid relying on smart contracts for complex data management. If you
@@ -1096,7 +1118,28 @@ keyAgreement:
     <section class="informative">
       <h3>Hashing Algorithms</h3>
 
-      <p>Avoid MD5.</p>
+      <p>Avoid MD5, SHA1, and other legacy hashing algorithms with known weaknesses
+        or high collision rates.
+      </p>
+      <p class="advisement">
+        When in doubt in selection of a hashing algorithm, consult the 
+        <a href="https://csrc.nist.gov/projects/hash-functions">
+          NIST documentation</a> related to hash function selection,
+        <a href="https://csrc.nist.gov/publications/detail/fips/202/final">
+          SHA-3 as described in FIPS 202</a> 
+        should be strongly considered for new implementations
+      </p>
+    </section>
+
+    <section class="informative">
+      <h3>Randomness</h3>
+      When making an implemention carefully consider how you are sourcing
+      random numbers.  Consult 
+      <a href="https://datatracker.ietf.org/doc/html/rfc4086">RFC 4086</a>
+      when selecting an approach to get random bits, and pay careful attention
+      to the platform and any underlying hardware that may be in use as multiple
+      attacks have been performed in the wild due to improper selection of 
+      random values in key material and other aspects of cryptography.  
     </section>
 
     <section class="informative">
@@ -1107,6 +1150,15 @@ keyAgreement:
         <a href="https://w3c-ccg.github.io/ldp-bbs2020/">BBS+ Signatures</a>
         for selective disclosure and linked-secret&ndash;based JSON-LD verifiable
         credentials.
+      </p>
+
+      <p class="advisement">
+        The IETF document on 
+        <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-10.txt">
+          Pairing Friendly Curves
+        </a> should be consulted when selecting curves for usage with zero knowledge proofs,
+        especially to ensure that appropriate embedding degrees are selected, and that 
+        the resulting equivalent bit characteristics are sufficient.
       </p>
 
       <p>
@@ -1137,6 +1189,16 @@ keyAgreement:
       <p>
         Hardware-isolated keys protected by biometrics on devices may increase
         the usability of DIDs.
+      </p>
+
+      <p class="advisement">
+        The addition of biometrics to other techniques can aid in certain tasks
+        such as reauthentication.  
+        <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP 800-63B</a>
+        deals directly with digital identity and has several useful sections 
+        that address appropriate language for describing biometrics usage as well 
+        as techniques for incorporating biometrics into an approach for solving 
+        problems related to digital identity.
       </p>
     </section>
   </section>
