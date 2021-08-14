@@ -129,19 +129,21 @@
 <body>
   <section id="abstract">
     <p>
-      This document provides guidance to DID Method developers, related to
-      serialization, cryptographic primitive selection, governance, and
-      interoperability.
+      This document provides guidance to
+      <a data-cite="did-core#dfn-did-methods">DID method</a>
+      developers, related to serialization, cryptographic primitive selection,
+      governance, and interoperability.
     </p>
     <p>
-      Guidance provided in this document does not reflect the consenus of the W3C
-      DID WG, although some members of the WG have contributed to it.
+      Guidance provided in this document does not necessarily reflect consensus
+      of the <a href="https://www.w3.org/2019/did-wg/">W3C DID WG</a>, although
+      some members of the WG have contributed to it.
     </p>
   </section>
 
   <section id="sotd">
     <p>
-      This guide is under active development and implementers are advised
+      This guide is under active development. Implementers are advised
       against using the guide unless they are directly involved with the
       W3C DID Working Group.
     </p>
@@ -159,7 +161,7 @@
 
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with developing
-      <a href="https://www.w3.org/TR/did-core/#methods">DID Methods</a>.
+      <a data-cite="did-core#methods">DID methods</a>.
     </p>
 
     <p>
@@ -174,7 +176,7 @@
     </p>
 
     <p>
-      There are several "families" of DID Methods, including
+      There are several "families" of DID methods, including
       <a href="https://hyperledger-indy.readthedocs.io/en/latest/index.html">Hyperledger Indy</a>, <a
         href="https://identity.foundation/sidetree/spec/">Sidetree</a>, and
       various methods that share similar smart contracts or rely on shared
@@ -189,10 +191,10 @@
     </p>
 
     <p>
-      The primary user-facing aspects of a DID Method are its
+      The primary user-facing aspects of a DID method are its
       <a href="#did-syntax">DID Syntax</a> and its
       <a href="#verifiable-data-registry">Verifiable Data Registry</a>.
-      Together these determine most of the unique properties of a DID Method,
+      Together these determine most of the unique properties of a DID method,
       and its privacy and security properties for comparison to other methods.
     </p>
 
@@ -200,14 +202,16 @@
       <h3>DID Syntax</h3>
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#did-syntax">DID Syntax</a>.
+        <a data-cite="did-core#did-syntax">DID Syntax</a>.
       </p>
       <p>
         Avoid allowing users to control the structure of the DID Unique
-        Suffix, also referred to as the <code>id-char</code> in the ABNF. This
-        can be accomplished by coupling the create operation canonical
-        representation to the <code>id-char</code>. It can also be
-        accomplished by leveraging sources of entropy.
+        Suffix, also referred to as the <code>method-specific-id</code> in the
+        <a data-cite="did-core#did-syntax">DID Syntax ABNF</a>. This
+        can be accomplished by coupling the
+        <a data-cite="did-core#method-operations">Create operation</a>
+        canonical representation to the <code>method-specific-id</code>. It can
+        also be accomplished by leveraging sources of entropy.
       </p>
 
       <p>
@@ -215,9 +219,11 @@
         <code>did:example:deadbeef1f236...</code>. The structure of the
         identifier should not be relied on for anything other than collision
         resistance. Be especially careful of trusting a relationship between a
-        DID subject and DID controller without relying on a cryptographically
-        secure verification relationship for
-        <a href="authentication">authentication</a>.
+        <a data-cite="did-core#dfn-did-subjects">DID subject</a> and
+        <a data-cite="did-core#dfn-did-controllers">DID controller</a>
+        without relying on a cryptographically secure
+        <a data-cite="did-core#verification-relationships">verification relationship</a>
+        for <a href="authentication">authentication</a>.
         Anyone can claim a DID, but only someone who controls the associated
         keys can authenticate their association with the DID.
         For example `did:example:xyzcorp` should not be assumed to belong to
@@ -239,13 +245,13 @@
 
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#dfn-verifiable-data-registry">Verifiable Data Registry</a>.
+        <a data-cite="did-core#dfn-verifiable-data-registry">Verifiable Data Registries</a>.
       </p>
 
       <p>
         The <a href="#verifiable-data-registry">VDR</a> is the system to which
-        DID Operations such as Create, Resolve, Update, and Deactivate are
-        applied.
+        <a data-cite="did-core#method-operations">DID method operations</a>
+        such as Create, Resolve, Update, and Deactivate are applied.
       </p>
 
       <p>
@@ -255,14 +261,14 @@
 
       <p>
         Blockchains or distributed ledgers are popular choices for building
-        verifiable data registries, but there are other solutions which yield
+        verifiable data registries, but there are other solutions. Each yield
         unique security pros and cons.
       </p>
 
       <p>
         Some DID methods rely on centralized trusted service providers and
         Merkle proofs to provide tamper-evident logs without the costs
-        associated with distributeted consensus.
+        associated with distributed consensus.
       </p>
 
       <p>
@@ -272,17 +278,18 @@
 
       <p>
         Some DID methods might rely on legacy security infrastructure, such as
-        TLS or TOR.
+        <a data-cite="rfc8446">TLS</a> or
+        <a href="https://www.torproject.org/">Tor</a>.
       </p>
 
       <p>
-        Few DID methods support portability accross verifiable data
-        registries, and altering the VDR associated with a DID will almost
+        Few DID methods support portability across verifiable data
+        registries. Altering the VDR associated with a DID will almost
         certainly impact Privacy and Security considerations.
       </p>
 
       <p>
-        Intead of designing complex DID Methods with registry portability,
+        Instead of designing complex DID methods with registry portability,
         consider supporting multiple DID methods that have each been designed
         to support disjoint security and/or privacy consideration, such as
         global discoverability, offline functionality, pairwise uniqueness, 
@@ -291,7 +298,7 @@
 
       <p>
         Depending on the nature of the VDR, it may be desirable to store data
-        other than DID Documents, such as verifiable credentials,
+        other than DID documents, such as verifiable credentials,
         templates or schemas for credentials, discovery metadata, or integrity-
         or content-addressable identifiers for related information.
       </p>
@@ -318,16 +325,16 @@
           Obtain <code>entropy</code> from a source of randomness that is as close to actually random as possible.
         </li>
         <li>Generate a first verification method from <code>entropy</code>.</li>
-        <li>Use the first verification method to perform a DID Create Operation.</li>
+        <li>Use the first verification method to perform a <a data-cite="did-core#method-operations">DID Create operation</a>.</li>
       </ol>
       <p class="note">
-        The Create Operation will often use the first verification directly, or a deterministic 
+        The Create Operation will often use the first verification method directly, or a deterministic
         function thereof, such as a hash, to construct and register the DID.
       </p>
       <p class="note">
-        True randomness is <b>hard</b> to get. Sources such as the
+        True randomness is <b>hard</b> to get. Public sources such as the
         <a href="https://csrc.nist.gov/projects/interoperable-randomness-beacons">NIST Randomness Beacon</a>
-        are reliable, but should not be used directly as a secret key.  See the 
+        are reliable but not appropriate for use directly as a secret key.  See the
         section on <a href="#randomness">Randomness</a> for more information.
       </p>
 </section>
@@ -339,31 +346,33 @@
 
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with developing
-      <a href="https://www.w3.org/TR/did-core/#did-resolution">DID Resolution</a>.
+      <a data-cite="did-core#did-resolution">DID Resolution</a>.
     </p>
 
     <p>
       DID resolution is a function which takes a DID, and produces a DID
-      Resolution response in a representation, most commonly JSON.
+      resolution result in a representation, most commonly
+      <a data-cite="rfc8259">JSON</a>.
     </p>
 
    
 
     <p>
-      DID resolution can be proxied through intermediaries such as command
-      line tools or http servers. Because the DID Document contains key
+      DID resolution can be proxied through intermediaries such as command-line
+      tools or HTTP servers. Because the DID document contains key
       material, such intermediaries represent excellent targets for attackers,
       who can use the intermediaries to tamper with verification relationships.
     </p>
 
     <p>
-      Avoid tampering with a DID Document that as been returned by DID Method
-      software. It is better to throw an error than to attempt to solve problems
-      in the underlying DID Method.
+      Avoid tampering with a DID document that has been returned by a
+      <a data-cite="did-core#dfn-did-resolvers">DID resolver</a>.
+      It is better to throw an error than to attempt to solve problems
+      in the underlying DID method.
     </p>
 
     <p>
-      Avoid transforming DID Documents without the consent of the DID subject
+      Avoid transforming DID documents without the consent of the DID subject
       or controller.
     </p>
 
@@ -377,24 +386,25 @@
 
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#did-url-syntax">DID URL Syntax</a>.
+        <a data-cite="did-core#did-url-syntax">DID URL Syntax</a>.
       </p>
 
       <p>
-        DID URLs can be used to identify sub-resources inside a DID Document,
-        older versions of a DID Document, or resources outside of a DID
-        Document.
+        <a data-cite="did-core#dfn-did-urls">DID URLs</a>
+        can be used to identify sub-resources inside a DID document,
+        older versions of a DID document, or resources outside of a DID
+        document.
       </p>
 
-      <pre class="example" title="DID URL identifying a verification method in a DID Document">
+      <pre class="example" title="DID URL identifying a verification method in a DID document">
         did:example:123#primary
         </pre>
 
-      <pre class="example" title="DID URL identifying a service in a DID Document">
+      <pre class="example" title="DID URL identifying a service in a DID document">
           did:example:123#agent
           </pre>
 
-      <pre class="example" title="DID URL identifying a resource outside a DID Document">
+      <pre class="example" title="DID URL identifying a resource outside a DID document">
           did:example:123?service=packages@relativeRef=/jose/versions/v0.1.2/archive.zip
           </pre>
 
@@ -415,14 +425,14 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a href="https://www.w3.org/TR/did-core/#path">Path</a>.
+          <a data-cite="did-core#path">Path</a>.
         </p>
         <p>
           Avoid using <code>path</code>; as of this writing, there are not enough 
           implementations that make use of it.
         </p>
 
-        <pre class="example" title="DID URL identifying a resource outside a DID Document">
+        <pre class="example" title="DID URL identifying a resource outside a DID document">
           did:example:123/ephemeral/77d66171-b290-489c-abf1-95ae10725201#primary
           </pre>
       </section>
@@ -433,7 +443,7 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a href="https://www.w3.org/TR/did-core/#query">Query</a>.
+          <a data-cite="did-core#query">Query</a>.
         </p>
 
         <p>
@@ -441,8 +451,8 @@
           implementations that make use of it.
         </p>
 
-        <pre class="example" title="DID URL identifying a verification method in an older version of a DID Document">
-          did:example:123?version-id=77d66171-b290-489c-abf1-95ae10725201#primary
+        <pre class="example" title="DID URL identifying a verification method in an older version of a DID document">
+          did:example:123?versionId=77d66171-b290-489c-abf1-95ae10725201#primary
         </pre>
       </section>
 
@@ -452,20 +462,21 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a href="https://www.w3.org/TR/did-core/#fragment">Fragment</a>.
+          <a data-cite="did-core#fragment">Fragment</a>.
         </p>
 
-        <pre class="example" title="DID URL identifying a verification method in a DID Document">
+        <pre class="example" title="DID URL identifying a verification method in a DID document">
           did:example:123#primary
         </pre>
 
         <p>
-          Fragments identify sub-resources of a resource identified with a DID
-          URL.
+          Fragments identify sub-resources of a resource identified with a
+          <a data-cite="did-core#dfn-did-urls">DID URL</a>.
         </p>
 
         <p>
-          The interpretation of the fragment is determined by the Media Type 
+          The interpretation of the fragment is determined by the
+          <a data-cite="rfc6838">Media Type</a>
           (formerly known as a MIME type).
         </p>
       </section>
@@ -476,11 +487,11 @@
 
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#representations">Representations</a>.
+        <a data-cite="did-core#representations">Representations</a>.
       </p>
 
       <p>
-        The [[DID-CORE]] specification describes representations and the
+        The [[DID-CORE]] specification describes representations. The
         [[DID-SPEC-REGISTRIES]] supports the registration of an unbounded
         number of alternative representations.
       </p>
@@ -488,12 +499,12 @@
       <p>Each representation has unique pros and cons.</p>
 
       <p>
-        DID Methods are responsible for producing a DID Document in the
+        DID Methods are responsible for producing a DID document in the
         requested representation.
       </p>
 
       <p>
-        DID Method implementers may choose to return verification methods in
+        DID method implementers may choose to return verification methods in
         alternate formats for representations, for example, an implementer
         might prefer to return verification material encoded with
         <code>publicKeyJwk</code> for <code>application/did+json</code> and
@@ -538,12 +549,15 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a href="https://www.w3.org/TR/did-core/#did-url-dereferencing">DID URL Dereferencing</a>.
+          <a data-cite="did-core#did-url-dereferencing">DID URL Dereferencing</a>.
         </p>
 
         <p>
           Dereferencing is critical to integrating with cryptographic toolkits
-          such as Linked Data Proofs, JOSE, PGP, or Anon Creds.
+          such as <a href="https://w3c-ccg.github.io/ld-proofs/">Linked Data Proofs</a>,
+          <a href="https://www.iana.org/assignments/jose/jose.xhtml">JOSE</a>,
+          <a data-cite="rfc4880">PGP</a>, or
+          <a href="https://github.com/hyperledger/ursa-docs/tree/main/specs/anoncreds2">Anon Creds</a>.
         </p>
       </section>
 
@@ -561,7 +575,7 @@
     <h2>Verification Relationships</h2>
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with developing
-      <a href="https://www.w3.org/TR/did-core/#verification-relationships">Verification Relationships</a>.
+      <a data-cite="did-core#verification-relationships">Verification Relationships</a>.
     </p>
 
     <p>
@@ -578,13 +592,13 @@
       <h2>Authentication</h2>
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#authentication">Authentication</a>.
+        <a data-cite="did-core#authentication">Authentication verification relationships</a>.
       </p>
       <p>
         Implementers are advised to implement support for this relationship.
       </p>
       <p>
-        This relationship should be used for proofs or signatures associated
+        Use this relationship for proofs or signatures associated
         with DID Subject authentication.
       </p>
 
@@ -600,20 +614,20 @@
       <h2>Assertion Method</h2>
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a href="https://www.w3.org/TR/did-core/#assertion">Assertion</a>.
+        <a data-cite="did-core#assertion">Assertion verification relationships</a>.
       </p>
       <p>
         Implementers are advised to implement support for this relationship.
       </p>
       <p>
-        This relationship should be used for proofs or signatures associated
+        Use this relationship for proofs or signatures associated
         with claims issued by this DID Subject about another identifier, which
         might be a DID.
       </p>
 
       <p>
-        This method is described in the [[VC-DATA-MODEL], see
-        <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures-0">Proofs</a>
+        This method is described in the [[VC-DATA-MODEL]], see
+        <a data-cite="vc-data-model#proofs-signatures-0">Proofs</a>.
       </p>
 
       <p>
