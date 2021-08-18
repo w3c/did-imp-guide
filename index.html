@@ -21,7 +21,7 @@
 
       // the specification's short name, as in http://www.w3.org/TR/short-name/
       shortName: "did-imp-guide",
-      //xref: ["did-core"],
+      xref: ["DID-CORE", "VC-DATA-MODEL", "DID-SPEC-REGISTRIES", "RFC4086", "RFC4880", "RFC6838", "RFC8259", "RFC8446", "RFC8174", "RFC2119"],
 
       // subtitle for the spec
       subtitle: "A DID developer's guide to understanding and implementing Decentralized Identifiers",
@@ -33,8 +33,8 @@
 
       // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
       // and its maturity status
-      // previousPublishDate:  "1977-03-15",
-      // previousMaturity:  "WD",
+      previousPublishDate:  "2021-08-26",
+      previousMaturity:  "FPWD",
 
       // extend the bibliography entries
       localBiblio: {},
@@ -130,7 +130,7 @@
   <section id="abstract">
     <p>
       This document provides guidance to
-      <a data-cite="did-core#dfn-did-methods">DID method</a>
+      <a data-cite="DID-CORE#dfn-did-methods">DID method</a>
       developers, related to serialization, cryptographic primitive selection,
       governance, and interoperability.
     </p>
@@ -143,9 +143,9 @@
 
   <section id="sotd">
     <p>
-      This guide is under active development. Implementers are advised
-      against using the guide unless they are directly involved with the
-      W3C DID Working Group.
+      Implementers are advised to consult this guide if they are directly 
+      involved with the W3C DID Working Group or are actively involved in 
+      authoring a DID method.
     </p>
   </section>
 
@@ -155,7 +155,7 @@
     <h2>Terminology</h2>
     <p>
       See [[DID-CORE]] for definitions of commonly-used
-      <a data-cite="did-core#terminology">DID terminology</a>.
+      <a data-cite="DID-CORE#terminology">DID terminology</a>.
     </p>
 
     <section id="index"></section>
@@ -166,7 +166,7 @@
 
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with developing
-      <a data-cite="did-core#methods">DID methods</a>.
+      <a data-cite="DID-CORE#methods">DID methods</a>.
     </p>
 
     <p>
@@ -207,14 +207,14 @@
       <h3>DID Syntax</h3>
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a data-cite="did-core#did-syntax">DID Syntax</a>.
+        <a data-cite="DID-CORE#did-syntax">DID Syntax</a>.
       </p>
       <p>
         Avoid allowing users to control the structure of the DID Unique
         Suffix, also referred to as the <code>method-specific-id</code> in the
-        <a data-cite="did-core#did-syntax">DID Syntax ABNF</a>. This
+        <a data-cite="DID-CORE#did-syntax">DID Syntax ABNF</a>. This
         can be accomplished by coupling the
-        <a data-cite="did-core#method-operations">Create operation</a>
+        <a data-cite="DID-CORE#method-operations">Create operation</a>
         canonical representation to the <code>method-specific-id</code>. It can
         also be accomplished by leveraging sources of entropy.
       </p>
@@ -224,11 +224,11 @@
         <code>did:example:deadbeef1f236...</code>. The structure of the
         identifier should not be relied on for anything other than collision
         resistance. Be especially careful of trusting a relationship between a
-        <a data-cite="did-core#dfn-did-subjects">DID subject</a> and
-        <a data-cite="did-core#dfn-did-controllers">DID controller</a>
+        <a data-cite="DID-CORE#dfn-did-subjects">DID subject</a> and
+        <a data-cite="DID-CORE#dfn-did-controllers">DID controller</a>
         without relying on a cryptographically secure
-        <a data-cite="did-core#verification-relationships">verification relationship</a>
-        for <a href="authentication">authentication</a>.
+        <a data-cite="DID-CORE#verification-relationships">verification relationship</a>
+        for <a href="#authentication">authentication</a>.
         Anyone can claim a DID, but only someone who controls the associated
         keys can authenticate their association with the DID.
         For example `did:example:xyzcorp` should not be assumed to belong to
@@ -250,12 +250,12 @@
 
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a data-cite="did-core#dfn-verifiable-data-registry">Verifiable Data Registries</a>.
+        <a data-cite="DID-CORE#dfn-verifiable-data-registry">Verifiable Data Registries</a>.
       </p>
 
       <p>
         The <a href="#verifiable-data-registry">VDR</a> is the system to which
-        <a data-cite="did-core#method-operations">DID method operations</a>
+        <a data-cite="DID-CORE#method-operations">DID method operations</a>
         such as Create, Resolve, Update, and Deactivate are applied.
       </p>
 
@@ -283,7 +283,7 @@
 
       <p>
         Some DID methods might rely on legacy security infrastructure, such as
-        <a data-cite="rfc8446">TLS</a> or
+        <a data-cite="RFC8446">TLS</a> or
         <a href="https://www.torproject.org/">Tor</a>.
       </p>
 
@@ -330,7 +330,7 @@
           Obtain <code>entropy</code> from a source of randomness that is as close to actually random as possible.
         </li>
         <li>Generate a first verification method from <code>entropy</code>.</li>
-        <li>Use the first verification method to perform a <a data-cite="did-core#method-operations">DID Create operation</a>.</li>
+        <li>Use the first verification method to perform a <a data-cite="DID-CORE#method-operations">DID Create operation</a>.</li>
       </ol>
       <p class="note">
         The Create Operation will often use the first verification method directly, or a deterministic
@@ -351,13 +351,13 @@
 
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with developing
-      <a data-cite="did-core#did-resolution">DID Resolution</a>.
+      <a data-cite="DID-CORE#did-resolution">DID Resolution</a>.
     </p>
 
     <p>
       DID resolution is a function which takes a DID, and produces a DID
       resolution result in a representation, most commonly
-      <a data-cite="rfc8259">JSON</a>.
+      <a data-cite="RFC8259">JSON</a>.
     </p>
 
    
@@ -371,7 +371,7 @@
 
     <p>
       Avoid tampering with a DID document that has been returned by a
-      <a data-cite="did-core#dfn-did-resolvers">DID resolver</a>.
+      <a data-cite="DID-CORE#dfn-did-resolvers">DID resolver</a>.
       It is better to throw an error than to attempt to solve problems
       in the underlying DID method.
     </p>
@@ -391,11 +391,11 @@
 
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a data-cite="did-core#did-url-syntax">DID URL Syntax</a>.
+        <a data-cite="DID-CORE#did-url-syntax">DID URL Syntax</a>.
       </p>
 
       <p>
-        <a data-cite="did-core#dfn-did-urls">DID URLs</a>
+        <a data-cite="DID-CORE#dfn-did-urls">DID URLs</a>
         can be used to identify sub-resources inside a DID document,
         older versions of a DID document, or resources outside of a DID
         document.
@@ -430,7 +430,7 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a data-cite="did-core#path">Path</a>.
+          <a data-cite="DID-CORE#path">Path</a>.
         </p>
         <p>
           Avoid using <code>path</code>; as of this writing, there are not enough 
@@ -448,7 +448,7 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a data-cite="did-core#query">Query</a>.
+          <a data-cite="DID-CORE#query">Query</a>.
         </p>
 
         <p>
@@ -467,7 +467,7 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a data-cite="did-core#fragment">Fragment</a>.
+          <a data-cite="DID-CORE#fragment">Fragment</a>.
         </p>
 
         <pre class="example" title="DID URL identifying a verification method in a DID document">
@@ -476,12 +476,12 @@
 
         <p>
           Fragments identify sub-resources of a resource identified with a
-          <a data-cite="did-core#dfn-did-urls">DID URL</a>.
+          <a data-cite="DID-CORE#dfn-did-urls">DID URL</a>.
         </p>
 
         <p>
           The interpretation of the fragment is determined by the
-          <a data-cite="rfc6838">Media Type</a>
+          <a data-cite="RFC6838">Media Type</a>
           (formerly known as a MIME type).
         </p>
       </section>
@@ -492,7 +492,7 @@
 
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a data-cite="did-core#representations">Representations</a>.
+        <a data-cite="DID-CORE#representations">Representations</a>.
       </p>
 
       <p>
@@ -554,14 +554,14 @@
         <p class="note">
           See [[DID-CORE]] for normative requirements associated with
           developing
-          <a data-cite="did-core#did-url-dereferencing">DID URL Dereferencing</a>.
+          <a data-cite="DID-CORE#did-url-dereferencing">DID URL Dereferencing</a>.
         </p>
 
         <p>
           Dereferencing is critical to integrating with cryptographic toolkits
           such as <a href="https://w3c-ccg.github.io/ld-proofs/">Linked Data Proofs</a>,
           <a href="https://www.iana.org/assignments/jose/jose.xhtml">JOSE</a>,
-          <a data-cite="rfc4880">PGP</a>, or
+          <a data-cite="RFC4880">PGP</a>, or
           <a href="https://github.com/hyperledger/ursa-docs/tree/main/specs/anoncreds2">Anon Creds</a>.
         </p>
       </section>
@@ -580,7 +580,7 @@
     <h2>Verification Relationships</h2>
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with developing
-      <a data-cite="did-core#verification-relationships">Verification Relationships</a>.
+      <a data-cite="DID-CORE#verification-relationships">Verification Relationships</a>.
     </p>
 
     <p>
@@ -597,7 +597,7 @@
       <h2>Authentication</h2>
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a data-cite="did-core#authentication">Authentication verification relationships</a>.
+        <a data-cite="DID-CORE#authentication">Authentication verification relationships</a>.
       </p>
       <p>
         Implementers are advised to implement support for this relationship.
@@ -619,7 +619,7 @@
       <h2>Assertion Method</h2>
       <p class="note">
         See [[DID-CORE]] for normative requirements associated with developing
-        <a data-cite="did-core#assertion">Assertion verification relationships</a>.
+        <a data-cite="DID-CORE#assertion">Assertion verification relationships</a>.
       </p>
       <p>
         Implementers are advised to implement support for this relationship.
@@ -632,7 +632,7 @@
 
       <p>
         This method is described in the [[VC-DATA-MODEL]], see
-        <a data-cite="vc-data-model#proofs-signatures-0">Proofs</a>.
+        <a data-cite="VC-DATA-MODEL#proofs-signatures-0">Proofs</a>.
       </p>
 
       <p>
@@ -649,12 +649,12 @@
 
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with the
-      <a href="https://www.w3.org/TR/did-core/#data-model">Data Model</a>.
+      <a data-cite="DID-CORE#data-model">Data Model</a>.
     </p>
 
     <p class="note">
       See [[DID-CORE]] for normative requirements associated with
-      <a href="https://www.w3.org/TR/did-core/#representations">Representations</a>.
+      <a data-cite="DID-CORE#representations">Representations</a>.
     </p>
 
     <p class="advisement">
@@ -690,7 +690,7 @@
       In contrast to this, the (non-LD) JSON representation (with media type `application/did+json`) does not have this semantic
       capability; instead, (non-LD) JSON documents always need agreement on semantics in some out-of-band way that is
       not part of the document itself. In the case of DID documents using the (non-LD) JSON representation, those semantics are
-      typically established by the <a href="https://w3c.github.io/did-spec-registries/">DID Spec Registries</a>. Therefore,
+      typically established by the <a href="https://w3c.github.io/DID-SPEC-REGISTRIES/">DID Spec Registries</a>. Therefore,
       establishing semantics of DID document properties in the (non-LD) JSON representation does not require
       the representation-specific `@context` entry, as is required by the JSON-LD representation.
     </p>
@@ -792,7 +792,7 @@ Examples of representation-specific and representation-foreign entries in variou
       <p>
         For example, consider the following DID document, and assume that the JSON-LD context
         `https://myextensions.com/other-definitions.jsonld` defines `blockchainAccountId` in a way that is different
-        from the <a href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property listed in the DID
+        from the <a href="https://w3c.github.io/DID-SPEC-REGISTRIES/#blockchainaccountid">property listed in the DID
         Specification Registries</a>.
       </p>
 
@@ -815,7 +815,7 @@ Examples of representation-specific and representation-foreign entries in variou
       <p>
         If this DID document is consumed as `application/did+json` by an implementation that doesn't understand JSON-LD,
         it will interpret `blockchainAccountId` as the <a
-              href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property listed in the DID
+              href="https://w3c.github.io/DID-SPEC-REGISTRIES/#blockchainaccountid">property listed in the DID
         Specification Registries</a>, and it will process it accordingly.
       </p>
 
@@ -852,11 +852,11 @@ Examples of representation-specific and representation-foreign entries in variou
       </p>
 
       <p>
-        The <a href="https://w3c.github.io/did-spec-registries/">DID Specification Registries</a> provide additional
+        The <a href="https://w3c.github.io/DID-SPEC-REGISTRIES/">DID Specification Registries</a> provide additional
         information about properties as well as representation-specific entries that help with such conversion. For
         example, a DID document in the `application/did+json` representation can be converted to the
         `application/did+ld+json` representation by adding a `@context` representation-specific entry during production,
-        using the JSON-LD context information in the DID <a href="https://w3c.github.io/did-spec-registries/">Specification
+        using the JSON-LD context information in the DID <a href="https://w3c.github.io/DID-SPEC-REGISTRIES/">Specification
         Registries</a>.
       </p>
 
@@ -1007,7 +1007,8 @@ keyAgreement:
 
       <p>
         Any anonymous identifier, even if it is generated randomly, can be used to
-        infer sensitive information about a <a href="#dfn-did-subjects">DID subject</a> 
+        infer sensitive information about a <a data-cite="DID-CORE#did-subject">
+          DID subject</a> 
         if it is reused enough times.
       </p>
 
@@ -1154,7 +1155,8 @@ keyAgreement:
       <h3>Randomness</h3>
       When making an implemention carefully consider how you are sourcing
       random numbers.  Consult 
-      <a href="https://datatracker.ietf.org/doc/html/rfc4086">RFC 4086</a>
+      <a href="https://datatracker.ietf.org/doc/html/RFC4086">RFC 4086:
+      Randomness Requirements for Security</a>
       when selecting an approach to get random bits, and pay careful attention
       to the platform and any underlying hardware that may be in use as multiple
       attacks have been performed in the wild due to improper selection of 
@@ -1183,7 +1185,7 @@ keyAgreement:
       <p>
         Avoid zero knowledge proofs as described in the
         <a
-          href="https://w3c.github.io/vc-data-model/#example-25-a-verifiable-presentation-that-supports-cl-signatures">AnonCredDerivedCredentialv1</a>.
+          data-cite="VC-DATA-MODEL#example-25-a-verifiable-presentation-that-supports-cl-signatures">AnonCredDerivedCredentialv1</a>.
         This proof format is coupled to specific ledger technologies,
         similar to the concept of an ethereum virtual machine smart contract
         only running on EVM compatible ledgers. Ledger-specific technologies
@@ -1236,31 +1238,36 @@ keyAgreement:
       <p>
         The current specification does not take a position on the maximum length
         of a
-        <a>DID</a>. The maximum interoperable URL length is currently about
+        <a data-cite="DID-CORE#dfn-decentralized-identifiers">DID</a>. 
+        The maximum interoperable URL length is currently about
         2048 characters. QR codes can handle about 4096 characters. Clients
-        using <a>DIDs</a> will be responsible for storing many <a>DIDs</a>,
+        using <a data-cite="DID-CORE#dfn-decentralized-identifiers">DIDs</a> 
+        will be responsible for storing many <a data-cite="DID-CORE#dfn-decentralized-identifiers">DIDs</a>,
         and some methods would be able to externalize some of their costs
         onto clients by relying on more complicated signature schemes or by
-        adding state into <a>DIDs</a> intended for temporary use. A future
+        adding state into <a data-cite="DID-CORE#dfn-decentralized-identifiers">DIDs</a> 
+        intended for temporary use. A future
         version of this specification should set reasonable limits on
-        <a>DID</a> character length to minimize externalities.
+        <a data-cite="DID-CORE#dfn-decentralized-identifiers">DID</a> character length to minimize externalities.
       </p>
     </section>
     <section>
       <h2>Verifiable Timestamps</h2>
 
       <p>
-        <a>Verifiable timestamps</a> have significant utility for identifier
-        records. This is a good fit for <a>DLTs</a>, since most offer some
+        <a data-cite="DID-CORE#dfn-verifiable-timestamp">
+          Verifiable Timestamps</a> have significant utility for identifier
+        records. This is a good fit for <a data-cite="DID-CORE#dfn-distributed-ledger-technology">DLTs</a>, since most offer some
         type of timestamp mechanism. Despite some transactional cost, they
         are the among the most censorship-resistant transaction ordering
         systems at the present, so they are nearly ideal for
-        <a>DID document</a> timestamping. In some cases a <a>DLT</a>'s
-        immediate timing is approximate, however their sense of
-        <a href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki%23Abstract">
-          "median time past" (see Bitcoin BIP 113)</a>
-        can be precisely defined. A generic <a>DID document</a> timestamping
-        mechanism could would work across all <a>DLTs</a> and might operate
+        <a data-cite="DID-CORE#dfn-did-documents">DID document</a> 
+        timestamping. In some cases a <a data-cite="DID-CORE#dfn-distributed-ledger-technology">DLT</a>'s
+        immediate timing is approximate, however their sense of "median time past"
+        <a href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki">
+           (see Bitcoin BIP 113)</a>
+        can be precisely defined. A generic <a data-cite="DID-CORE#dfn-did-documents">DID document</a> timestamping
+        mechanism could would work across all <a data-cite="DID-CORE#dfn-distributed-ledger-technology">DLTs</a> and might operate
         via a mechanism including either individual transactions or
         transaction batches. Such a generic mechanism was deemed out of scope
         for this version, although it may be included in a future version of
@@ -1272,12 +1279,14 @@ keyAgreement:
       <h2>Verifiable Credentials</h2>
 
       <p>
-        Although <a>DIDs</a> and <a>DID documents</a> form a foundation for
+        Although <a data-cite="DID-CORE#dfn-decentralized-identifiers">DIDs</a> 
+        and <a data-cite="DID-CORE#dfn-did-documents">DID documents</a> form a foundation for
         decentralized identity, they are only the first step in describing
         their subjects. The rest of the descriptive power comes through
         collecting and selectively using Verifiable Credentials
         [[VC-DATA-MODEL]]. Future versions of the specification will
-        describe in more detail how <a>DIDs</a> and <a>DID document</a> can
+        describe in more detail how <a data-cite="DID-CORE#dfn-decentralized-identifiers">DIDs</a> 
+        and <a data-cite="DID-CORE#dfn-did-documents">DID document</a> can
         be integrated with &mdash; and help enable &mdash; the Verifiable
         Credentials ecosystem.
       </p>
@@ -1288,9 +1297,9 @@ keyAgreement:
 
       <p>
         This version of the specification relies on JSON-LD and the RDF
-        graph model for expressing a <a>DID document</a>. Future versions of
+        graph model for expressing a <a data-cite="DID-CORE#dfn-did-documents">DID document</a>. Future versions of
         this specification might specify other semantic graph formats for a
-        <a>DID document</a>.
+        <a data-cite="DID-CORE#dfn-did-documents">DID document</a>.
       </p>
     </section>
   </section>
