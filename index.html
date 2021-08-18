@@ -21,7 +21,10 @@
 
       // the specification's short name, as in http://www.w3.org/TR/short-name/
       shortName: "did-imp-guide",
-      xref: ["DID-CORE", "VC-DATA-MODEL", "DID-SPEC-REGISTRIES", "RFC4086", "RFC4880", "RFC6838", "RFC8259", "RFC8446", "RFC8174", "RFC2119"],
+      xref: {
+        specs: ["DID-CORE", "VC-DATA-MODEL", "DID-SPEC-REGISTRIES", "RFC4086", "RFC4880", "RFC6838", "RFC8259", "RFC8446", "RFC8174", "RFC2119"],
+        profile: "web-platform",
+      },
 
       // subtitle for the spec
       subtitle: "A DID developer's guide to understanding and implementing Decentralized Identifiers",
@@ -283,7 +286,7 @@
 
       <p>
         Some DID methods might rely on legacy security infrastructure, such as
-        <a data-cite="RFC8446">TLS</a> or
+        <a href="https://www.rfc-editor.org/rfc/rfc8446">Transport Layer Security</a> or
         <a href="https://www.torproject.org/">Tor</a>.
       </p>
 
@@ -357,7 +360,7 @@
     <p>
       DID resolution is a function which takes a DID, and produces a DID
       resolution result in a representation, most commonly
-      <a data-cite="RFC8259">JSON</a>.
+      <a href="https://www.rfc-editor.org/rfc/rfc8259">JSON</a>.
     </p>
 
    
@@ -481,7 +484,7 @@
 
         <p>
           The interpretation of the fragment is determined by the
-          <a data-cite="RFC6838">Media Type</a>
+          <a href="https://www.rfc-editor.org/rfc/rfc6838">Media Type</a>
           (formerly known as a MIME type).
         </p>
       </section>
@@ -561,7 +564,7 @@
           Dereferencing is critical to integrating with cryptographic toolkits
           such as <a href="https://w3c-ccg.github.io/ld-proofs/">Linked Data Proofs</a>,
           <a href="https://www.iana.org/assignments/jose/jose.xhtml">JOSE</a>,
-          <a data-cite="RFC4880">PGP</a>, or
+          <a href="https://www.rfc-editor.org/rfc/rfc4880">PGP</a>, or
           <a href="https://github.com/hyperledger/ursa-docs/tree/main/specs/anoncreds2">Anon Creds</a>.
         </p>
       </section>
