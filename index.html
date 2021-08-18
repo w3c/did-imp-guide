@@ -1007,7 +1007,8 @@ keyAgreement:
 
       <p>
         Any anonymous identifier, even if it is generated randomly, can be used to
-        infer sensitive information about a <a href="#dfn-did-subjects">DID subject</a> 
+        infer sensitive information about a <a href="https://www.w3.org/TR/did-core/#did-subject">
+          DID subject</a> 
         if it is reused enough times.
       </p>
 
@@ -1236,31 +1237,36 @@ keyAgreement:
       <p>
         The current specification does not take a position on the maximum length
         of a
-        <a>DID</a>. The maximum interoperable URL length is currently about
+        <a href="https://www.w3.org/TR/did-core/#dfn-decentralized-identifiers">DID</a>. 
+        The maximum interoperable URL length is currently about
         2048 characters. QR codes can handle about 4096 characters. Clients
-        using <a>DIDs</a> will be responsible for storing many <a>DIDs</a>,
+        using <a href="https://www.w3.org/TR/did-core/#dfn-decentralized-identifiers">DIDs</a> 
+        will be responsible for storing many <a href="https://www.w3.org/TR/did-core/#dfn-decentralized-identifiers">DIDs</a>,
         and some methods would be able to externalize some of their costs
         onto clients by relying on more complicated signature schemes or by
-        adding state into <a>DIDs</a> intended for temporary use. A future
+        adding state into <a href="https://www.w3.org/TR/did-core/#dfn-decentralized-identifiers">DIDs</a> 
+        intended for temporary use. A future
         version of this specification should set reasonable limits on
-        <a>DID</a> character length to minimize externalities.
+        <a href="https://www.w3.org/TR/did-core/#dfn-decentralized-identifiers">DID</a> character length to minimize externalities.
       </p>
     </section>
     <section>
       <h2>Verifiable Timestamps</h2>
 
       <p>
-        <a>Verifiable timestamps</a> have significant utility for identifier
-        records. This is a good fit for <a>DLTs</a>, since most offer some
+        <a href="https://www.w3.org/TR/did-core/#dfn-verifiable-timestamp">
+          Verifiable Timestamps</a> have significant utility for identifier
+        records. This is a good fit for <a href="https://www.w3.org/TR/did-core/#dfn-distributed-ledger-technology">DLTs</a>, since most offer some
         type of timestamp mechanism. Despite some transactional cost, they
         are the among the most censorship-resistant transaction ordering
         systems at the present, so they are nearly ideal for
-        <a>DID document</a> timestamping. In some cases a <a>DLT</a>'s
+        <a href="https://www.w3.org/TR/did-core/#dfn-did-documents">DID document</a> 
+        timestamping. In some cases a <a href="https://www.w3.org/TR/did-core/#dfn-distributed-ledger-technology">DLT</a>'s
         immediate timing is approximate, however their sense of "median time past"
         <a href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki">
            (see Bitcoin BIP 113)</a>
-        can be precisely defined. A generic <a>DID document</a> timestamping
-        mechanism could would work across all <a>DLTs</a> and might operate
+        can be precisely defined. A generic <a href="https://www.w3.org/TR/did-core/#dfn-did-documents">DID document</a> timestamping
+        mechanism could would work across all <a href="https://www.w3.org/TR/did-core/#dfn-distributed-ledger-technology">DLTs</a> and might operate
         via a mechanism including either individual transactions or
         transaction batches. Such a generic mechanism was deemed out of scope
         for this version, although it may be included in a future version of
@@ -1272,12 +1278,14 @@ keyAgreement:
       <h2>Verifiable Credentials</h2>
 
       <p>
-        Although <a>DIDs</a> and <a>DID documents</a> form a foundation for
+        Although <a href="https://www.w3.org/TR/did-core/#dfn-decentralized-identifiers">DIDs</a> 
+        and <a href="https://www.w3.org/TR/did-core/#dfn-did-documents">DID documents</a> form a foundation for
         decentralized identity, they are only the first step in describing
         their subjects. The rest of the descriptive power comes through
         collecting and selectively using Verifiable Credentials
         [[VC-DATA-MODEL]]. Future versions of the specification will
-        describe in more detail how <a>DIDs</a> and <a>DID document</a> can
+        describe in more detail how <a href="https://www.w3.org/TR/did-core/#dfn-decentralized-identifiers">DIDs</a> 
+        and <a href="https://www.w3.org/TR/did-core/#dfn-did-documents">DID document</a> can
         be integrated with &mdash; and help enable &mdash; the Verifiable
         Credentials ecosystem.
       </p>
@@ -1288,9 +1296,9 @@ keyAgreement:
 
       <p>
         This version of the specification relies on JSON-LD and the RDF
-        graph model for expressing a <a>DID document</a>. Future versions of
+        graph model for expressing a <a href="https://www.w3.org/TR/did-core/#dfn-did-documents">DID document</a>. Future versions of
         this specification might specify other semantic graph formats for a
-        <a>DID document</a>.
+        <a href="https://www.w3.org/TR/did-core/#dfn-did-documents">DID document</a>.
       </p>
     </section>
   </section>
