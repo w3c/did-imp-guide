@@ -228,7 +228,7 @@
         <a data-cite="did-core#dfn-did-controllers">DID controller</a>
         without relying on a cryptographically secure
         <a data-cite="did-core#verification-relationships">verification relationship</a>
-        for <a href="authentication">authentication</a>.
+        for <a href="#authentication">authentication</a>.
         Anyone can claim a DID, but only someone who controls the associated
         keys can authenticate their association with the DID.
         For example `did:example:xyzcorp` should not be assumed to belong to
@@ -1256,9 +1256,9 @@ keyAgreement:
         are the among the most censorship-resistant transaction ordering
         systems at the present, so they are nearly ideal for
         <a>DID document</a> timestamping. In some cases a <a>DLT</a>'s
-        immediate timing is approximate, however their sense of
-        <a href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki%23Abstract">
-          "median time past" (see Bitcoin BIP 113)</a>
+        immediate timing is approximate, however their sense of "median time past"
+        <a href="https://github.com/bitcoin/bips/blob/master/bip-0113.mediawiki">
+           (see Bitcoin BIP 113)</a>
         can be precisely defined. A generic <a>DID document</a> timestamping
         mechanism could would work across all <a>DLTs</a> and might operate
         via a mechanism including either individual transactions or
