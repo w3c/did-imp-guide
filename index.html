@@ -38,8 +38,8 @@
 
       // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
       // and its maturity status
-      previousPublishDate: "2021-08-26",
-      previousMaturity: "FPWD",
+      // previousPublishDate: "2021-08-26",
+      // previousMaturity: "FPWD",
 
       // extend the bibliography entries
       localBiblio: {},
@@ -889,8 +889,8 @@
           JSON-LD context
           `https://myextensions.com/other-definitions.jsonld` defines
           `blockchainAccountId` in a way that is different
-          from the <a
-            href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property
+          from the <a 
+            data-cite="did-spec-registries#blockchainaccountid">property
             listed in the DID
             Specification Registries</a>.
         </p>
@@ -916,8 +916,8 @@
           If this DID document is consumed as `application/did+json` by an
           implementation that doesn't understand
           JSON-LD,
-          it will interpret `blockchainAccountId` as the <a
-            href="https://w3c.github.io/did-spec-registries/#blockchainaccountid">property
+          it will interpret `blockchainAccountId` as the <a 
+            data-cite="did-spec-registries#blockchainaccountid">>property
             listed in the DID
             Specification Registries</a>, and it will process it accordingly.
         </p>
@@ -967,8 +967,7 @@
         </p>
 
         <p>
-          The <a href="https://w3c.github.io/did-spec-registries/">DID
-            Specification Registries</a> provide additional
+          The DID Specification Registries [[DID-SPEC-REGISTRIES]] provide additional
           information about properties as well as representation-specific
           entries that help with such conversion. For
           example, a DID document in the `application/did+json` representation
@@ -976,9 +975,7 @@
           `application/did+ld+json` representation by adding a `@context`
           representation-specific entry during
           production,
-          using the JSON-LD context information in the DID <a
-            href="https://w3c.github.io/did-spec-registries/">Specification
-            Registries</a>.
+          using the JSON-LD context information in the DID Specification Registries [[DID-SPEC-REGISTRIES]].
         </p>
 
         <p>
