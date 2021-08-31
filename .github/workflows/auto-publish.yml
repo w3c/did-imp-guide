@@ -12,7 +12,7 @@ jobs:
       - uses: w3c/spec-prod@v2
         with:
           W3C_ECHIDNA_TOKEN: ${{ secrets.W3C_TR_TOKEN }}
-          W3C_WG_DECISION_URL: https://www.w3.org/2019/did-wg/Meetings/Minutes/2020-06-09-did#resolution1
+          W3C_WG_DECISION_URL: https://www.w3.org/2019/did-wg/Meetings/Minutes/2021-08-17-did#resolution3
           W3C_BUILD_OVERRIDE: |
             shortName: did-imp-guide
             specStatus: WG-NOTE
