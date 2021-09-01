@@ -24,7 +24,7 @@
       // the specification's short name, as in http://www.w3.org/TR/short-name/
       shortName: "did-imp-guide",
       xref: {
-        specs: ["DID-CORE", "VC-DATA-MODEL", "did-spec-registries", "RFC4086", "RFC4880", "RFC6838", "RFC8259", "RFC8446", "RFC8174", "RFC2119"],
+        specs: ["DID-CORE", "VC-DATA-MODEL", "DID-CBOR-REPRESENTATION", "did-spec-registries", "RFC4086", "RFC4880", "RFC6838", "RFC8259", "RFC8446", "RFC8174", "RFC2119"],
         profile: "web-platform",
       },
 
@@ -530,7 +530,7 @@
         <p>Each representation has unique pros and cons.</p>
 
         <p>
-          DID Methods are responsible for producing a DID document in the
+          DID methods are responsible for producing a DID document in the
           requested representation.
         </p>
 
@@ -695,8 +695,9 @@
     <p class="advisement">
       There is no strong consensus regarding preserving data model properties
       across representations.
-      Removing properties when converting a did document can result in an
-      inability to maintain
+      Removing properties when converting a
+      <a data-cite="DID-CORE#dfn-did-documents">DID document</a> can result in
+      an inability to maintain
       interoperability with [[VC-DATA-MODEL]]. See Drawbacks and Benefits.
     </p>
 
@@ -704,31 +705,45 @@
       <h2>Drawbacks</h2>
 
       <p>
-        The DID document data model contains “properties” (such as `id`,
+        The <a data-cite="DID-CORE#data-model">DID document data model</a>
+        contains <a data-cite="DID-CORE#core-properties"
+          data-lt="DID core properties">properties</a> (such as `id`,
         `verificationMethod`, and `service`), which are
         defined in a way that is independent of a concrete representation. There
-        are a number of known representations,
-        including JSON and JSON-LD (defined by DID Core), and CBOR (defined by a
-        DID WG Note). Additional
-        representations
-        (such as XML, YAML, CBOR-LD, and others) are possible and may be defined
+        are a number of known
+        <a data-cite="DID-CORE#representations">representations</a>,
+        including
+        <a data-cite="DID-CORE#json" data-lt="JSON representation">JSON</a>
+        and <a data-cite="DID-CORE#json-ld" data-lt="JSON-LD
+          representation">JSON-LD</a> (defined by DID Core), and
+        <a data-cite="DID-CBOR-REPRESENTATION#the-plain-cbor-representation"
+           data-lt="Plain CBOR Representation">CBOR</a>
+        (defined by a DID WG Note). Additional representations
+        (such as XML, YAML, CBOR-LD, and others) are possible and could be
+        defined
         in the future. For each of these
         representations, a combination of production and consumption rules
         defines the concrete syntax of properties,
         but
         the semantics of properties are independent of any given representation.
-        In other words, in every representation
-        of a DID document, there is always a way to represent a `service` or a
+        In other words, in every
+        <a data-cite="DID-CORE#dfn-representations">representation</a>
+        of a <a data-cite="DID-CORE#dfn-did-documents">DID document</a>,
+        there is always a way to represent a `service` or a
         `verificationMethod`, and their meanings
         are consistent across conformant representations.
       </p>
 
       <p>
-        In addition to “properties”, a DID document may contain
-        “representation-specific entries” which may be
-        required by certain representations in order to fully represent the DID
-        document data model and its
-        properties. For example, the JSON-LD representation of a DID document
+        In addition to <a data-cite="DID-CORE#core-properties" data-lt="DID
+          core properties">properties</a>, a DID document may contain
+        <a
+          data-cite="DID-CORE#dfn-representation-specific-entry">representation-specific
+          entries</a> which may be
+        required by certain representations in order to fully represent the
+        <a data-cite="DID-CORE#data-model">DID document data model</a> and its
+        properties. For example, the <a data-cite="DID-CORE#json-ld">JSON-LD
+          representation</a> of a DID document
         (with media type
         `application/did+ld+json`) requires the
         `@context` representation-specific entry, in order to correctly express
@@ -740,9 +755,9 @@
       </p>
 
       <p>
-        In contrast to this, the (non-LD) JSON representation (with media type
-        `application/did+json`) does not have
-        this semantic
+        In contrast to this, the (non-LD) <a data-cite="DID-CORE#json">JSON
+        representation</a> (with media type `application/did+json`) does not
+        have this semantic
         capability; instead, (non-LD) JSON documents always need agreement on
         semantics in some out-of-band way that is
         not part of the document itself. In the case of DID documents using the
@@ -759,11 +774,15 @@
       </p>
 
       <p>
-        Similar holds true for the (non-LD) CBOR representation.
+        As with the (non-LD) JSON representation compared to the JSON-LD
+        representation, similar considerations apply between the (non-LD) CBOR
+        representation and the CBOR-LD representation.
       </p>
 
       <p>
-        Other examples of “representation-specific entries” could be XML
+        Other examples of <a
+          data-cite="DID-CORE#dfn-representation-specific-entry">representation-specific
+          entries</a> could be XML
         namespace definitions or YAML tags, although
         these particular representations have not been defined at the time of
         this writing.
@@ -772,15 +791,18 @@
       <p>
         If an entry that is specific to one representation appears in another
         representation, it can be called a
-        "representation-foreign entry". An example of this is an `@context`
+        <dfn>representation-foreign entry</dfn>.  An example of this is a
+        `@context`
         entry appearing in the
         `application/did+json`
         representation.
       </p>
 
       <p>
-        Examples of “representation-specific entries” and
-        “representation-foreign entries”:
+        Examples of <a
+          data-cite="DID-CORE#dfn-representation-specific-entry">representation-specific
+          entries</a> and
+        <a>representation-foreign entries</a>:
       </p>
 
       <figure id="representation-entries">
@@ -815,8 +837,10 @@
         </p>
 
         <p>
-          For example, if a producer adds an `@context` entry to a DID document
-          in the `application/did+json`
+          For example, if a producer adds an
+          <a data-cite="DID-CORE#dfn-context"><code>@context</code></a>
+          entry to a DID document in the
+          <a data-cite="DID-CORE#json"><code>application/did+json</code></a>
           representation, some consumers (those that understand JSON-LD, such as
           JSON-LD document loaders) may process
           it
@@ -839,7 +863,7 @@
 
         <p class="advisement">
           It is bad practice and potentially harmful for consumers to rely on
-          "representation-foreign entries" in DID
+          <dfn>representation-foreign entries</dfn> in DID
           documents.
         </p>
 
@@ -884,7 +908,7 @@
         <p>
           For example, consider the following DID document, and assume that the
           JSON-LD context
-          `https://myextensions.com/other-definitions.jsonld` defines
+          `https://example.com/myextensions/other-definitions.jsonld` defines
           `blockchainAccountId` in a way that is different
           from the <a 
             data-cite="did-spec-registries#blockchainaccountid">property
@@ -897,14 +921,14 @@
 {
   "@context":[
     "https://www.w3.org/ns/did/v1",
-    "https://myextensions.com/other-definitions.jsonld"
+    "https://example.com/myextensions/other-definitions.jsonld"
   ],
   "id":"did:example:123456789abcdefghi",
   "verificationMethod":[{
     "id": "did:example:123456789abcdefghi#vm-3",
     "controller": "did:example:123456789abcdefghi",
     "type": "EcdsaSecp256k1RecoveryMethod2020",
-    "blockchainAccountId": "0xF3beAC30C498D9E26865F34fCAa57dBB935b0D74"
+    "blockchainAccountId": "eip155:1:0xF3beAC30C498D9E26865F34fCAa57dBB935b0D74"
   }]
 }
       </pre>
@@ -914,7 +938,7 @@
           implementation that doesn't understand
           JSON-LD,
           it will interpret `blockchainAccountId` as the <a 
-            data-cite="did-spec-registries#blockchainaccountid">>property
+            data-cite="did-spec-registries#blockchainaccountid">property
             listed in the DID
             Specification Registries</a>, and it will process it accordingly.
         </p>
@@ -1025,11 +1049,13 @@
         <a
           href="https://www.w3.org/TR/json-ld11-api/#loaddocumentcallback">documentLoaders</a>
         that use
-        <a href="https://www.w3.org/TR/json-ld11-framing/">frame</a> to perform
+        <a href="https://www.w3.org/TR/json-ld11-framing/">JSON-LD Framing</a>
+        to perform
         dereferencing.
       </p>
 
-      <pre class="example">
+      <pre class="example" title="DID document preserving @context in a
+        hypothetical YAML representation">
 ---
 "@context":
 - https://www.w3.org/ns/did/v1
@@ -1059,16 +1085,16 @@ keyAgreement:
 
       <p class="note">Preserving members across representations is also common
         in
-        <a href="https://swagger.io/specification/">OpenAPI Specification
-          3.0.3</a>,
+        <a href="https://spec.openapis.org/oas/v3.1.0">OpenAPI Specification
+          3.1.0</a>,
         which supports
         <a
-          href="https://datatracker.ietf.org/doc/html/draft-wright-json-schema-00#section-4.2">JSON
+          href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-00#section-4.2">JSON
           Schema</a>
         represented as YAML or JSON.
       </p>
 
-      <p>DID Methods that support both <code>application/did+ld+json</code> and
+      <p>DID methods that support both <code>application/did+ld+json</code> and
         <code>application/did+json</code>
         ought to return <code>application/did+json</code> with an
         <code>@context</code>, because it enables
@@ -1078,12 +1104,12 @@ keyAgreement:
         members that are not understood.
       </p>
 
-      <p>DID Document representations produced by an implementation ought to be
+      <p>DID document representations produced by an implementation ought to be
         treated as immutable,
         since any tampering, including adding, removing, or reordering core or
         representation specific entries
         might be considered malicious, since it alters the integrity of the
-        produced DID Document.</p>
+        produced DID document.</p>
 
     </section>
   </section>
