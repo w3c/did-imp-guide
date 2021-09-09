@@ -24,7 +24,7 @@
       // the specification's short name, as in http://www.w3.org/TR/short-name/
       shortName: "did-imp-guide",
       xref: {
-        specs: ["DID-CORE", "VC-DATA-MODEL", "DID-CBOR-REPRESENTATION", "did-spec-registries", "RFC4086", "RFC4880", "RFC6838", "RFC8259", "RFC8446", "RFC8174", "RFC2119"],
+        specs: ["DID-CORE", "VC-DATA-MODEL", "DID-CBOR-REPRESENTATION", "DID-RUBRIC", "did-spec-registries", "RFC4086", "RFC4880", "RFC6838", "RFC8259", "RFC8446", "RFC8174", "RFC2119"],
         profile: "web-platform",
       },
 
@@ -208,6 +208,29 @@
       Together these determine most of the unique properties of a DID method,
       and its privacy and security properties for comparison to other methods.
     </p>
+
+    <section class="informative">
+      <h3>Method Reuse is Encouraged</h3>
+      <p>
+        While many forms of decentralization are desired, some convergence upon
+        widely useful DID methods is considered beneficial.
+        If you are considering defining a new DID method, consider first
+        surveying existing defined DID methods to see if there may be an
+        already existing method that may meet your needs. Many DID method
+        specifications can be found listed in the [[DID-SPEC-REGISTRIES]]. Some
+        DID methods have been evaluated against various criteria in the
+        [[DID-RUBRIC]]. Some DID methods have implementation data in the
+        <a href="https://github.com/w3c/did-test-suite/">DID Test Suite</a>,
+        which could be useful as references for some criteria. If no existing
+        DID method fully meets your needs, but some appear that they may be
+        modifiable or extensible to do so, consider contacting the DID method
+        specification author(s) or following other established procedures
+        to see if collaboration may be possible to support your use case. Some
+        DID methods have built-in extensibility points (such as
+        registry-like mechanisms) to support new key types, discovery methods,
+        etc.
+      </p>
+    </section>
 
     <section class="informative">
       <h3>DID Syntax</h3>
