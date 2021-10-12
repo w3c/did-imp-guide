@@ -1331,6 +1331,12 @@ keyAgreement:
         <a
           href="https://csrc.nist.gov/publications/detail/sp/800-56a/rev-3/final">
           SP 800-56A Rev 3</a> when evalutating curves for use.
+        Safecurves does not take into account actual implementation work such as
+        for secp256k1 in 
+        <a href="https://github.com/bitcoin-core/secp256k1">libsecp256k1</a>, 
+        and has been described as a resource "best considered marketing copy
+        rather than an earnest attempt at scholarship", in 
+        <a href="https://crypto.stackexchange.com/questions/68269/does-secp256k1-have-any-known-weaknesses/68316">reviews</a>.
       </p>
 
     </section>
