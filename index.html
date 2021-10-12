@@ -1283,6 +1283,24 @@ keyAgreement:
     </p>
 
     <p>
+      Some cryptographic functions <a
+      href="https://github.com/w3c/did-imp-guide/pull/36/files/a1919dfbd9d98c4f5995eb91ab955c1cf9ca79f4#r727228219">are
+      not allowed on certain government networks</a>, hence it is a
+      good idea to beware of that when designing a DID Method for use
+      on those networks.
+    </p>
+    
+    <p>
+      Some <a
+      href="https://github.com/w3c-ccg/lds-jws2020/issues/4">Working
+      Group wisdom is offered</a> on the limits of <a
+      href="https://en.wikipedia.org/wiki/Cryptographic_agility">cryptographic
+      agility</a>.  Cryptosuites exist so that people that know better
+      can pick an extremely limited set of options, rather than
+      enabling a kitchen sink approach.
+    </p>
+    
+    <p>
       Avoid complex or slow signature formats, especially if they are poorly
       documented, or do not have an open standard with well documented test
       vectors.
