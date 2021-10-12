@@ -1283,12 +1283,6 @@ keyAgreement:
     </p>
 
     <p>
-      Pay very close attention to the defense, cryptographic agility, and
-      political
-      acceptability of any cryptography you rely on for DID Method security.
-    </p>
-
-    <p>
       Avoid complex or slow signature formats, especially if they are poorly
       documented, or do not have an open standard with well documented test
       vectors.
@@ -1307,22 +1301,11 @@ keyAgreement:
     </p>
 
     <section class="informative">
-      <h3>Vendor Lock In</h3>
-      <p>
-        Competition, direct substitutability, interoperability, and mutual
-        feature support are key to reducing the barriers to adoption of, and
-        increasing confidence in, your DID Method.
-      </p>
+      <h3>Transparency</h3>
 
       <p>
         Avoid inventing "new features". Work with others to find a common way
         to express any new features that are not unique to your DID Method.
-      </p>
-
-      <p>
-        Avoid hard coupling to specific networks, such as Bitcoin or
-        Hyperledger Fabric. Design your method such that it may be adapted
-        to support multiple ledger systems.
       </p>
 
       <p class="advisement">
@@ -1350,13 +1333,6 @@ keyAgreement:
           SP 800-56A Rev 3</a> when evalutating curves for use.
       </p>
 
-      <p class="advisement">Avoid secp256k1, RSA, P-256, P-384 and P-521.</p>
-
-      <p>
-        Avoid relying on smart contracts for complex data management. If you
-        must use a smart contract, keep it simple and architect a solution
-        that supports data migration.
-      </p>
     </section>
 
     <section class="informative">
