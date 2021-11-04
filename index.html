@@ -1283,11 +1283,23 @@ keyAgreement:
     </p>
 
     <p>
-      Pay very close attention to the defense, cryptographic agility, and
-      political
-      acceptability of any cryptography you rely on for DID Method security.
+      Some cryptographic functions <a
+      href="https://github.com/w3c/did-imp-guide/pull/36/files/a1919dfbd9d98c4f5995eb91ab955c1cf9ca79f4#r727228219">are
+      not allowed on certain government networks</a>, hence it is a
+      good idea to beware of that when designing a DID Method for use
+      on those networks.
     </p>
-
+    
+    <p>
+      Some <a
+      href="https://github.com/w3c-ccg/lds-jws2020/issues/4">Working
+      Group wisdom is offered</a> on the limits of <a
+      href="https://en.wikipedia.org/wiki/Cryptographic_agility">cryptographic
+      agility</a>.  Cryptosuites exist so that people that know better
+      can pick an extremely limited set of options, rather than
+      enabling a kitchen sink approach.
+    </p>
+    
     <p>
       Avoid complex or slow signature formats, especially if they are poorly
       documented, or do not have an open standard with well documented test
@@ -1307,22 +1319,11 @@ keyAgreement:
     </p>
 
     <section class="informative">
-      <h3>Vendor Lock In</h3>
-      <p>
-        Competition, direct substitutability, interoperability, and mutual
-        feature support are key to reducing the barriers to adoption of, and
-        increasing confidence in, your DID Method.
-      </p>
+      <h3>Transparency</h3>
 
       <p>
         Avoid inventing "new features". Work with others to find a common way
         to express any new features that are not unique to your DID Method.
-      </p>
-
-      <p>
-        Avoid hard coupling to specific networks, such as Bitcoin or
-        Hyperledger Fabric. Design your method such that it may be adapted
-        to support multiple ledger systems.
       </p>
 
       <p class="advisement">
@@ -1348,15 +1349,14 @@ keyAgreement:
         <a
           href="https://csrc.nist.gov/publications/detail/sp/800-56a/rev-3/final">
           SP 800-56A Rev 3</a> when evalutating curves for use.
+        Safecurves does not take into account actual implementation work such as
+        for secp256k1 in 
+        <a href="https://github.com/bitcoin-core/secp256k1">libsecp256k1</a>, 
+        and has been described as a resource "best considered marketing copy
+        rather than an earnest attempt at scholarship", in 
+        <a href="https://crypto.stackexchange.com/questions/68269/does-secp256k1-have-any-known-weaknesses/68316">reviews</a>.
       </p>
 
-      <p class="advisement">Avoid secp256k1, RSA, P-256, P-384 and P-521.</p>
-
-      <p>
-        Avoid relying on smart contracts for complex data management. If you
-        must use a smart contract, keep it simple and architect a solution
-        that supports data migration.
-      </p>
     </section>
 
     <section class="informative">
