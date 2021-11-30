@@ -1162,7 +1162,7 @@ keyAgreement:
 
     <p>
       Decentralized Identifiers, like any other technology, can be used to
-      enhance privacy as well as harm privacy. This section speaks to topics
+      enhance privacy as well as to harm privacy. This section speaks to topics
       that implementers might consider when thinking about the privacy
       characteristics of their software systems.
     </p>
@@ -1179,7 +1179,7 @@ keyAgreement:
       </p>
 
       <p>
-        It is the DID method implementer's responsibility to think about and
+        It is a DID method implementer's responsibility to think about and
         identify
         the extent to which personal data may be included in a DID document.
       </p>
@@ -1192,21 +1192,19 @@ keyAgreement:
       </p>
 
       <p>
-        A DID method specification should have a section dedicated to personal
-        data covering the extent to
+        DID method specifications are encouraged to have a section dedicated to
+        personal data, covering the extent to
         which information published on the corresponding ledger can be updated
         or deleted.
-        It should provide specific instructions of how to do so, if it is
-        possible.
+        Such a section could provide specific instructions of how to do so,
+        if it is possible.
         Otherwise, it should clearly state that it is not possible.
       </p>
 
       <p>
         A DID method should avoid "phone home" or tracking characteristics that
-        would
-        permit tracing of a user in manner not understood or authorized by the
-        user
-        by some third party.
+        would permit tracing of a user by a third party
+        in manner not understood or authorized by the user.
       </p>
     </section>
 
@@ -1214,11 +1212,11 @@ keyAgreement:
       <h3>Avoid correlation</h3>
 
       <p class="advisement">
-        Avoid reusing verification methods across DID Methods.
+        Avoid reusing verification methods across DID methods.
       </p>
 
       <p class="advisement">
-        Avoid reusing services with unique parameters across DID Methods.
+        Avoid reusing services with unique parameters across DID methods.
       </p>
 
       <p>
@@ -1230,9 +1228,9 @@ keyAgreement:
       </p>
 
       <p>
-        A DID method implementer should rotate keys and identifiers as often as
-        possible
-        to avoid correlation
+        DID method implementations are encouraged to rotate keys and
+        identifiers as often as possible,
+        to avoid correlation.
       </p>
     </section>
 
@@ -1241,14 +1239,14 @@ keyAgreement:
 
       <p>
         Consider formally modeling the privacy implications associated with
-        your implementation using
+        your DID method and/or implementation using
         <a href="https://en.wikipedia.org/wiki/T-closeness">t-closeness</a> or
         other mechanisms.
       </p>
 
       <p>
-        If your DID Method supports global enumeration and indexing, consider
-        exposing this information publicly. You may wish to provide alerts
+        If your DID method supports global enumeration and indexing, consider
+        exposing this fact publicly. You may wish to provide alerts
         similar to services that watch version control systems for sensitive
         information that is accidentally leaked.
       </p>
@@ -1259,16 +1257,18 @@ keyAgreement:
 
       <p>
         Review any applicable local law when considering developing or
-        operating a decentralized identifier method.
+        operating a decentralized identifier method. Consider the following:
       </p>
 
-      <p>Consider <a href="https://gdpr.eu/">GDPR</a>.</p>
-
-      <p>Consider <a href="https://oag.ca.gov/privacy/ccpa">CCPA</a>.</p>
-
-      <p>Consider <a
-          href="https://www.bis.doc.gov/index.php/policy-guidance/encryption">EAR</a>.
-      </p>
+      <ul>
+      <li><a href="https://gdpr.eu/">General Data Protection Regulation
+        (GDPR)</a></li>
+      <li><a href="https://oag.ca.gov/privacy/ccpa">California Consumer
+        Privacy Act (CCPA)</a></li>
+      <li><a
+          href="https://www.bis.doc.gov/index.php/policy-guidance/encryption">
+        Encryption and Export Administration Regulations (EAR)</a></li>
+      </ul>
     </section>
   </section>
 
@@ -1285,7 +1285,7 @@ keyAgreement:
     <p>
       Pay very close attention to the defense, cryptographic agility, and
       political
-      acceptability of any cryptography you rely on for DID Method security.
+      acceptability of any cryptography you rely on for DID method security.
     </p>
 
     <p>
@@ -1295,14 +1295,15 @@ keyAgreement:
     </p>
 
     <p class="advisement">
-      Avoid open source implementations that are declared a "defacto
-      standard", but lack open standard technical specifications.
+      Prefer technologies based on open standard technical specifications.
+      Avoid technologies declared <em>de facto</em> standard based on
+      particular implementations but lacking open standards.
     </p>
 
     <p class="advisement">
-      Support for legacy cryptography systems such as
+      Consider support for legacy cryptography systems such as
       <a href="https://www.iana.org/assignments/jose/jose.xhtml">JOSE</a>
-      and <a href="https://www.openpgp.org/">OpenPGP</a> should be considered
+      and <a href="https://www.openpgp.org/">OpenPGP</a>,
       due to their prevalence in existing systems.
     </p>
 
@@ -1311,12 +1312,12 @@ keyAgreement:
       <p>
         Competition, direct substitutability, interoperability, and mutual
         feature support are key to reducing the barriers to adoption of, and
-        increasing confidence in, your DID Method.
+        increasing confidence in, your DID method.
       </p>
 
       <p>
         Avoid inventing "new features". Work with others to find a common way
-        to express any new features that are not unique to your DID Method.
+        to express any new features that are not unique to your DID method.
       </p>
 
       <p>
@@ -1327,7 +1328,7 @@ keyAgreement:
 
       <p class="advisement">
         Transparency and openness in approaches related to security not only
-        lead to greater security, but promote interoprability and adoption.
+        lead to greater security, but promote interoperability and adoption.
       </p>
     </section>
 
@@ -1335,13 +1336,11 @@ keyAgreement:
       <h3>Digital Signatures</h3>
 
       <p class="advisement">
-        We recommend the user review
-        <a href="https://safecurves.cr.yp.to/">safecurves.cr.yp.to</a> before
-        selecting elliptic curve types. A key note however, is that several
-        items on safecurves are less frequently updated.
-        In addition to safecurves you should always check the top level
-        standards
-        and any docs which superseed referenced standards in safecurves,
+        When selecting elliptic curve types, consider reviewing
+        <a href="https://safecurves.cr.yp.to/">SafeCurves</a>.
+        However, note that some items on SafeCurves may be infrequently updated.
+        In addition to SafeCurves, check the top-level standards
+        and any documents which supercede referenced standards in SafeCurves,
         especially
         <a href="https://csrc.nist.gov/publications/detail/fips/186/4/final">
           FIPS 186-4</a> and
@@ -1369,27 +1368,27 @@ keyAgreement:
       <p class="advisement">
         When in doubt in selection of a hashing algorithm, consult the
         <a href="https://csrc.nist.gov/projects/hash-functions">
-          NIST documentation</a> related to hash function selection,
+          NIST documentation</a> related to hash function selection.
+        For new implementations, consider
         <a href="https://csrc.nist.gov/publications/detail/fips/202/final">
-          SHA-3 as described in FIPS 202</a>
-        should be strongly considered for new implementations
+          SHA-3 as described in FIPS 202</a>.
       </p>
     </section>
 
     <section class="informative">
       <h3>Randomness</h3>
-      When making an implemention carefully consider how you are sourcing
+      When making an implemention, carefully consider how you are sourcing
       random numbers. Consult
       <a href="https://datatracker.ietf.org/doc/html/RFC4086">RFC 4086:
         Randomness Requirements for Security</a>
-      when selecting an approach to get random bits, and pay careful attention
-      to the platform and any underlying hardware that may be in use as multiple
+      when selecting an approach to get random bits. Pay careful attention
+      to the platform and any underlying hardware that may be in use. Multiple
       attacks have been performed in the wild due to improper selection of
       random values in key material and other aspects of cryptography.
     </section>
 
     <section class="informative">
-      <h3>Zero Knowledge Proofs</h3>
+      <h3>Zero-Knowledge Proofs</h3>
 
       <p>
         Consider using
@@ -1400,31 +1399,32 @@ keyAgreement:
       </p>
 
       <p class="advisement">
-        The IETF document on
+      When selecting curves and other parameters for zero-knowledge proofs,
+      consider consulting the IETF document on
         <a
-          href="https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-10.txt">
-          Pairing Friendly Curves
-        </a> should be consulted when selecting curves for usage with zero
-        knowledge proofs,
+          href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-pairing-friendly-curves">
+          Pairing-Friendly Curves</a>
         especially to ensure that appropriate embedding degrees are selected,
         and that
         the resulting equivalent bit characteristics are sufficient.
       </p>
 
       <p>
-        Avoid zero knowledge proofs as described in the
+        Avoid zero-knowledge proofs as described in the
         <a
           data-cite="VC-DATA-MODEL#example-25-a-verifiable-presentation-that-supports-cl-signatures">AnonCredDerivedCredentialv1</a>.
         This proof format is coupled to specific ledger technologies,
-        similar to the concept of an ethereum virtual machine smart contract
-        only running on EVM compatible ledgers. Ledger-specific technologies
+        similar to the concept of an Ethereum Virtual Machine (EVM)
+        smart contract
+        only running on EVM-compatible ledgers. Ledger-specific technologies
         should be avoided when designing for portable, interoperable, and
-        open-standards&ndash;based zero knowledge proofs.
+        open-standards&ndash;based zero-knowledge proofs.
       </p>
 
       <p>
-        Avoid storing credential schemas on ledgers. Many DID methods cannot
-        store information other than a DID Document, which reduces the direct
+        Avoid requiring credential schemas to be stored on ledgers. Many DID
+        methods cannot
+        store information other than a DID document, which reduces the direct
         interoperability, substitutability, and cost effectiveness of
         solutions that make use of rare or poorly supported features such as
         credential schema definition storage.
@@ -1442,11 +1442,12 @@ keyAgreement:
       </p>
 
       <p class="advisement">
-        The addition of biometrics to other techniques can aid in certain tasks
+        The addition of biometrics to other techniques can aid certain tasks
         such as reauthentication.
         <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP
-          800-63B</a>
-        deals directly with digital identity and has several useful sections
+          800-63B ("Digital Identity Guidelines: Authentication and
+          Lifecycle Management")</a>
+        has several useful sections
         that address appropriate language for describing biometrics usage as
         well
         as techniques for incorporating biometrics into an approach for solving
